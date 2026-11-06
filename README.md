@@ -6,7 +6,7 @@ List of currently open roles in leading AI companies and startups.
 
 Search tens of thousands of jobs from the ~3,800 companies that hire through Ashby. Filter by salary, remote/hybrid/in person, experience level, years of experience, company size, department and posting date, then export your results as a CSV. There are no logins and no ads, and every listing links to the company's own job page.
 
-Jobs and companies are updated every **Monday at 9am Vancouver time**.
+Jobs and companies are updated every **Monday at 9am PST**.
 
 ## About me
 

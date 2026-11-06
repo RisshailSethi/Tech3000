@@ -1,0 +1,44 @@
+name: Publish site changes
+
+# When files in site/ change, publish them straight away, reusing this week's job data
+# from the live site, so design tweaks don't need the full weekly data pull.
+on:
+  push:
+    branches: [main]
+    paths: ["site/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reuse this week's job data from the live site
+        run: |
+          base="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"
+          curl -fsSL --retry 3 "$base/jobs.json" -o site/data/jobs.json
+          curl -fsSL --retry 3 "$base/meta.json" -o site/data/meta.json
+          python3 -c "import json; d = json.load(open('site/data/jobs.json')); n = len(d['jobs']); assert n > 1000, n; print(n, 'jobs reused')"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publish the site
+        id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,13 +1,10 @@
 name: Weekly update
 
-# Every Monday at 9:00 am Vancouver time. GitHub schedules run in UTC, so there are two:
-# 16:00 UTC is 9am when Vancouver is on UTC-7, 17:00 UTC is 9am when it's on UTC-8.
-# The "check-time" job lets only the one that matches Vancouver's current offset continue.
+# Every Monday at 16:00 UTC (8am PST), so fresh jobs are up by 9am PST.
 # You can also run it any time from the Actions tab: "Weekly update" -> "Run workflow".
 on:
   schedule:
     - cron: "0 16 * * 1"
-    - cron: "0 17 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -16,29 +13,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: weekly-update
+  group: site
   cancel-in-progress: false
 
 jobs:
-  check-time:
-    runs-on: ubuntu-latest
-    outputs:
-      go: ${{ steps.gate.outputs.go }}
-    steps:
-      - id: gate
-        run: |
-          offset=$(TZ=America/Vancouver date +%z)
-          if [ "$offset" = "-0700" ]; then expected="0 16 * * 1"; else expected="0 17 * * 1"; fi
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "${{ github.event.schedule }}" = "$expected" ]; then
-            echo "go=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "This is the other season's 9am slot; nothing to do."
-            echo "go=false" >> "$GITHUB_OUTPUT"
-          fi
-
   update:
-    needs: check-time
-    if: needs.check-time.outputs.go == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 150
     environment:

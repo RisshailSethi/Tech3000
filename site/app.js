@@ -1,7 +1,6 @@
 "use strict";
 // Tech3000: loads data/jobs.json once and does all searching and filtering in the browser.
 
-const PAGE = 50;
 const LEVELS = ["Internship", "Entry level", "", "Senior", "Staff / Lead", "Director+"];
 const LEVELS_CSV = ["Internship", "Entry level", "Mid / not stated", "Senior", "Staff / Lead", "Director+"];
 const WORK = ["", "Remote", "Hybrid", "In person"];
@@ -20,7 +19,7 @@ const el = (tag, cls, text) => {
 let D = null;            // the data file
 let hay = [], titles = [], locLower = [];
 let companyByName = new Map(), companyBySlug = new Map();
-let results = [], shown = 0;
+let results = [];
 
 // ---------------------------------------------------------------- state <-> URL
 
@@ -157,19 +156,19 @@ function link(j) {
   return /^https?:\/\//.test(l) ? l : `https://jobs.ashbyhq.com/${encodeURIComponent(D.companies[j[1]][1])}/${l}`;
 }
 
-function card(i) {
+const GROUP_PAGE = 20;   // companies per page
+const PER_GROUP = 5;     // jobs shown per company before "show more"
+let groups = [], shownGroups = 0;
+
+function jobRow(i) {
   const j = D.jobs[i];
   const li = el("li");
-  const a = el("a", "job");
+  const a = el("a", "row");
   a.href = link(j);
   a.target = "_blank";
   a.rel = "noopener noreferrer";
   const top = el("div", "jtop");
-  const head = el("div");
-  head.append(el("span", "jtitle", j[0]), document.createTextNode(" "));
-  const co = el("span", "jco", "· " + D.companies[j[1]][0]);
-  head.append(co);
-  top.append(head);
+  top.append(el("span", "jtitle", j[0]));
   const p = pay(j);
   if (p) top.append(el("span", "jpay", p + " /yr"));
   const meta = el("div", "jmeta");
@@ -187,14 +186,54 @@ function card(i) {
   return li;
 }
 
+function groupCard(g) {
+  const [name, slug, open] = D.companies[g.c];
+  const li = el("li", "group");
+  const head = el("div", "ghead");
+  const title = el("a", "gname", name);
+  title.href = `https://jobs.ashbyhq.com/${encodeURIComponent(slug)}`;
+  title.target = "_blank";
+  title.rel = "noopener noreferrer";
+  const n = g.items.length;
+  let count = `${n.toLocaleString()} matching job${n === 1 ? "" : "s"}`;
+  if (open > n) count += ` · ${open.toLocaleString()} open in total`;
+  head.append(title, el("span", "gcount", count));
+  const ul = el("ul", "gjobs");
+  for (const i of g.items.slice(0, PER_GROUP)) ul.append(jobRow(i));
+  li.append(head, ul);
+  if (n > PER_GROUP) {
+    const b = el("button", "gmore", `Show ${(n - PER_GROUP).toLocaleString()} more from ${name}`);
+    b.type = "button";
+    b.addEventListener("click", () => {
+      const frag = document.createDocumentFragment();
+      for (const i of g.items.slice(PER_GROUP)) frag.append(jobRow(i));
+      ul.append(frag);
+      b.remove();
+    });
+    li.append(b);
+  }
+  return li;
+}
+
+function groupResults(ids) {
+  // Companies appear in the order of their best-ranked job, so sorting still applies.
+  const byCompany = new Map();
+  for (const i of ids) {
+    const c = D.jobs[i][1];
+    if (!byCompany.has(c)) byCompany.set(c, []);
+    byCompany.get(c).push(i);
+  }
+  return [...byCompany].map(([c, items]) => ({ c, items }));
+}
+
 function showMore() {
   const frag = document.createDocumentFragment();
-  const end = Math.min(shown + PAGE, results.length);
-  for (let k = shown; k < end; k++) frag.append(card(results[k]));
+  const end = Math.min(shownGroups + GROUP_PAGE, groups.length);
+  for (let k = shownGroups; k < end; k++) frag.append(groupCard(groups[k]));
   $("list").append(frag);
-  shown = end;
-  $("more").hidden = shown >= results.length;
-  $("more").textContent = `Show more (${(results.length - shown).toLocaleString()} left)`;
+  shownGroups = end;
+  $("more").hidden = shownGroups >= groups.length;
+  $("more").textContent = `Show more companies (${(groups.length - shownGroups).toLocaleString()} left)`;
 }
 
 let timer = null;
@@ -206,17 +245,21 @@ function update() {
   updateActiveCount();
   const list = $("list");
   list.replaceChildren();
-  shown = 0;
+  shownGroups = 0;
   if (f.company === -1) {
     results = [];
+    groups = [];
     $("count").textContent = "Pick a company from the list.";
     $("more").hidden = true;
     $("export").disabled = true;
     return;
   }
   results = compute(f);
-  const n = results.length;
-  $("count").replaceChildren(el("strong", null, n.toLocaleString()), document.createTextNode(n === 1 ? " job" : " jobs"));
+  groups = groupResults(results);
+  const n = results.length, m = groups.length;
+  $("count").replaceChildren(
+    el("strong", null, n.toLocaleString()), document.createTextNode(n === 1 ? " job at " : " jobs at "),
+    el("strong", null, m.toLocaleString()), document.createTextNode(m === 1 ? " company" : " companies"));
   $("export").disabled = n === 0;
   if (!n) {
     const li = el("li", "empty", "No jobs match these filters. Try removing one.");
