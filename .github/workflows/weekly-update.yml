@@ -1,0 +1,86 @@
+name: Weekly update
+
+# Every Monday at 9:00 am Vancouver time. GitHub schedules run in UTC, so there are two:
+# 16:00 UTC is 9am when Vancouver is on UTC-7, 17:00 UTC is 9am when it's on UTC-8.
+# The "check-time" job lets only the one that matches Vancouver's current offset continue.
+# You can also run it any time from the Actions tab: "Weekly update" -> "Run workflow".
+on:
+  schedule:
+    - cron: "0 16 * * 1"
+    - cron: "0 17 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write    # save the updated company list back to the repo
+  pages: write       # publish the site
+  id-token: write
+
+concurrency:
+  group: weekly-update
+  cancel-in-progress: false
+
+jobs:
+  check-time:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.gate.outputs.go }}
+    steps:
+      - id: gate
+        run: |
+          offset=$(TZ=America/Vancouver date +%z)
+          if [ "$offset" = "-0700" ]; then expected="0 16 * * 1"; else expected="0 17 * * 1"; fi
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "${{ github.event.schedule }}" = "$expected" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "This is the other season's 9am slot; nothing to do."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  update:
+    needs: check-time
+    if: needs.check-time.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Find companies new to Ashby
+        # A problem here shouldn't stop the weekly jobs refresh.
+        continue-on-error: true
+        run: python3 -u scraper/update_companies.py
+
+      - name: Fetch every company's jobs
+        run: python3 -u scraper/ingest.py --db jobs.db
+
+      - name: Build the site's data
+        # Stops here (and keeps last week's site) if the refresh looks broken.
+        run: python3 -u scraper/build_data.py --db jobs.db --out site/data
+
+      - name: Save the updated company list
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add -A scraper
+          if git diff --cached --quiet; then
+            echo "Company list unchanged."
+          else
+            git commit -m "Weekly company list update"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Publish the site
+        id: deploy
+        uses: actions/deploy-pages@v4

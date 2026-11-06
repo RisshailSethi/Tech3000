@@ -1,0 +1,6 @@
+jobs.db
+jobs.db-*
+*.lock
+site/data/*.json
+__pycache__/
+.DS_Store

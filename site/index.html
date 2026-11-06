@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Roles: every job on Ashby job boards, in one search</title>
+<meta name="description" content="Search jobs from thousands of companies that hire through Ashby, with filters for salary, remote or hybrid, experience and company size. Updated every Monday.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f6f5c'/%3E%3Ccircle cx='14' cy='14' r='6.5' fill='none' stroke='white' stroke-width='3'/%3E%3Cpath d='M19 19l6 6' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#results">Skip to results</a>
+<header class="site">
+  <div class="wrap head">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"></span>
+      <div>
+        <h1>Open Roles</h1>
+        <p class="tag">Every job posted on Ashby job boards, in one search.</p>
+      </div>
+    </div>
+    <p class="update" id="update">
+      <span class="dot" aria-hidden="true"></span>
+      Jobs and companies are updated every <strong>Monday at 9am</strong> Vancouver time.
+      <span id="last"></span>
+    </p>
+  </div>
+  <div class="wrap searchrow">
+    <label class="sr" for="q">Search jobs</label>
+    <input id="q" type="search" placeholder="Job title, skill or company, e.g. data analyst" autocomplete="off">
+    <label class="sr" for="loc">Location</label>
+    <input id="loc" type="search" placeholder="City or country, e.g. Vancouver" autocomplete="off">
+    <button id="toggleFilters" class="ghost filters-btn" type="button" aria-expanded="false" aria-controls="filters">Filters <span id="activeCount"></span></button>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <aside id="filters" class="filters" aria-label="Filters">
+    <div class="fgroup">
+      <span class="flabel" id="workLabel">Work location</span>
+      <div class="seg" role="group" aria-labelledby="workLabel">
+        <label><input type="checkbox" name="work" value="1"><span>Remote</span></label>
+        <label><input type="checkbox" name="work" value="2"><span>Hybrid</span></label>
+        <label><input type="checkbox" name="work" value="3"><span>In person</span></label>
+      </div>
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel" id="levelLabel">Experience level</span>
+      <div class="chips" role="group" aria-labelledby="levelLabel">
+        <label><input type="checkbox" name="level" value="0"><span>Internship</span></label>
+        <label><input type="checkbox" name="level" value="1"><span>Entry level</span></label>
+        <label><input type="checkbox" name="level" value="2"><span>Mid / not stated</span></label>
+        <label><input type="checkbox" name="level" value="3"><span>Senior</span></label>
+        <label><input type="checkbox" name="level" value="4"><span>Staff / Lead</span></label>
+        <label><input type="checkbox" name="level" value="5"><span>Director+</span></label>
+      </div>
+      <p class="hint">Inferred from the job title.</p>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel" for="years">Years of experience asked for</label>
+      <select id="years">
+        <option value="">Any</option>
+        <option value="1">1 year or less</option>
+        <option value="2">2 years or less</option>
+        <option value="3">3 years or less</option>
+        <option value="5">5 years or less</option>
+        <option value="8">8 years or less</option>
+      </select>
+      <p class="hint">Jobs that don't say are kept.</p>
+    </div>
+
+    <div class="fgroup">
+      <span class="flabel">Salary per year</span>
+      <div class="pair">
+        <label class="sr" for="smin">Minimum salary</label>
+        <input id="smin" type="number" inputmode="numeric" min="0" step="5000" placeholder="Min">
+        <span aria-hidden="true">–</span>
+        <label class="sr" for="smax">Maximum salary</label>
+        <input id="smax" type="number" inputmode="numeric" min="0" step="5000" placeholder="Max">
+      </div>
+      <label class="sr" for="ccy">Currency</label>
+      <select id="ccy"><option value="">Any currency</option></select>
+      <label class="check"><input type="checkbox" id="paid"> Only jobs that list a salary</label>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel" for="size">Company size</label>
+      <select id="size">
+        <option value="">Any</option>
+        <option value="s">Small: up to 10 open roles</option>
+        <option value="m">Medium: 11–50 open roles</option>
+        <option value="l">Large: 51–200 open roles</option>
+        <option value="xl">Very large: 200+ open roles</option>
+      </select>
+      <p class="hint">Measured by how many roles a company has open on Ashby.</p>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel" for="company">Company</label>
+      <input id="company" list="companyList" placeholder="Any company" autocomplete="off">
+      <datalist id="companyList"></datalist>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel" for="dept">Department</label>
+      <select id="dept"><option value="">Any</option></select>
+    </div>
+
+    <div class="fgroup">
+      <label class="flabel" for="days">Posted</label>
+      <select id="days">
+        <option value="">Any time</option>
+        <option value="7">Past week</option>
+        <option value="14">Past 2 weeks</option>
+        <option value="30">Past month</option>
+        <option value="90">Past 3 months</option>
+      </select>
+    </div>
+
+    <div class="factions">
+      <button id="clear" class="ghost" type="button">Clear all</button>
+      <button id="done" class="primary only-mobile" type="button">Show results</button>
+    </div>
+  </aside>
+
+  <main id="results" class="results" tabindex="-1">
+    <div class="resbar">
+      <p id="count" aria-live="polite">Loading jobs…</p>
+      <div class="resactions">
+        <label class="sr" for="sort">Sort by</label>
+        <select id="sort">
+          <option value="">Best match</option>
+          <option value="new">Newest</option>
+          <option value="pay">Highest salary</option>
+        </select>
+        <button id="export" class="ghost" type="button" disabled>Export CSV</button>
+      </div>
+    </div>
+    <ol id="list" class="list"></ol>
+    <div class="more"><button id="more" class="ghost" type="button" hidden>Show more</button></div>
+  </main>
+</div>
+
+<footer class="wrap foot">
+  <p>Open Roles is an unofficial, non-commercial index and is not affiliated with Ashby or any company listed. Every listing links to the company's own job page, where you apply.
+  Details like level, years and company size are inferred and can be wrong; check the posting.</p>
+  <p>Company list started from <a href="https://github.com/AnshumanAtrey/ashby-jobs-search">AnshumanAtrey/ashby-jobs-search</a> (MIT).
+  Want a company removed or found a problem? <a id="issues" href="#">Open an issue</a>.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

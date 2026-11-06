@@ -1,0 +1,9 @@
+# Your own Ashby boards, one per line: `slug` or `slug<TAB>Company Name`
+# (the slug is the part after jobs.ashbyhq.com/). Lines starting with # are ignored.
+# The big community list lives in companies.tsv; add anything it is missing here.
+# discover.py appends companies it finds to this file.
+ashby
+ramp
+linear
+openai
+notion

@@ -1,0 +1,2 @@
+# Companies to leave out of the public site, one Ashby board name per line.
+# Add a line here when a company asks to be removed.
