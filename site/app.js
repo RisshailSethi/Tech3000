@@ -1,5 +1,5 @@
 "use strict";
-// Open Roles: loads data/jobs.json once and does all searching and filtering in the browser.
+// Tech3000: loads data/jobs.json once and does all searching and filtering in the browser.
 
 const PAGE = 50;
 const LEVELS = ["Internship", "Entry level", "", "Senior", "Staff / Lead", "Director+"];
@@ -252,7 +252,7 @@ function exportCsv() {
   const blob = new Blob(["﻿" + rows.map((r) => r.map(csvCell).join(",")).join("\r\n")], { type: "text/csv;charset=utf-8" });
   const a = el("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `open-roles-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `tech3000-jobs-${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.append(a);
   a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
