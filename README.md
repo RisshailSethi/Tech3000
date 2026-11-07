@@ -10,7 +10,7 @@ Jobs and companies are updated every **Monday at 9am PST**.
 
 ## About me
 
-I'm Risshail Sethi, a data and analytics professional based in Vancouver and a UBC grad (International Economics, minor in Data Science). Ashby hosts some of the best tech jobs around, but you can only browse them one company at a time, so I built the search I wanted to use. It's a non-commercial side project; if it helps your job hunt, that's the whole point.
+I'm Risshail Sethi, a data and analytics professional based in Vancouver and a UBC grad (International Economics, minor in Data Science). Ashby hosts some of the best tech jobs around, but you can only browse them one company at a time, so I built the search I wanted to use. It's a free side project; if it helps your job hunt, that's the whole point. If you'd like to support it, you can [buy me a coffee](https://buymeacoffee.com/sethirisshy).
 
 ## How it works
 
