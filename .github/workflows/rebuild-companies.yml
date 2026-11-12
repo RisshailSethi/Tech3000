@@ -1,0 +1,37 @@
+name: Rebuild company list
+
+# Builds scraper/companies.tsv from scratch from the Wayback Machine's full history of
+# jobs.ashbyhq.com pages, Hacker News and public job lists, checking every name against Ashby.
+# The result goes to the "company-rebuild" branch for review instead of straight to main.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebuild-companies
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild the company list from scratch
+        run: python3 -u scraper/update_companies.py --rebuild
+
+      - name: Save it to the company-rebuild branch for review
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git checkout -b company-rebuild
+          git add -A scraper
+          git commit -m "Rebuild company list from the Wayback Machine and other public sources"
+          git push -f origin company-rebuild

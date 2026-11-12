@@ -2,22 +2,22 @@
 """Find companies that use Ashby and add new ones to companies.tsv (runs weekly via schedule.py).
 
 Usage:
-    python3 update_companies.py           # look for companies added since the last run
-    python3 update_companies.py --full    # rescan every source from the beginning (slow, ~15+ min)
+    python3 update_companies.py             # look for companies added since the last run (weekly)
+    python3 update_companies.py --full      # rescan every source's full history, add anything missing
+    python3 update_companies.py --rebuild   # build companies.tsv from scratch from the sources below
 
 Where candidates come from (all free, no account needed):
-  * the community list at github.com/AnshumanAtrey/ashby-jobs-search, in case it gets updated
-  * the Wayback Machine's index of jobs.ashbyhq.com pages
+  * the Wayback Machine's index of every archived jobs.ashbyhq.com page
   * Hacker News comments that link to jobs.ashbyhq.com ("Who's hiring" threads)
   * public new-grad / internship job lists on GitHub that link to Ashby boards
 
 Each new name is checked against its live Ashby board page: it is kept only if a real (non-demo)
 company owns it, under the board name Ashby itself uses. Names that turn out not to be companies
-are remembered, so they aren't checked again. Existing entries are never removed; closed boards
+are remembered, so they aren't checked again. Weekly runs never remove entries; closed boards
 are simply skipped by ingest.py.
 
-The approach follows scripts/refresh_companies.py in github.com/AnshumanAtrey/ashby-jobs-search
-(MIT License, Copyright (c) 2026 Anshuman Atrey), rewritten here without third-party packages.
+The discovery approach is adapted from scripts/refresh_companies.py in
+github.com/AnshumanAtrey/ashby-jobs-search (MIT License, Copyright (c) 2026 Anshuman Atrey).
 """
 import argparse
 import html
@@ -38,8 +38,6 @@ STATE = os.path.join(HERE, "discovery_state.json")
 UA = "Mozilla/5.0 (compatible; ashby-jobs-personal-index/0.4; personal, non-commercial)"
 
 # Overridable for testing.
-UPSTREAM = os.environ.get("ASHBY_UPSTREAM_URL",
-                          "https://raw.githubusercontent.com/AnshumanAtrey/ashby-jobs-search/main/src/companies.tsv")
 WAYBACK = os.environ.get("ASHBY_WAYBACK_URL", "https://web.archive.org/cdx/search/cdx")
 HN = os.environ.get("ASHBY_HN_URL", "https://hn.algolia.com/api/v1/search_by_date")
 GITHUB_RAW = os.environ.get("ASHBY_GITHUB_RAW", "https://raw.githubusercontent.com")
@@ -55,16 +53,17 @@ GITHUB_LISTS = [
     "vanshb03/Summer2026-Internships/dev/.github/scripts/listings.json",
     "vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json",
 ]
-# The community list already covers everything up to its build date, so a first run starts here.
+# Where a weekly run starts if it has no saved progress yet.
 FIRST_RUN_FROM = datetime(2026, 9, 1, tzinfo=timezone.utc)
-FULL_FROM = datetime(2020, 1, 1, tzinfo=timezone.utc)
+FULL_FROM = datetime(2019, 1, 1, tzinfo=timezone.utc)   # before Ashby's first job boards
 LINK = re.compile(r"jobs\.ashbyhq\.com/([A-Za-z0-9][A-Za-z0-9._%~&-]{0,99})", re.I)
 NAME_OK = re.compile(r"[A-Za-z0-9][A-Za-z0-9._~ &-]{0,99}")
+MIN_REBUILD = 500   # refuse to replace the list with fewer confirmed companies than this
 APP_DATA = "window.__appData = "
-CREDIT = (
-    "# Community list of Ashby job boards: board name<TAB>company name.\n"
-    "# Source: https://github.com/AnshumanAtrey/ashby-jobs-search (src/companies.tsv)\n"
-    "# MIT License, Copyright (c) 2026 Anshuman Atrey. New boards are added by update_companies.py.\n"
+HEADER = (
+    "# Ashby job boards: board name<TAB>company name.\n"
+    "# Built by update_companies.py from the Wayback Machine, Hacker News and public job lists;\n"
+    "# every entry was checked against its live Ashby board.\n"
 )
 
 
@@ -111,23 +110,9 @@ def links_in(text):
 
 # ---------------------------------------------------------------- sources
 
-def from_upstream():
-    status, text = get(UPSTREAM)
-    if status != 200:
-        raise RuntimeError(f"HTTP {status}" if status else "couldn't connect")
-    rows = {}
-    for line in text.splitlines():
-        if line.strip() and not line.startswith("#") and "\t" in line:
-            slug, name = line.split("\t", 1)
-            rows[slug.strip()] = name.strip()
-    if len(rows) < 500:
-        raise RuntimeError(f"list looks wrong ({len(rows)} rows)")
-    return rows   # already verified upstream: slug -> name
-
-
 def from_wayback(since):
-    found, key = set(), None
-    for _ in range(50):
+    found, key, pages = set(), None, 0
+    while True:
         params = {"url": "jobs.ashbyhq.com/", "matchType": "prefix", "fl": "original", "collapse": "urlkey",
                   "limit": "150000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
         if key:
@@ -141,7 +126,10 @@ def from_wayback(since):
             if part:
                 found.add(part)
         key = rest.strip() or None
-        if not key or not rows.strip():
+        pages += 1
+        if pages % 10 == 0:
+            log(f"    Wayback: {pages * 150000:,} archived pages read, {len(found):,} names so far")
+        if not key or not rows.strip() or pages >= 2000:
             break
     return found
 
@@ -237,101 +225,142 @@ def parse_time(value, default):
         return default
 
 
+def check_all(names, workers):
+    """Verify names against Ashby. Returns (ok: {lower: (slug, name)}, aliases, rejected, retry)."""
+    ok, aliases, rejected, retry = {}, set(), set(), []
+    if not names:
+        return ok, aliases, rejected, retry
+    log(f"  checking {len(names):,} name(s) against Ashby...")
+    done = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for cand, (result, slug, cname) in zip(names, pool.map(verify, names)):
+            done += 1
+            if done % 1000 == 0:
+                log(f"    {done:,}/{len(names):,} checked, {len(ok):,} real companies so far")
+            if result == "ok":
+                if cand.lower() != slug.lower():
+                    aliases.add(cand.lower())
+                ok.setdefault(slug.lower(), (slug, cname))
+            elif result == "no":
+                rejected.add(cand.lower())
+            else:
+                retry.append(cand)
+    return ok, aliases, rejected, retry
+
+
+def gather(sources_since, known, rejected, state_cursors):
+    """Collect names from every source. Returns {lower: name} not in known/rejected."""
+    candidates = {}
+    for name, key, fn in [("Wayback Machine", "wayback_from", from_wayback),
+                          ("Hacker News", "hn_from", from_hacker_news),
+                          ("GitHub job lists", None, lambda _since: from_github_lists())]:
+        since = sources_since(key)
+        try:
+            found = fn(since)
+            fresh = {c for c in found if c.lower() not in known and c.lower() not in rejected}
+            for c in fresh:
+                candidates.setdefault(c.lower(), c)
+            if key:
+                state_cursors[key] = True   # only advanced when the source worked
+            log(f"  {name}: {len(found):,} names seen, {len(fresh):,} not yet known"
+                + (f" (since {since:%Y-%m-%d})" if since else ""))
+        except Exception as e:
+            log(f"  {name}: skipped this time ({e}); will retry from the same point next run")
+    return candidates
+
+
+def write_rows(path, rows, mode, stamp):
+    with open(path, mode, encoding="utf-8") as f:
+        if mode == "w":
+            f.write(HEADER)
+        else:
+            f.write(f"# added {stamp} by update_companies.py\n")
+        for slug, cname in sorted(rows, key=lambda r: r[0].lower()):
+            f.write(f"{slug}\t{cname.replace(chr(9), ' ')}\n")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--full", action="store_true", help="rescan all sources from 2020 and recheck rejected names")
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--full", action="store_true", help="rescan all history and add anything missing")
+    mode.add_argument("--rebuild", action="store_true", help="build companies.tsv from scratch")
     ap.add_argument("--workers", type=int, default=6)
     args = ap.parse_args()
 
     t0 = time.time()
     run_started = datetime.now(timezone.utc)
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-    log(f"[{stamp}] Looking for new Ashby companies...")
     state = load_state()
-    rejected = set() if args.full else {r.lower() for r in state.get("rejected", [])}
-    aliases = {a.lower() for a in state.get("aliases", [])}   # names that resolved to a different board name
-    known = (known_slugs() if os.path.exists(COMPANIES) else set()) | aliases
+    fresh_start = args.full or args.rebuild
+    log(f"[{stamp}] " + ("Rebuilding the company list from scratch..." if args.rebuild
+                         else "Looking for new Ashby companies..."))
 
-    # 1. The community list: already verified, so new rows are added directly.
-    new_rows = {}
-    try:
-        for slug, name in from_upstream().items():
-            if slug.lower() not in known:
-                new_rows[slug.lower()] = (slug, name)
-        log(f"  community list: {len(new_rows)} new")
-    except Exception as e:
-        log(f"  community list: skipped ({e})")
+    old = known_slugs() if os.path.exists(COMPANIES) else set()
+    rejected = set() if fresh_start else {r.lower() for r in state.get("rejected", [])}
+    aliases = set() if args.rebuild else {a.lower() for a in state.get("aliases", [])}
+    known = set() if args.rebuild else old | aliases
 
-    # 2. Wayback, Hacker News and GitHub lists: candidates that need checking.
-    candidates = {}
-    cursors = {}
-    for name, key, fn in [("Wayback Machine", "wayback_from", from_wayback),
-                          ("Hacker News", "hn_from", from_hacker_news),
-                          ("GitHub job lists", None, lambda _since: from_github_lists())]:
-        since = FULL_FROM if args.full else parse_time(state.get(key), FIRST_RUN_FROM) if key else None
-        try:
-            found = fn(since)
-            fresh = {c for c in found if c.lower() not in known and c.lower() not in rejected
-                     and c.lower() not in new_rows}
-            for c in fresh:
+    def since(key):
+        if not key:
+            return None
+        return FULL_FROM if fresh_start else parse_time(state.get(key), FIRST_RUN_FROM)
+
+    worked = {}
+    candidates = gather(since, known, rejected, worked)
+    if not args.rebuild:
+        # Names that couldn't be checked last time (network trouble) get another go.
+        for c in state.get("retry", []):
+            if c.lower() not in known and c.lower() not in rejected:
                 candidates.setdefault(c.lower(), c)
-            if key:
-                cursors[key] = run_started.isoformat()   # only advanced when the source worked
-            log(f"  {name}: {len(found)} names seen, {len(fresh)} not yet known"
-                + (f" (since {since:%Y-%m-%d})" if since else ""))
-        except Exception as e:
-            log(f"  {name}: skipped this time ({e}); will retry from the same point next run")
 
-    # Names that couldn't be checked last time (network trouble) get another go.
-    for c in state.get("retry", []):
-        if c.lower() not in known and c.lower() not in rejected and c.lower() not in new_rows:
-            candidates.setdefault(c.lower(), c)
+    ok, new_aliases, new_rejected, retry = check_all(sorted(candidates.values()), args.workers)
+    aliases |= new_aliases
+    rejected |= new_rejected
 
-    # 3. Check each unknown name against Ashby.
-    checked = errors = 0
-    retry = []
-    if candidates:
-        log(f"  checking {len(candidates)} name(s) against Ashby...")
-        with ThreadPoolExecutor(max_workers=args.workers) as pool:
-            names = sorted(candidates.values())
-            for cand, (result, slug, cname) in zip(names, pool.map(verify, names)):
-                checked += 1
-                if result == "ok":
-                    if cand.lower() != slug.lower():
-                        aliases.add(cand.lower())
-                    if slug.lower() not in known and slug.lower() not in new_rows:
-                        new_rows[slug.lower()] = (slug, cname)
-                elif result == "no":
-                    rejected.add(slug.lower())
-                else:
-                    errors += 1
-                    retry.append(slug)
+    if args.rebuild:
+        if "wayback_from" not in worked:
+            sys.exit("The Wayback Machine couldn't be read, so the list was not rebuilt. Try again later.")
+        if len(ok) < MIN_REBUILD:
+            sys.exit(f"Only {len(ok)} companies confirmed; something went wrong, so the list was not replaced.")
+        write_rows(COMPANIES, ok.values(), "w", stamp)
+        found_keys = set(ok) | aliases
+        missed = sorted(old - found_keys)
+        log(f"  checking whether the {len(missed):,} previous entries we didn't find are still live...")
+        still_live, _, _, _ = check_all(missed, args.workers)
+        report = os.path.join(HERE, "rebuild_report.txt")
+        with open(report, "w", encoding="utf-8") as f:
+            f.write(f"Rebuild {stamp}: {len(ok)} companies confirmed from our own sources.\n")
+            f.write(f"Previous list: {len(old)}; found again: {len(old & found_keys)}; "
+                    f"not found by our sources: {len(missed)} ({len(still_live)} of them still live); "
+                    f"new: {len(set(ok) - old)}.\n\n")
+            f.write("Previous entries our sources didn't find but that are still live:\n")
+            f.write("".join(f"{slug}\t{name}\n" for slug, name in sorted(still_live.values())))
+        log(f"  previous list: {len(old):,}; found again: {len(old & found_keys):,}; "
+            f"not found by our sources: {len(missed):,} ({len(still_live):,} still live); "
+            f"new: {len(set(ok) - old):,} (details in rebuild_report.txt)")
+        added = ok
+    else:
+        added = {k: v for k, v in ok.items() if k not in known}
+        if added:
+            write_rows(COMPANIES, added.values(), "a" if os.path.exists(COMPANIES) else "w", stamp)
 
-    # 4. Save.
-    if new_rows:
-        if not os.path.exists(COMPANIES):
-            with open(COMPANIES, "w", encoding="utf-8") as f:
-                f.write(CREDIT)
-        with open(COMPANIES, "a", encoding="utf-8") as f:
-            f.write(f"# added {stamp} by update_companies.py\n")
-            for slug, cname in sorted(new_rows.values(), key=lambda r: r[0].lower()):
-                f.write(f"{slug}\t{cname.replace(chr(9), ' ')}\n")
-    state.update(cursors)
+    for key in worked:
+        state[key] = run_started.isoformat()
     state["rejected"] = sorted(rejected)
     state["retry"] = sorted(retry)
     state["aliases"] = sorted(aliases)
     state["last_run"] = run_started.isoformat()
-    state["last_added"] = len(new_rows)
+    state["last_added"] = len(added)
     save_state(state)
 
-    total = len(known - aliases) + len(new_rows)
-    names = ", ".join(r[1] for r in sorted(new_rows.values(), key=lambda r: r[1].lower())[:15])
-    log(f"[{datetime.now().strftime('%Y-%m-%d %H:%M')}] {len(new_rows)} new compan{'y' if len(new_rows) == 1 else 'ies'} "
-        f"added ({total} total) in {round(time.time() - t0)}s."
-        + (f" {errors} name(s) couldn't be checked and will be retried." if errors else "")
-        + (f"\n  New: {names}{' …' if len(new_rows) > 15 else ''}" if new_rows else "")
-        + ("\n  Their jobs are fetched on the next refresh." if new_rows else ""))
-
+    total = len(ok) if args.rebuild else len(old) + len(added)
+    names = ", ".join(r[1] for r in sorted(added.values(), key=lambda r: r[1].lower())[:15])
+    log(f"[{datetime.now().strftime('%Y-%m-%d %H:%M')}] "
+        + (f"Company list rebuilt: {total:,} companies" if args.rebuild else
+           f"{len(added)} new compan{'y' if len(added) == 1 else 'ies'} added ({total:,} total)")
+        + f" in {round(time.time() - t0)}s."
+        + (f" {len(retry)} name(s) couldn't be checked and will be retried." if retry else "")
+        + (f"\n  New: {names}{' …' if len(added) > 15 else ''}" if added and not args.rebuild else ""))
 
 if __name__ == "__main__":
     try:
