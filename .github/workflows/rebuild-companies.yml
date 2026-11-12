@@ -29,14 +29,33 @@ jobs:
         with:
           python-version: "3.12"
 
+      # The full Wayback scan of a big platform (Greenhouse) can take longer than one run allows, so its
+      # progress is kept between runs. Running this workflow again continues where the last run stopped.
+      - name: Restore Wayback scan progress from earlier runs
+        uses: actions/cache/restore@v4
+        with:
+          path: scraper/wayback_cache
+          key: wayback-${{ github.run_id }}
+          restore-keys: wayback-
+
       - name: Rebuild the company list from scratch
-        run: python3 -u scraper/update_companies.py --rebuild --platforms "${{ inputs.platforms }}" --workers 10
+        timeout-minutes: 340
+        run: python3 -u scraper/update_companies.py --rebuild --platforms "${{ inputs.platforms }}" --workers 10 --wayback-minutes 200 --wayback-total-minutes 285
+
+      - name: Keep Wayback scan progress for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: scraper/wayback_cache
+          key: wayback-${{ github.run_id }}
 
       - name: Save it to the company-rebuild branch for review
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
           git checkout -b company-rebuild
           git add -A scraper
+          git diff --cached --quiet && { echo "No list changed this run."; exit 0; }
           git commit -m "Rebuild company list from the Wayback Machine and other public sources"
           git push -f origin company-rebuild

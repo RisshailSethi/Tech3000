@@ -4,3 +4,4 @@ jobs.db-*
 site/data/*.json
 __pycache__/
 .DS_Store
+scraper/wayback_cache/

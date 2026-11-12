@@ -6,6 +6,8 @@ Usage:
     python3 update_companies.py --full                   # rescan every source's full history, add anything missing
     python3 update_companies.py --rebuild                # build the lists from scratch
     python3 update_companies.py --rebuild --platforms greenhouse,lever   # only some platforms
+    python3 update_companies.py --rebuild --wayback-minutes 100          # stop scanning after 100 min per
+                                                                         # platform; the next run continues
 
 Lists (board name<TAB>company name): companies.tsv (Ashby), greenhouse.tsv, lever.tsv.
 
@@ -160,14 +162,45 @@ def links_in(platform, text):
 SHARDS = "0123456789abcdefghijklmnopqrstuvwxyz"   # first character of the board name
 
 
-def wayback_shard(platform, shard_prefix, since):
-    """All board names under one shard of one domain, e.g. 'boards.greenhouse.io/a'. Raises on failure."""
-    found, key, pages = set(), None, 0
-    while True:
+WAYBACK_CACHE = os.path.join(HERE, "wayback_cache")
+WAYBACK_DEADLINE = [None]   # time.time() after which no new Wayback pages are requested (--wayback-minutes)
+
+
+def load_cache(platform, since):
+    """Saved progress from earlier runs over the same history, so a long scan can continue where it stopped."""
+    try:
+        with open(os.path.join(WAYBACK_CACHE, f"{platform}.json"), encoding="utf-8") as f:
+            cache = json.load(f)
+        if cache.get("since") == since.strftime("%Y%m%d"):
+            return cache
+    except (OSError, ValueError):
+        pass
+    return {"since": since.strftime("%Y%m%d"), "shards": {}}
+
+
+def save_cache(platform, cache):
+    os.makedirs(WAYBACK_CACHE, exist_ok=True)
+    path = os.path.join(WAYBACK_CACHE, f"{platform}.json")
+    with open(path + ".tmp", "w", encoding="utf-8") as f:
+        json.dump(cache, f, separators=(",", ":"))
+    os.replace(path + ".tmp", path)
+
+
+def out_of_time():
+    return WAYBACK_DEADLINE[0] is not None and time.time() > WAYBACK_DEADLINE[0]
+
+
+def wayback_shard(platform, shard_prefix, since, entry, save):
+    """Reads board names under one shard of one domain, e.g. 'boards.greenhouse.io/a', into entry
+    ({"names", "resume", "done"}), saving after every page. Stops early when time runs out; raises on failure."""
+    names = set(entry.get("names", []))
+    while not entry.get("done"):
+        if out_of_time():
+            return
         params = {"url": shard_prefix, "matchType": "prefix", "fl": "original", "collapse": "urlkey",
-                  "limit": "100000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
-        if key:
-            params["resumeKey"] = key
+                  "limit": "50000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
+        if entry.get("resume"):
+            params["resumeKey"] = entry["resume"]
         status, body = get(WAYBACK, params, timeout=300, tries=5, backoff=30)
         if status != 200:
             raise RuntimeError(f"HTTP {status}" if status else "couldn't connect")
@@ -175,33 +208,44 @@ def wayback_shard(platform, shard_prefix, since):
         for line in rows.splitlines():
             name = name_from_url(platform, line)
             if name:
-                found.add(name)
-        key = rest.strip() or None
-        pages += 1
-        if not key or not rows.strip() or pages >= 500:
-            return found
+                names.add(name)
+        entry["resume"] = rest.strip() or None
+        entry["pages"] = entry.get("pages", 0) + 1
+        entry["done"] = not entry["resume"] or not rows.strip()
+        entry["names"] = sorted(names)
+        save()
         time.sleep(1)
 
 
 def from_wayback(platform, since):
     """Returns (names, complete). The archive is read in small pieces (one per first character),
-    because one query over a whole domain is too heavy for the Wayback Machine. A few failed pieces
-    are tolerated; more than 10% failing raises."""
-    found, failed, total = set(), [], 0
+    because one query over a whole domain is too heavy for the Wayback Machine. Progress is saved
+    to wayback_cache/, so a scan cut short (failures or --wayback-minutes) continues next run."""
+    cache = load_cache(platform, since)
+    save = lambda: save_cache(platform, cache)   # noqa: E731
+    found, failed, unread, total = set(), [], 0, 0
     for prefix in PLATFORMS[platform]["wayback"]:
+        t = time.time()
         for ch in SHARDS:
             total += 1
+            entry = cache["shards"].setdefault(prefix + ch, {})
             try:
-                found |= wayback_shard(platform, prefix + ch, since)
+                wayback_shard(platform, prefix + ch, since, entry, save)
+                if not entry.get("done"):
+                    unread += 1
             except RuntimeError as e:
                 failed.append(f"{prefix}{ch} ({e})")
-            time.sleep(1)
-        log(f"    {prefix}: {len(found):,} names so far")
-    if len(failed) > 0.1 * total:
+            found |= set(entry.get("names", []))
+        pages = sum(cache["shards"].get(prefix + ch, {}).get("pages", 0) for ch in SHARDS)
+        log(f"    {prefix}: {len(found):,} names so far ({pages:,} pages read in total, "
+            f"{round(time.time() - t)}s this run)")
+    if not found and failed:
         raise RuntimeError(f"{len(failed)} of {total} pieces failed, e.g. {failed[0]}")
     if failed:
         log(f"    {len(failed)} of {total} pieces couldn't be read: {', '.join(failed[:5])}")
-    return found, not failed
+    if unread:
+        log(f"    ran out of time with {unread} of {total} pieces unfinished; the next run continues from here")
+    return found, not failed and not unread
 
 
 def from_hacker_news(platform, since):
@@ -444,7 +488,11 @@ def run_platform(platform, args, st, stamp, run_started):
             log(f"  The Wayback Machine couldn't be read, so the {label} list was not rebuilt.")
             return 0
         if len(ok) < MIN_REBUILD[platform]:
-            log(f"  Only {len(ok)} {label} companies confirmed; something went wrong, so the list was not replaced.")
+            if "wayback_from" not in worked:
+                log(f"  Only {len(ok)} {label} companies confirmed so far, from an unfinished scan; the list "
+                    f"will be written once a later run gets further (progress is saved).")
+            else:
+                log(f"  Only {len(ok)} {label} companies confirmed; something went wrong, so the list was not replaced.")
             return 0
         write_rows(platform, ok.values(), "w", stamp)
         found_keys = set(ok) | aliases
@@ -487,8 +535,14 @@ def main():
     mode.add_argument("--rebuild", action="store_true", help="build the lists from scratch")
     ap.add_argument("--platforms", default=",".join(PLATFORMS), help="e.g. greenhouse,lever")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--wayback-minutes", type=float, default=None,
+                    help="stop reading the Wayback Machine after this many minutes per platform "
+                         "(progress is saved, and the next run continues)")
+    ap.add_argument("--wayback-total-minutes", type=float, default=None,
+                    help="and after this many minutes across all platforms together")
     args = ap.parse_args()
-    platforms = [p.strip() for p in args.platforms.split(",") if p.strip() in PLATFORMS]
+    wanted = {p.strip() for p in args.platforms.split(",")}
+    platforms = [p for p in ("ashby", "lever", "greenhouse") if p in wanted]   # smallest first
 
     t0 = time.time()
     run_started = datetime.now(timezone.utc)
@@ -497,6 +551,9 @@ def main():
     state = load_state()
     added = 0
     for platform in platforms:
+        limits = [time.time() + 60 * args.wayback_minutes if args.wayback_minutes else None,
+                  t0 + 60 * args.wayback_total_minutes if args.wayback_total_minutes else None]
+        WAYBACK_DEADLINE[0] = min((x for x in limits if x), default=None)
         added += run_platform(platform, args, state[platform], stamp, run_started)
         save_state(state)   # after each platform, so a later failure keeps earlier progress
     state["last_run"] = run_started.isoformat()
