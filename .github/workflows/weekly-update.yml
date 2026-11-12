@@ -1,7 +1,7 @@
 name: Weekly update
 
-# Every Monday at 14:00 UTC (6am PST). Fetching every Ashby, Greenhouse and Lever board takes
-# about an hour or two, so fresh jobs are up by 9am PST.
+# Every Monday at 14:00 UTC (6am PST): up to an hour looking for new companies, then fetching every
+# Ashby, Greenhouse and Lever board, so fresh jobs are up by 9am PST.
 # You can also run it any time from the Actions tab: "Weekly update" -> "Run workflow".
 on:
   schedule:
@@ -31,10 +31,27 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Reading the Wayback Machine's index is slow for big platforms, so the search for new companies
+      # gets 45 minutes each week; an unfinished scan is saved and continues the next week.
+      - name: Restore last week's unfinished company search
+        uses: actions/cache/restore@v4
+        with:
+          path: scraper/wayback_cache
+          key: weekly-wayback-${{ github.run_id }}
+          restore-keys: weekly-wayback-
+
       - name: Find companies new to Ashby, Greenhouse and Lever
         # A problem here shouldn't stop the weekly jobs refresh.
         continue-on-error: true
-        run: python3 -u scraper/update_companies.py
+        timeout-minutes: 75
+        run: python3 -u scraper/update_companies.py --wayback-total-minutes 45
+
+      - name: Keep the company search's progress for next week
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: scraper/wayback_cache
+          key: weekly-wayback-${{ github.run_id }}
 
       - name: Fetch every company's jobs
         run: python3 -u scraper/ingest.py --db jobs.db --no-descriptions --workers 10
