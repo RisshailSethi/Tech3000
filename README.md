@@ -16,7 +16,7 @@ I'm Risshail Sethi, a data and analytics professional based in Vancouver and a U
 
 Every Monday a GitHub Actions workflow (`.github/workflows/weekly-update.yml`) runs these steps:
 
-1. `scraper/update_companies.py` finds companies new to Ashby. It looks at Wayback Machine archives, Hacker News hiring posts, public new-grad and internship lists on GitHub, and a community list of Ashby companies. It checks each one against Ashby and commits the updated `scraper/companies.tsv`.
+1. `scraper/update_companies.py` finds companies new to Ashby. It looks at the Wayback Machine's archive of every `jobs.ashbyhq.com` page, Hacker News hiring posts, and public new-grad and internship lists on GitHub. It checks each one against Ashby and commits the updated `scraper/companies.tsv`.
 2. `scraper/ingest.py` fetches every company's current jobs. Closed jobs drop off.
 3. `scraper/build_data.py` writes the site's data (`site/data/jobs.json`).
 4. The static site in `site/` is published to GitHub Pages.
@@ -41,4 +41,5 @@ python3 -m http.server -d site 8000      # open http://127.0.0.1:8000
 
 - This is an unofficial index and isn't affiliated with Ashby or any company listed. Job data comes from each company's public Ashby job board, and postings marked unlisted are skipped.
 - Experience level is inferred from job titles, years from descriptions, and company size from the number of open roles on Ashby. Check the posting for the details.
-- The company list started from [AnshumanAtrey/ashby-jobs-search](https://github.com/AnshumanAtrey/ashby-jobs-search) (MIT License, Copyright (c) 2026 Anshuman Atrey).
+- The company list is built from public sources by `scraper/update_companies.py`. To rebuild it from scratch, run **Actions → Rebuild company list**; the result lands on a `company-rebuild` branch for review before you merge it.
+- The company-discovery approach is adapted from [AnshumanAtrey/ashby-jobs-search](https://github.com/AnshumanAtrey/ashby-jobs-search) (MIT License, Copyright (c) 2026 Anshuman Atrey).

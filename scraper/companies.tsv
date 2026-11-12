@@ -1,603 +1,48 @@
-# Community list of Ashby job boards: board name<TAB>company name.
-# Source: https://github.com/AnshumanAtrey/ashby-jobs-search (src/companies.tsv)
-# MIT License, Copyright (c) 2026 Anshuman Atrey. Refresh with: python3 update_companies.py
-# Ashby job boards, updated 2026-09-30, 3,814 boards (3,478 hiring, 61,272 open jobs that day).
-# Board name<TAB>company name. Built by scripts/refresh_companies.py from the Wayback Machine index of jobs.ashbyhq.com, Hacker News hiring posts and public job lists, each board checked live.
+# Ashby job boards: board name<TAB>company name.
+# Built by update_companies.py from the Wayback Machine, Hacker News and public job lists;
+# every entry was checked against its live Ashby board.
 0g	0g Labs
 0x	0x
 10xteam	10x Team
+120ft-factory	120ft Factory AB
 1bios	1bios
 1mind	1mind
 1password	1Password
 1st Formations	1st Formations
+1uphealth	1upHealth
 1x	1X
 30mpc	30 Minutes to President's Club
-3E	3E
+32e9b6c7-5cec-4ac4-ad26-09cac1bff657	Seismic
 3commas	3Commas
+3E	3E
 3imembers	3i Members
+3ive	3ive
 3y-health	3Y Health
 42dot	42dot
 5bluesoftware	5Blue Software
 7Gen	Seven Gen
 80000hours	80,000 Hours
-805title	805Title
+805title	805title
 8090 Solutions Inc	8090 Solutions Inc
+829studios	829 Studios
 8fleet-inc	8Fleet Inc.
 8returns	8returns GmbH
 8vc	8VC
 9-mothers	9 Mothers
 9fin	9fin
+a-place-for-mom	A Place for Mom
+a-team	A.Team
 A1 Garage Door Service	A1 Garage Door Service
-AION Biosciences	AION Biosciences
-APEXX	APEXX Global
-ARQ	ARQ
-ATG	ATG
+a16z-new-media	a16z New Media
+aacigroup	AACI Group, Inc.
+Aaron-School	Aaron School
+aaru	Aaru
+abacum	Abacum
+abby-care	Abby Care
 Abe	Abe
 Abode Money	Abode Money
 Abound	Abound
 Abridge	Abridge
-Accord	Accord
-Acorns	Acorns
-Adaptive	Adaptive
-AeroVect	AeroVect
-AfterQuery	AfterQuery
-Agent	Agent
-AgentMail	AgentMail
-Agentis-Capital-Advisors	Agentis Capital Advisors
-Aios	AIOS  (YC W20/S21)
-Ajax	Ajax
-AlephAlpha	Aleph Alpha
-Allswell	Allswell
-Almabase	Almabase
-Altis Labs	Altis Labs
-Amari	Amari
-Ambral	Ambral
-Ambrosia-Energy	Ambrosia Energy
-American Terawatt	American Terawatt
-Ampersand	Ampersand
-Amplo	Amplo
-Anagram	Anagram
-Anima	Anima
-Anon	Anon
-Antares	Antares
-Anthos Capital	Anthos Capital
-Aphex	Aphex
-Apiphany	Apiphany
-Applied Compute	Applied Compute
-Aquant	Aquant
-Arbor	Arbor
-Arch	Arch
-Archy	Archy
-Arlo	Arlo
-Armory	Armory
-Ashby	Ashby
-Aspora	Aspora
-AstralisFoundation	Astralis Foundation
-Astro-Mechanica	Astro Mechanica
-Atolio	Atolio
-Augustus	Augustus
-Authorium	Authorium
-Aven	Aven
-Away	Away
-BIOptimizers	BIOptimizers
-Base	Base
-Bastion	Bastion
-Baton	Baton
-Ben	Ben
-Bevel	Bevel
-Bifrost	Bifrost AI
-Bioscope AI	Bioscope AI
-Blackpoint Cyber	Blackpoint Cyber
-Blacksmith	Blacksmith
-Blacksmith Agency	Blacksmith Agency
-Blockworks	Blockworks
-Blossom-Health	Blossom Health
-Blue-Raincoat-Music	Blue Raincoat Music
-Boom	Boom
-Boost	Boost
-Bounce	Bounce
-Braiins	Braiins
-Braintrust	Braintrust
-BranchInsurance	Branch Financial, LLC
-Brodie Rec League	Brodie Rec League
-Brookwood	Brookwood
-C1	C1
-CUBE	CUBE
-Cambly	Cambly
-Capable	Capable Labs
-Cape	Cape
-Catio	Catio
-Cedar	Cedar
-Cello	Cello
-ChartHop	ChartHop
-Cheiron	Cheiron
-Chestnut	Chestnut
-Chief	Chief
-Chromatic	Chromatic
-Cirrus Systems	Cirrus Systems, Inc.
-Citizen	Citizen
-Citizen Health	Citizen Health
-Civic Roundtable	Civic Roundtable
-ClassDojo	ClassDojo
-Clera	Clera
-Cleric	Cleric
-Clerk	Clerk
-ClinicallyAI	Clinically AI
-Clipbook	Clipbook
-Close	Close
-CloudZero	CloudZero
-CoachHub Careers	CoachHub
-Coalesce	Coalesce
-CodaMetrix	CodaMetrix
-Coframe	Coframe
-Coinflow	Coinflow
-Coinhako	Coinhako
-Commons	Commons
-Commure	Commure
-Compound Jobs	Twenty Labs
-Conception	Conception
-Conduit	Conduit
-Convey	Convey (formerly Message Broadcast)
-Coperniq	Coperniq Inc.
-CorePlan	CorePlan
-CourseCareers	CourseCareers
-Coworker	Coworker.ai
-Crusoe	Crusoe
-Cyberhaven	Cyberhaven
-CylinderHealth	Cylinder Health
-Dapster	Dapster
-Dataleap	Dataleap
-DatologyAI	DatologyAI
-DealRoom Inc	DealRoom Inc
-Deel	Deel
-DeepL	DeepL
-Deepgram	Deepgram
-Deepnote	Deepnote
-DehazeLabs	Dehazelabs
-Delphina	Delphina
-Diagrid	Diagrid
-DimRed	DimRed
-Discovery-Loop	Discovery Loop
-Dispatch	Dispatch
-Distyl	Distyl AI
-DivineResearch	Divine
-Dominion Dynamics	Dominion Dynamics
-Doppel	Doppel
-Doppler	Doppler
-DoubleZero	DoubleZero
-DubClub	DubClub
-EON	EON
-EYT	Extend Your Team
-Easygenerator	Easygenerator
-Edgesource Corporation	Edgesource Corporation
-Edison Scientific	Edison Scientific
-Egra	Egra
-Electric	Electric
-ElevenLabs	ElevenLabs
-EliseAI	EliseAI
-Empo Health	Empo Health
-Endgame	Endgame
-Envoy	Envoy
-Eon Systems	Eon Systems
-Epistemix	Epistemix
-Eragon	Eragon
-Escape	Escape Technologies
-Etched	Etched
-EverOps	EverOps
-Evolve	Evolve AI Ltd
-Evvy	Evvy
-FINNY	FINNY
-FLORA	FLORA
-FORDEFIJobs.ashbyhq.com	FORDEFI
-FSH	FSH Technologies
-FURTHER	FURTHER
-Fab2	Fab2
-Felix	Felix
-Ferovinum	Ferovinum Limited
-Fiducial	Fiducial
-FirstPrinciples	FirstPrinciples
-FleetWorks	FleetWorks
-Fleetcraft	Fleetcraft
-Float	Float
-FloatMe	FloatMe
-Flock Safety	Flock
-Flowtel	Flowtel
-FlutterFlow	FlutterFlow
-Foresight Diagnostics Inc.	Foresight Diagnostics Inc.
-Fort Health	Fort Health
-Forward Financing	Forward Financing
-Foundational Industries	Foundational Industries
-Fourier	Fourier
-Frameplay	Frameplay
-Fuel-Cycle	Fuel Cycle
-Fulcrum	Fulcrum
-Fuse	Fuse
-G2	G2
-GPTZero	GPTZero
-Gaia Health	Gaia Health
-Gardens	Gardens Interactive
-Geoforce	Geoforce
-GigaML	Giga
-GitBook	GitBook
-GoVenti	Venti Technologies
-Goldsky	Goldsky
-GotPhoto	GotPhoto
-GovEagle	GovEagle
-GovSignals	GovSignals
-GovWell	GovWell
-Graphitehq	Graphite
-GravityClimate	Gravity
-Gray Swan AI	Gray Swan AI
-Greenboard	Greenboard
-Gridium	Gridium
-Grindr LLC	Grindr
-GrowthX AI	GrowthX AI
-Gruntwork	Gruntwork
-Gumloop	Gumloop
-HUMAN	HUMAN
-Haast	Haast
-Hamming AI	Hamming AI
-Hang	Hang
-Harmonic	Harmonic
-Harrison.ai	Harrison.ai
-Hartbeat	Hartbeat
-Hatch	Hatch
-Headstart	Headstart
-HealthMatch	HealthMatch
-Healthtech-1	Healthtech-1
-Higharc	Higharc
-HighlightTA	HighlightTA
-Hippocratic AI	Hippocratic AI
-Homebound	Homebound
-Honey Homes	Honey Homes
-Horizon	Horizon Institute for Public Service
-Hubs.is	Hubs.is
-Human Intuition	Human Intuition
-Humanly	Humanly
-Hyperbound	Hyperbound
-Hyperliquid Labs	Hyperliquid Labs
-IT Labs	IT Labs
-Ideal Dental	Ideal Dental
-Ideogram	Ideogram
-Inception Point AI	Inception Point AI
-Inclined	Inclined
-Infinite Lambda	Infinite Lambda
-Influxdata	InfluxData
-Injective	Injective
-InoviaCapital	Inovia Capital
-InscribeAI	Inscribe
-Inspectiv	Inspectiv
-Intelligence-Security-Laboratories	Intelligence Security Laboratories
-Intellistack	Intellistack
-Interrahealth	Interra Health
-Irregular	Irregular
-Jasper AI	Jasper
-Jellyfish	Jellyfish
-Jerry.ai	Jerry.ai
-Joyteractive	Joyteractive
-Juicebox	Juicebox
-Jump	Jump
-Junction	Junction
-Karman Industries	Karman Industries
-Kastle	Kastle
-Keragon	Keragon Inc
-Keyrock	Keyrock
-Kingdom	Kingdom
-Kirin	Kirin
-Known	Known
-Kognitos	Kognitos
-Kojo	Kojo
-Kombo	Kombo
-Konnected	Konnected
-Kota	Kota
-Koyfin	Koyfin
-Kueski	Kueski
-Kustomer	Kustomer
-LAI	Lead Allies Inc
-LIV-Golf	LIV Golf
-Lambda	Lambda
-Lance	Lance
-LatchBio	LatchBio
-Latent Defense	Latent Defense
-Latitud	Latitud
-LawDepot	LawDepot
-LeanData	LeanData
-LeanLayer	Lean Layer
-LeanTech	Lean Technologies
-LevHaolam	Lev Haolam World Ltd.
-Level-AI	Level AI
-Levelpath	Levelpath
-Lido.fi	Lido
-LifeLabs Learning	LifeLabs Learning
-Lightdash	Lightdash
-Lightfield	Lightfield
-Lime	Lime
-Linkup	Linkup
-Local Infusion	Local Infusion
-Lorikeet	Lorikeet
-Luminary	Luminary
-Lunon	Lunon
-M-KOPA	M-KOPA
-MSquared	MSquared
-MUBI	MUBI
-MUI	MUI
-Magical	Magical
-Mapbox	Mapbox
-Marathon Fusion	Marathon Fusion
-MarcoHire	Marco
-Mastra	Mastra
-MaticRobots	Matic
-Maxima	Maxima
-Meadow	Meadow
-MediCircle	MediCircle
-Merge Labs	Merge Labs
-Mintlify	Mintlify
-Molg	Molg
-Moonlake	Moonlake
-MotherDuck	MotherDuck
-Move Concierge	Move Concierge
-Moxie	Moxie
-Multitude Insights	Multitude Insights
-Mutiny	Mutiny
-NOCTOVO	NOCTOVO
-NPX	Nuclear Promise X
-Nango	Nango
-Nash	Nash
-NationGraph	NationGraph
-Natter	Natter
-Nautilus Biotechnology	Nautilus Biotechnology
-Neon	Neon
-Neon Money Talks	Neon
-New Story	New Story
-NewOrbit	NewOrbit Space
-NextPatient	NextPatient
-Niural	Niural
-Nivoda	Nivoda
-NormalComputing	Normal Computing Corporation
-OBRIO	OBRIO
-OXIO	OXIO Corporation
-Ontic	Ontic
-Opal	Opal Security
-Opal-OS	Opal
-OpenHands	OpenHands
-OpenSea	OpenSea
-OpsLevel	OpsLevel
-Opus1	Opus1
-Oso	Oso
-Ostrom	Ostrom
-OurRitual	OurRitual
-Outpost	Outpost
-Outrival	Outrival
-Outsmart	Outsmart
-Overjet	Overjet
-P-1 AI	P-1 AI
-PACELoanGroup	PACE Loan Group
-PAR Technology	PAR Technology
-PRISM	PRISM
-Pagos	Pagos
-Panoptyc	Panoptyc
-Paradigm	Paradigm
-Paragon	Paragon
-Parkade	Parkade
-Passthrough	Passthrough
-PaveBank	Pave Bank
-PaxosLabs	Paxos Labs
-Payscale	Payscale
-PeakMetrics	PeakMetrics
-Pear-VC	Pear VC
-Pearmill	Pearmill
-Pelico	Pelico
-Pemberton	Pemberton
-Perchwell	Perchwell
-Perk	Perk
-Perplexity	Perplexity
-Phil	PHIL
-Pivot	Pivot
-PlantingSpace	PlantingSpace
-Plaud	Plaud
-Playbook	Playbook
-Playground	Playground
-Playground Global	Playground Global
-Playlab	Playlab
-Pocket Worlds	Pocket Worlds
-Poetiq	Poetiq
-PoggioLabs	Poggio Labs
-Point	Point
-PointOne	PointOne
-Post	Post.
-Powerlattice	Powerlattice Technologies Inc.
-Preference-Model	Preference Model
-Prima Mente	Prima Mente
-PrimeIntellect	Prime Intellect
-Profound	Profound
-Promise	Promise
-Prompt	Prompt
-Prophet Tech Pty Ltd	Prophet Tech Pty Ltd
-Prospyr	Prospyr
-Protex AI	Protex AI
-ProvenirInc	Provenir Inc
-ProximaAI	Proxima
-Pulsora Inc	Pulsora, Inc.
-Pyyne	Pyyne
-QAWolf	QA Wolf
-REGENT	REGENT
-RWA.xyz	RWA.xyz
-Railway	Railway
-Rasa	Rasa
-Reaktor	Reaktor
-Rebecca-School	Rebecca School
-Recall	Recall
-Recurrency	Recurrency
-Red6	Red 6
-Redesign Health	Redesign Health
-Redis	Redis
-ReflexRobotics	Reflex Robotics
-Reka	Reka
-ReklameHealth	ReKlame Health
-Remedy Scientific	Remedy Scientific
-Renterra	Renterra
-Replicant	Replicant
-Reprise Financial	Reprise Financial
-Reset	Reset
-Resilience Care	Resilience Care
-ResolveAI	ResolveAI
-RevenueVessel	Revenue Vessel
-Rhythms	Rhythms
-Ricursive Intelligence	Ricursive Intelligence
-Ridealso	ALSO
-Roadrunner	Roadrunner
-Rogo	Rogo
-Root Financial	Root Financial
-Rose Rocket	Rose Rocket
-Rothys	Rothy's
-Rox-Data-Corp	Rox Data Corp
-Runway	cfo.ai
-SASH	Singapore AI Safety Hub
-SKELAR-Platform	SKELAR Platform
-SageOx	SageOx
-Sahara	Sahara
-SalesPatriot	SalesPatriot
-Sandstone	Sandstone
-Scale Army Careers	Scale Army Careers
-Scholarly	Scholarly
-Sciforium	Sciforium
-ScribdInc	Scribd, Inc.
-SearchApi	SearchApi
-SearchStax	SearchStax
-Second-Front-Systems	Second Front Systems
-SecondDinner	Second Dinner
-Sentradel	Sentradel
-Serval	Serval
-ServedWithHonor	Served With Honor
-Shasqi	Shasqi
-ShiftKey	ShiftKey
-ShortStory	Short Story
-Sierra	Sierra
-SigNoz	SigNoz
-SignalFire	SignalFire
-Silver	Silver.dev
-Sine Engineering	Sine Engineering
-Siro	Siro
-SiteMinder	SiteMinder
-Sitemate	Sitemate
-Skalar	Skalar
-Skip	Skip
-SkyLink	SkyLink
-Skydropx	Skydropx - Frenet
-SlingshotAI	Slingshot AI
-Snappy	Snappy
-SoLo Funds	SoLo Funds
-Socotra	Socotra
-Solace	Solace
-Solana Foundation	Solana Foundation
-Solvd	Solvd
-Sona	Sona
-Sondermind	SonderMind
-Sonio	Sonio
-Sorare	Sorare
-Span.app	Span
-Speakeasy	Speakeasy
-Speckle	Speckle
-Sphinx	Sphinx
-Stand	Stand
-StandInsurance	Stand Insurance
-StandardBots	Standard Bots
-Staycation	Staycation
-Steadily	Steadily
-Stepful	Stepful
-Stony Creek Homes	Stony Creek Homes
-Stora	Stora
-Straia	Straia
-Strava	Strava
-Stride Build	Stride Build
-Sui Foundation	Sui Foundation
-Suite-Studios	Suite Studios
-SunnyData	SunnyData
-Superhuman Platform Inc	Superhuman
-Swoop	Swoop Technologies
-Symmetry	Symmetry AI
-Syndica	Syndica
-Synergy Pet Group	Synergy Pet Group
-Tabs	Tabs
-Talos-Trading	Talos
-TaptapSend	Taptap Send
-Taste-Labs	Taste Labs
-Technimove	Technimove
-Technitask	Technitask
-Tembo-Health	Tembo Health
-Tempo	Tempo
-TensorWave	TensorWave
-TerraFirma-Inc	TerraFirma
-Terranova	Terranova
-The Agency Fund	The Agency Fund
-The Browser Company	The Browser Company
-The Job Sauce	The Job Sauce
-The Zebra	The Zebra
-The-Flex	The Flex
-Theori	Theori
-TheyDo	TheyDo
-ThinkingMachines	Thinking Machines Lab
-Tides	Tides Network
-TigerData	Tiger Data
-Tillster	Tillster
-Toku	Toku
-TonicAI	Tonic AI
-Tools for Humanity	Tools for Humanity
-Transfr	Transfr
-Tremendous	Tremendous
-Trenchant	Trenchant
-Trexo Robotics	Trexo Robotics
-Trunk Tools	Trunk Tools, Inc.
-TwoStepTx	TwoStep Therapeutics
-UHP-UnlockHumanPotential	UHP (Unlock Human Potential)
-US Health Partners	US Health Partners
-Uberall	Uberall
-Unblocked	Unblocked
-Union	Union.ai
-Unlearn	Unlearn
-Unwrap	Unwrap
-UpCodes	UpCodes
-VITL	VITL
-VLogic	VLogic
-VREY	VREY
-Valcre	Valcre
-Valon	Valon Tech
-Varick-Agents	Varick Agents
-Verne Robotics	Verne Robotics
-Vetcove	Vetcove
-Vibrant Planet	Vibrant Planet
-Vic.ai	Vic.ai
-Vidmob	Vidmob
-Viz.ai	Viz.ai
-Vogel	Vogel
-Vori	Vori
-Voxel	Voxel
-Voya Energy	Voya Energy
-Vultr	Vultr
-Vytalize Health	Vytalize Health
-WA.Technology	WA.Technology
-WON.ai	WON
-WRITER	WRITER
-Watershed	Watershed
-Winona	Winona
-Wisp	Wisp
-Wordly.ai Careers	Wordly.ai
-WunderGraph	WunderGraph, Inc.
-XDOF	XDOF
-XMTP Labs	XMTP Labs
-Zania	Zania
-Zello	Zello
-Zeromark	Zeromark
-Zip Security	Zip Security
-Zircuit	Zircuit
-a-place-for-mom	A Place for Mom
-a-team	A.Team
-a16z-new-media	a16z New Media
-a37	a37
-aacigroup	AACI Group, Inc.
-aaru	Aaru
-abacum	Abacum
-abby-care	Abby Care
 absci	Absci
 absentia-labs	Absentia Labs
 absorblms	Absorb
@@ -607,63 +52,88 @@ abusix	Abusix
 academia	Academia.edu
 acai	Acai Travel
 access	Access Destination Services
+Accord	Accord
 accurx	Accurx
 acd	AIA Contract Documents
-ace-1-media	Ace 1 Media
+aceve	Aceve
 achilleshr	Achilles
 achira	Achira
 aclima	Aclima, Inc.
+Acorns	Acorns
 acquird	Acquird.io
 acquisition	Acquisition.com
+act-security	Act Security
 activesite	Active Site
 adapt	Adapt API
 adaption	adaption
+Adaptive	Adaptive
+adaptive-innovations	Adaptive Innovations
 adaptivesecurity	Adaptive Security
+adapty-io	Adapty.io
 adaptyv	Adaptyv
 addi	Addi
 additiveai	Additive AI
 adelphi-ai	Adelphi
+adexis	Adexis
 aditude	Aditude
+adjoe	adjoe
 adonis	Adonis
 adthena	Adthena
 aduro-advisors	Aduro Advisors
 advanced-systems-group	Advanced Systems Group
 aegis-ai	Aegis AI
+AeroVect	AeroVect
 aerovy	Aerovy
 aescape	Aescape
 afference	Afference Inc
 affinity.co	Affinity
+AfterQuery	AfterQuery
+Agave	Agave
 agavegames	Agave Games
+Agent	Agent
 agentio	Agentio
+Agentis-Capital-Advisors	Agentis Capital Advisors
+AgentMail	AgentMail
 agi-inc	AGI, Inc.
+agility.io	Agility IO
+agzen	AgZen
 aiand	ai&
 aibidia	Aibidia
 aida	Aida
 aidigest	AI Digest
 aidkit	AidKit
+aim	AIM
 aim4hire	Aim4Hire
+AION Biosciences	AION Biosciences
+aios	AIOS
 aiprise	AiPrise
 airapps	Air Apps
 airbound	Airbound
 airbyte	Airbyte
+aire	Aire
 airgarage	AirGarage
 airgoods	Airgoods
 airops	AirOps
 airspace-intelligence.com	ASI
+airspeed	Airspeed
 airtasker	Airtasker
 airwallex	Airwallex
 aisle	Aisle
+aistudio	AiStudio Artificial Intelligence Technologies Ltd
 aiuc	Artificial Intelligence Underwriting Company
 aiwyn	Aiwyn
+Ajax	Ajax
+aka	aka (fka mem protocol)
 akasa	AKASA
 akur8	Akur8
 alan	Alan
 alaro	Alaro
 alcazar-energy	Alcazar Energy
+Alchemi	Alchemi
 alchemy	Alchemy
-alden	Alden Labs
 alembic	Alembic
 aleph	Aleph
+AlephAlpha	Aleph Alpha
 alexai	Alex AI
 algo1	algo1
 allarahealth	Allara
@@ -675,8 +145,10 @@ allminds	Allminds
 allocate	Allocate
 alloyenterprises	Alloy Enterprises
 alloyriver	Alloy River
-allspice	AllSpice
+allspice	Allspice
+Allswell	Allswell
 allwyn-corp	Allwyn Corp
+Almabase	Almabase
 almedia	Almedia
 almetra	Almetra
 aloe-identity	Aloe Identity
@@ -687,31 +159,43 @@ alpenlabs	Alpen Labs
 alpha	Alpha
 alpha-design-ai-inc	ChipAgents
 alphalifesci	Alpha Life Sciences
-alpic	Alpic
+alt	Alt Platform Inc
 alta-ares	Alta Ares
+altadaily	Alta Daily
 alternativepayments	Alternative Payments
 altimate	Altimate.ai
 altis	Altis
+Altis Labs	Altis Labs
+altruistiq	Expanding Circle Ltd
 altura	Altura
 alva-energy	Alva Energy, Inc
 amagistechcareers	AmagisTech
+Amari	Amari
 amber	amber
 ambiencehealthcare	Ambience Healthcare
 ambient.ai	Ambient.ai
 amboss	AMBOSS
+Ambral	Ambral
 ambrook	Ambrook
-ameba	Ameba
-americaachieves	America Achieves
+Ambrosia-Energy	Ambrosia Energy
+amca	Amca
+amenitiz	Amenitiz
+American Terawatt	American Terawatt
 american-housing	The American Housing Corporation
+american-turbines	American Turbines
 americanoperator	American Operator
 ami	AMI
 amo	amo
 ampeers	Ampeers
 amperos	Amperos
+Ampersand	Ampersand
 amplify	Amplify
 amplitude	Amplitude
+Amplo	Amplo
+Anagram	Anagram
 anam	Anam AI
 anara	Anara
+ande	Ande
 andela	Andela
 andera	Andera
 andercore	Andercore
@@ -720,6 +204,7 @@ andotechnologies	Ando Technologies, Inc
 andromeda	Andromeda Cluster
 angi	Angi
 anglehealth	Angle Health
+Anima	Anima
 ankar	Ankar
 ankorstore	Ankorstore
 annaautismcare	Anna Autism Care
@@ -728,8 +213,10 @@ anrok	Anrok
 ansiblehealth	AnsibleHealth Inc.
 answersnow	AnswersNow Inc
 antaiventures	Antai Ventures
+Antares	Antares
 anterior	Anterior
 anthelioncap	Anthelion Capital
+Anthos Capital	Anthos Capital
 anthrogen	Anthrogen
 antimetal	Antimetal
 antioch	Antioch
@@ -738,36 +225,47 @@ anuvaya	Anuvaya Labs
 anyone-ai	Anyone AI
 anyscale	Anyscale
 anysignal	AnySignal
-anything	Anything
 anyvan	AnyVan
 apella	Apella
 apex-technology-inc	Apex Technology, Inc.
 apexgrowth	Apex Growth
+APEXX	APEXX Global
+Aphex	Aphex
 apify	Apify Technologies s.r.o.
+Apiphany	Apiphany
 aplazo	Aplazo
 apolink	Apolink Communcations
 apollo-graphql	Apollo GraphQL
 apollo-information-systems	Apollo Information Systems
 apple-roofing	Apple Roofing
 applied	Applied Intuition
-appliedlabs	Applied Labs
+Applied Compute	Applied Compute
+Applied-Behavioral-Services	Applied Behavioral Services
+appsumo	AppSumo
 april	april
 apron	Apron
 aptible	Aptible
 aptosfoundation	Aptos Foundation
 aptura	Aptura
 aqua-voice	Aqua Voice
+Aquant	Aquant
+aquarianlp	Aquarian
 aquark	Aquark Technologies Ltd
 arago	Arago
 arb-interactive	ARB Interactive
 arbiter-ai	Arbiter AI
+Arbor	Arbor
+arca	Arca
 arcade	Arcade
 arcade-ai	Arcade
 arcadeai	Arcade
+arcessio.ai	Arcessio
+Arch	Arch
 arch.com	Arch
 archil	Archil
 architect	Architect Labs
 archive	Archive
+Archy	Archy
 arclight-consulting	ArcLight Consulting
 arcturus	Arcturus
 arda-therapeutics	Arda Therapeutics
@@ -775,12 +273,15 @@ ardea-partners	Ardea Partners
 arena	Arena Intelligence, Inc.
 arenanet	ArenaNet
 argon-ai	Argon AI
+ariesglobal	Aries Global
 arini	Arini
 arizent	Arizent
 arketa	Arketa
+Arlo	Arlo
 armadin	Armadin
+Armory	Armory
 aro.homes	Aro Homes
-arrakis	Arrakis Finance
+ARQ	ARQ
 array-behavioral-care	Array Behavioral Care
 arrive	Arrive
 artafinance	Arta Finance
@@ -792,16 +293,20 @@ artie	Artie
 artificial.agency	Artificial.Agency
 artificialanalysis	Artificial Analysis, Inc.
 artisan	Artisan
+artosai	ArtosAI
 artsy	Artsy and Artnet
 aryahealth.ai	Arya Health
 asari.ai	Asari AI
 ascertain	Ascertain
+Ashby	Ashby
 ashgro	Ashgro
 asimov	Asimov
 askdragonfly	Dragonfly
 aso-careers	Agresta, Storms & O’Leary, PC
+Aspora	Aspora
 assemble	Assemble
 assembledhq	Assembled
+assembly	Assembly
 assorthealth	Assort Health
 assured	Assured
 assured-health	Assured
@@ -809,20 +314,26 @@ astera	Astera Institute
 asteriAI	Asteri AI, Inc.
 astra	Astra
 astral	Astral
+AstralisFoundation	Astralis Foundation
+Astro-Mechanica	Astro Mechanica
 astrocade	Astrocade
 astronomer	Astronomer
 asula	Asula Labs
 asymmetric.re	asymmetric.re
 atalanta	Atalanta
 ataraxis-ai	Ataraxis AI
+ATG	ATG
 athena-hq	AthenaHQ
 athenaactuarial	Athena Actuarial Consulting
+atira	Atira
 atlan	Atlan
 atlas	Atlas
 atlas-privacy	Atlas Privacy
 atlasonc	Atlas Oncology Partners
 atlasresidential	Atlas Residential
+atlys	Atlys
 atob	AtoB
+Atolio	Atolio
 atomic	Atomic
 atomic-financial	Atomic Fi
 atomic-invest	Atomic Invest
@@ -831,7 +342,7 @@ atominvest	Atominvest
 atomos	Atomos Systems
 atp	AT Process Technologies
 atrato	Atrato
-atria	Atria
+atrix	Atrix AI
 atroposhealth	Atropos Health
 attention	Attention Engineering
 atticus	Atticus
@@ -843,25 +354,34 @@ augrade	Augrade Inc
 augur	Augur Initiative Ltd
 augurai	Augur
 august	August
+Augustus	Augustus
 aurelian	Aurelian
 aureliussystems	Aurelius Systems
 auror	Auror
+aurora-operations-inc	Aurora
 aurorasolar	Aurora Solar
+Authorium	Authorium
 authzed	AuthZed
 automat	Automat, Inc.
 autoscience	Autoscience
 ava-labs	Ava Labs
+avalanche-foundation	Avalanche Foundation
+avalanchefusion	Avalanche
 avantos	Avantos AI
 avarra	Avarra
+avartha	Avartha
 avelios-medical	Avelios Medical
+Aven	Aven
 aveni	Aveni
+averi	AVERI
 avid4	Avid4 Adventure
 avida	Avida
 avoca	Avoca
 avora-agency	Ayora
 avra	Avra
+Away	Away
+Axel	Axel
 axelera	Axelera AI
-axiom	Axiom
 axiom-co	Axiom
 axiombio	Axiom
 axiommath	Axiom Math
@@ -869,6 +389,7 @@ axion	Axion
 axle-careers	Axle Energy
 axle-health	Axle Health
 axle-mobility	Axle Mobility
+ayosemi	Ayo Semiconductor
 aztec-labs	Aztec Labs
 b2spin	B2spin
 baba	Baba
@@ -888,17 +409,21 @@ barti	Barti
 basata	Basata Inc
 base-operations	Base Operations
 base-power	Base Power Company
+basecamp-research	Basecamp Research
 basecompute	Base Compute
 baseten	Baseten
 basiccapital	Basic Capital
 basis-ai	Basis AI
 basis-research	Basis Research Institute
+Bastion	Bastion
+Baton	Baton
 batoncorporation	Baton Corporation Ltd
 battle-creek-games	Battle Creek Games
 bayesianhealth	Bayesian Health, Inc.
+beach-bum	Beach Bum
 beaconai	Beacon AI
+beaconholdings	Beacon Holdings
 beacons	Beacons
-beaconsoftware	Beacon Software
 beam-up	Beam
 beamery	Beamery
 beamimpact	Beam Impact
@@ -909,10 +434,14 @@ bedrockocean	Bedrock Ocean Exploration
 believer	Believer
 belvo	Belvo
 bem	bem
+Ben	Ben
 benchling	Benchling
+Benchmark Analytics	Benchmark Analytics
 benchmarkhealth	Benchmark Health
 benepass	Benepass
 benevity	Benevity
+beparallel	Parallel
+bereal	BeReal
 berlitz	Berlitz
 beside	Beside
 bespokelabs	Bespoke Labs
@@ -922,8 +451,12 @@ bettercloud	BetterCloud, Inc.
 bettermile	Bettermile
 bettermoney	The Better Money Company
 betterup	BetterUp
+Bevel	Bevel
 beyondmath	BeyondMath
+beyondreachlabs	Beyond Reach Labs
+beyondsports	Beyond Sports
 bicara-therapeutics	Bicara Therapeutics
+Bifrost	Bifrost AI
 big-leap-health	Big Leap Health
 biggergames	Bigger Games
 bild-ai	Bild AI
@@ -934,23 +467,26 @@ binance.us	Binance.US
 binti	Binti
 bio	BIO
 biofire	Biofire
+BIOptimizers	BIOptimizers
+Bioscope AI	Bioscope AI
 birdie	Birdie
 bite	Bite Engineering
-bitnomial	Bitnomial
 bitstack	Bitstack
 bitvavo	Bitvavo
 bivacor-inc	BiVACOR Inc
 bjakcareer	Bjak
+black-forest-labs	Black Forest Labs
 blackbird-labs-inc	Blackbird Labs Inc
 blackbox-strategies	BlackBox Strategies
+Blackpoint Cyber	Blackpoint Cyber
 blacksemiconductor	Black Semiconductor GmbH
+Blacksmith	Blacksmith
+Blacksmith Agency	Blacksmith Agency
 blackstar	Blackstar Computers, Inc.
 bland	Bland
 blank-metal	Blank Metal
 blankexampleinstance	Blank Instance
 blast-io	Blast
-blaxel	Blaxel
-blink	Blink Tech Inc
 bliro	Bliro GmbH
 blissway	Blissway Inc.
 blitzy	Blitzy
@@ -959,10 +495,13 @@ blockdaemon	Blockdaemon
 blockhouse	Blockhouse
 blockit	Blockit AI
 blockstream	Blockstream
+Blockworks	Blockworks
 blooming-health	Blooming Health
+Blossom-Health	Blossom Health
 bloxd	Bloxd
-blp-digital	BLP Digital AG
+blp-digital	BLP
 blue-energy	Blue Energy
+Blue-Raincoat-Music	Blue Raincoat Music
 blueberrypediatrics	Blueberry Pediatrics
 bluedot	BlueDot Impact
 bluenote	Bluenote
@@ -973,28 +512,38 @@ bold	Bold.org
 boldgames	Bold Games
 bolna	Bolna AI
 bolt-farm	Bolt Farm Treehouse
+Bolter	Bolter
 bookkeeper360	Bookkeeper360
+Boom	Boom
 boon	Boon Technologies, Inc.
+Boost	Boost
 boostly	Boostly
 bootloop	BootLoop
 botanictonics	Botanic Tonics
 boulder-care	Boulder Care
+Bounce	Bounce
 bracket-bot	Bracket Bot Inc.
+Braiins	Braiins
 brainbaselabs	Brainbase Labs
 brainco	Brain Co.
 brainly	Brainly
+Braintrust	Braintrust
 brale	Brale
+BranchInsurance	Branch Financial, LLC
 branchlab	BranchLab
 brandlight	Brandlight
 bratte	Bratte
 bravehealth	Brave Health
 breadcrumb	Breadcrumb
+breadwinner	Breadwinner
 breaker	Breaker
 breakmark	Breakmark
 bree	Bree
 brelle	Brelle
 brellium	Brellium
 brettonai	Bretton AI
+bridgeneurotech	Bridge Neurotech, Inc.
+bridgepoint-consulting	Bridgepoint Consulting
 bridger	Bridger
 brightstar-ai	Brightstar.AI
 brightwheel	brightwheel
@@ -1005,13 +554,16 @@ brisk-teaching	Brisk Teaching
 bristleconecompanies	Bristlecone Companies
 brm.ai	BRM
 broccoli	Broccoli AI
+Brodie Rec League	Brodie Rec League
 brooklinen	Brooklinen
 brooklyn-health	Brooklyn Health
+Brookwood	Brookwood
 browserbase	Browserbase
 bubble	Bubble
 buena	Buena
 buffer	Buffer
 build	Build Technologies
+build-ai	Build AI
 builder-prime	Builder Prime
 buildforce	Buildforce
 buildlinX	Buildlinx GmbH
@@ -1028,25 +580,30 @@ burklandassociates	Burkland Associates
 buspatrol	BusPatrol
 butterflymx	ButterflyMX
 bynder	Bynder
+C1	C1
 cadence-group-software-inc	Cadence Group Software Inc
 cadregs	CADRE GOVERNMENT SOLUTIONS
 callosum	Callosum
 camber	Camber
 cambio	Cambio AI Inc.
 cambium	Cambium
+Cambly	Cambly
 campfire	Campfire
 campus	Campus
 camunda	Camunda
+canadavisa	CanadaVisa
 canals	Canals
 candidate.fyi	candidate fyi
 candidhealth	Candid Health
 candidintelligence	Candid Intelligence
 cantina	Cantina
 canvas-medical	Canvas Medical
+Capable	Capable Labs
 capchase	Capchase
+Cape	Cape
 capimoney	Capi Money
 capital-v-strategies	Capital V Strategies
-capsa	Capsa AI
+capsa	Capsa
 capsule	Capsule
 capy	Capy
 cara-ai	Cara
@@ -1054,6 +611,7 @@ carbonx	CarbonX
 cardboard	Cardboard, Inc
 cardless	Cardless
 careers.azx.io	AZX
+careers.mural	Mural
 careerstrengo	Trengo
 careerswift.ai	Careerswift
 caremessage	CareMessage
@@ -1073,20 +631,22 @@ casdin-capital	Casdin Capital
 casium	Casium
 cassihome	Cassi Home
 castle	Castle
-castletontower	Castleton Tower
 catalog	Catalog
 catalyst	Catalyst
 catchafire	Catchafire
 category-labs	Category Labs
 catena	Catena
+Catio	Catio
 causal	Causal Labs
 causaly	Causaly
 causaprima	Causa Prima
 cbai	Cambridge Boston Alignment Initiative
 cchn	Carolina Complete Health Network
 ceartas	Ceartas
+Cedar	Cedar
 ceezer	CEEZER
 ceilix	CeiliX
+Cello	Cello
 cellular-intelligence	Cellular Intelligence
 centari	Centari
 centerfield	Centerfield
@@ -1104,16 +664,20 @@ chainalysis-government-solutions	Chainalysis Government Solutions
 chainlink-labs	Chainlink Labs
 chakra-labs	Chakra Labs
 chalice	Chalice Custom Algorithms
+chalk	Chalk
 chalkboard	Chalkboard
+Chamber	Chamber
 chambercardio	Chamber Cardio
 chamelio	Chamelio
 change	Change.org
 chapter	Chapter
+Chapters	Chapters
 character	Character.AI
 charge-robotics	Charge Robotics
 chariot	Chariot
 chariotclaims	Chariot Claims
 chartahealth	Charta Health
+ChartHop	ChartHop
 chartis	Chartis
 chatbase	Chatbase
 chattermill	Chattermill Analytics Limited
@@ -1121,15 +685,25 @@ check-technologies	Check
 checkatrade	Checkatrade
 checkly	Checkly
 checkout.com	Checkout.com
+Cheiron	Cheiron
+Chestnut	Chestnut
+Chief	Chief
+chiefai	Chief AI
 chilipiper	Chili Piper
 choco	Choco
+Chromatic	Chromatic
 cinder	Cinder
+circle	Circle
 circleback	Circleback
 circuithub	CircuitHub
 circulareconomysystems	Circular Economy Systems
 ciridae	Ciridae
 ciroos	Ciroos
+Cirrus Systems	Cirrus Systems, Inc.
 citadel-ai	Citadel AI
+Citizen	Citizen
+Citizen Health	Citizen Health
+Civic Roundtable	Civic Roundtable
 civicmarketplace	CivicMarketplace
 civilgrid	CivilGrid
 claim-health	Claim Health
@@ -1138,54 +712,67 @@ clair	Clair
 clarasight	Clarasight
 clarify	Clarify
 clarion	Clarion
-clarity	Clarity
-claritymovescapital	Clarity
 claritypay	ClarityPay
 claritypediatrics	Clarity Pediatrics
 clarium	Clarium
-clark	Clark
+Clark	Clark
 claryo	Claryo
 clasp	Clasp
 clasp-group	Clasp
 classavo	Classavo
+ClassDojo	ClassDojo
 claylabs	Clay Labs
 clearbank	ClearBank
 clearco	Clearco
 clearly-ai	Clearly AI
 clearvector	ClearVector
+cleo-2	Cleo
+Clera	Clera
+Cleric	Cleric
+Clerk	Clerk
 clickhouse	ClickHouse
 clickup	ClickUp
 climate-finance-solutions	Climate Finance Solutions
 climatiq	Climatiq
+climb-ai	Climb
+ClinicallyAI	Clinically AI
 clipboard	Clipboard
+Clipbook	Clipbook
 cloaked	Cloaked
+Close	Close
 cloudscaler	Cloudscaler
-cloudtrucks	CloudTrucks
+CloudZero	CloudZero
 clover-sonoma	Clover Sonoma
 clubhouse	Clubhouse
 cluely	Cluely
+clueso	Clueso
 cmr.london	Cooper Moss Rutland
+CoachHub Careers	CoachHub
 coactive	Coactive AI
+Coalesce	Coalesce
 coastal	Coastal Community Bank
 cobot	Cobot
 cocodelivery	Coco
+CodaMetrix	CodaMetrix
 codat	Codat
 code-metal	Code Metal
 coder	Coder
 coderabbit	CodeRabbit
 codes-health	Codes Health
 codesphere	Codesphere
+codeway	Codeway
 codex	Codex
 coefficientgiving	Coefficient Giving
+Coframe	Coframe
 cogent-security	Cogent Security
 cognita-Imaging	Cognita Imaging Inc.
 cognition	Cognition
 cohere	Cohere
 cohort	Cohort AI Inc
+Coinflow	Coinflow
 cointracker	CoinTracker
 collective	Collective
 collegevine.com	CollegeVine
-collider	Collider
 collinear-ai	Collinear AI
 colonist	Colonist
 color-health	Color Health
@@ -1195,26 +782,31 @@ comfy-org	Comfy
 comind	CoMind
 comity	Comity
 common-fund	Common Fund for Commodities
+Commons	Commons
 commonware	Commonware
 community-preservation-corporation	The Community Preservation Corporation
+Commure	Commure
 compa	Compa
+company	Stealth-mode Battery Startup
 compass-surgical-partners	Compass Surgical Partners
 complement	Complement
 complete	Complete
 composio	Composio
 composite	Composite
 compound	Compound Planning, Inc.
+Compound Jobs	Twenty Labs
 compound-eye	Compound Eye
 compscience	CompScience
 compyl	Compyl
 comstruct	comstruct ICT
 comun	Comun
+Conception	Conception
 concourse	Concourse
 concoursetech	Concourse
-concurrence	Concurrence
 condor-software	Condor Software
 conduct	Conduct
 conductorai	ConductorAI
+Conduit	Conduit
 conduit-health	Conduit Health
 conetic-group	Conetic Group
 confiant	Confiant
@@ -1223,6 +815,7 @@ confluent	Confluent
 confusioncapital	Confusion Capital
 connectly	Connectly Inc
 conquest	Conquest
+consensys	Consensys
 console	Console
 constellationspace	Constellation Space
 constructor	Constructor
@@ -1234,13 +827,17 @@ contrast-security	Contrast Security
 conveo	Conveo.ai
 conversion	Conversion
 convex-dev	Convex
+Convey	Convey (formerly Message Broadcast)
+cooper-ai	Cooper AI
+Coperniq	Coperniq Inc.
 copilot-money	Copilot Money
+Coral Care	Coral Care
 coralai	Coral AI
 coram-ai	Coram AI
-coreflow	coreflow
 coreoftheheart	Core of the Heart
-corgi	Corgi Insurance
+CorePlan	CorePlan
 corridor	Corridor
+cortea	Cortea AI
 corti	Corti
 corvus-robotics	Corvus Robotics
 cosine	Cosine
@@ -1249,11 +846,12 @@ costanoavc	Costanoa Ventures
 cosuno	Cosuno
 council-capital	Council Capital
 counsel	Counsel Health
-count	Count
+CourseCareers	CourseCareers
 coverbase	Coverbase
 coverdash	Coverdash
 cow-dao	CoW DAO
 cowboyspace	Cowboy Space Corp.
+Coworker	Coworker.ai
 crackenagi	Cracken
 cradlebio	Cradle
 craft.co	Craft Machine Inc
@@ -1272,24 +870,27 @@ crogl	Crogl
 croporg	Creating Restorative Opportunities and Programs (CROP)
 crosby	Crosby
 crossjoin-solutions	Crossjoin Solutions
-cruva	Cruva
+Crusoe	Crusoe
 cruxclimate	Crux
 cryptio	Cryptio
-cside	Cside
 ctgt	CTGT
+CUBE	CUBE
 cubesoftware	Cube
 cubic3	Cubic³
 cuesta-partners	Cuesta Partners
 culturello	Culturello Inc
+current-advisors	Current
 curri	Curri
+curvionblue	Curvion Blue
 cuspai	CuspAI
 customuse	Customuse
 cybcube	CyberCube
 cyber.Fund	cyber•Fund
+Cyberhaven	Cyberhaven
 cybernut	CyberNut
-cybret	CYBRET AI
 cydea	Cydea
 cylake-inc	Cylake, Inc
+CylinderHealth	Cylinder Health
 cytora.com	Cytora
 cyvl	Cyvl
 d-Matrix	d-Matrix
@@ -1299,6 +900,7 @@ dandelion	Dandelion Energy
 dandelionhealth	Dandelion Health Inc
 dandy	Dandy
 dapper	Dapper
+Dapster	Dapster
 darkroom	Darkroom
 darwin	Darwin
 dash0	Dash0
@@ -1306,37 +908,50 @@ databook	Databook Labs, Inc.
 datafold	Datafold
 dataguard	DataGuard
 datalab	Datalab
+Dataleap	Dataleap
 datalogics	Datalogics, Inc.
 dataplor	Dataplor
+datasnipper	DataSnipper
 datatonic	Datatonic
 datawizz	Gamut
+DatologyAI	DatologyAI
 datum	Datum
 dave	Dave
 david-ai	David AI
 davidenergy	David Energy
+davischicago	Davis Chicago
 davistechnologymanagement	Davis Technology Management
 day9	Day[9]'s Game Studio
 daydream	DayDream
 daydream-ai	Daydream
 dcblox	DC BLOX
 ddn	DDN
+deaa6ad2-d184-436b-b69e-17f761da1d94	Spring Health
+DealRoom Inc	DealRoom Inc
 dearestcare	Dearest Care
 decagon	Decagon
 decimal	Decimal
+decisionfocus	Decision Focus
 deck-software	Deck Software
 decodahealth	Decoda Health
 dedale-intelligence	Dedale Intelligence
 dedalus-labs	Dedalus Labs, Inc.
 deduction	Deduction
+Deel	Deel
+Deepgram	Deepgram
 deepjudge	DeepJudge
+DeepL	DeepL
 deeploy	Deeploy
+Deepnote	Deepnote
 deepsetai	deepset
+deepslate	Deepslate
 deeptune	Deeptune
 deeter-analytics	Deeter Analytics
 definefinancial	Define Financial
 definelycareers	Definely
 deft-ai	Deft AI, Inc.
 defy-security	Defy Security
+DehazeLabs	Dehazelabs
 delfa	Delfa AI
 delian	Delian Alliance Industries
 deligo	Deligo
@@ -1344,47 +959,78 @@ delinea	Delinea
 deliveroo	Deliveroo
 delos-data	Delos Data Inc
 delphi	Delphi
+Delphina	Delphina
 delphos-labs	Delphos Labs
 demandbase	Demandbase
 denari	Denari
 dentology	Dentology
 deposco	Deposco
 depthfirst	DepthFirst
+designrulesco	The Design Rules Company
 designworkstalent	Designworks Talent
 develop-health	Develop Health
 devsavant	DevSavant Inc.
+dewarmte	DeWarmte
 dex	Dex
 dexmate	Dexmate
+Diagrid	Diagrid
 dialo	Dialo
+dialogica	Dialogica
 dialogueai	Dialogue AI
+differential.bio	Differential Bio
 diffit	Diffit
+DiligenceSquared	DiligenceSquared
 dimensional	Dimensional
+DimRed	DimRed
 dipper	Dipper
+directive	Directive
+Discernis	Discernis
+Discovery-Loop	Discovery Loop
+Dispatch	Dispatch
 distill	Distill
 distributed-spectrum	Distributed Spectrum
+Distyl	Distyl AI
 ditto	Ditto
 dittoai	Ditto
 diversified-botanics	Diversified Botanics
+DivineResearch	Divine
+dmodel	dmodel
 docebo	Docebo
 docker	Docker
+docplanner	Docplanner
 doctolib	Doctolib
+doctoralia-brasil	Doctoralia Brasil
+doctoralia-colombia	Doctoralia Colombia
+doctoralia-mexico	Doctoralia Mexico
+doctoralia-spain	Doctoralia Spain
 doctronic	Doctronic
+doe	doe
 doinstruct	doinstruct
 doji	Doji
 dome-systems-inc	Dome Systems Inc
+Dominion Dynamics	Dominion Dynamics
+dons-garage-doors	Don's Garage Doors
+Doppel	Doppel
+Doppler	Doppler
 doss	DOSS
 dosu	Dosu, Inc.
 dotfile	Dotfile
 dottxt	dottxt
 double	Double
+double-the-donation	Double the Donation
+DoubleZero	DoubleZero
 dourolabs.xyz	Douro Labs
 dovetail	Dovetail
 drata	Drata
+dreamhq	Dream Technologies
 dreamthree	Dream Three
+Dressly	Dressly
+drivewealth	DriveWealth
 drogue	Drogue
 droyd	Droyd
 dryft	Dryft
 dualentry	DualEntry
+DubClub	DubClub
 duck-duck-go	DuckDuckGo
 duckbill	Duckbill
 duet	Duet
@@ -1401,16 +1047,21 @@ e-source	E Source
 e2b	E2B
 eagle	Eagle
 earnedwealth	Earned
+earth	Earth
 earthforce	Earth Force
+Easygenerator	Easygenerator
 easyllama.com	EasyLlama
+echeloncareers	Echelon
 echo	Echo Neurotechnologies
 echo.ai	Echo
 echomark	EchoMark
 ecosia.org	Ecosia
 edge-node-ventures	Edge and Node Ventures Inc
+Edgesource Corporation	Edgesource Corporation
 edgetier.com	EdgeTier
 edia	Edia
 ediphi	Ediphi
+Edison Scientific	Edison Scientific
 edisyl	Edisyl
 edited	EDITED
 edlink	Edlink
@@ -1427,62 +1078,81 @@ ekarobotics	Eka
 ekho	Ekho
 ekumenlabs	Ekumen
 elastix	ElastixAI INC.
+Electric	Electric
 electricair	Electric Air
+electricplant	The Electric Plant
 electronx	ElectronX
 element451	Element451
 element84	Element 84
 eleos	Eleos AI Research
 elevate-charter-schools	Elevate Charter Schools
 eleve-talent	Eleve Talent
+ElevenLabs	ElevenLabs
 eli	Eli Health
 elicit	Elicit
+EliseAI	EliseAI
 eliza	Eliza
-ellamind	ellamind
 ellipsis-health	Ellipsis Health
 ellipsislabs	Ellipsis Labs
 elliptic	Elliptic
 ello	Ello
 eloquentai	Eloquent AI
 elorian-ai-inc	Elorian
+Elveo	Elveo
 ema	Ema
 embeddable	Embeddable
 embedding-vc	Embedding VC
+emberos	Emberos
 emerald-ai	Emerald AI
+emergence	Emergence
 emergence-capital-partners	Emergence Capital Partners
 emidat	Emidat
 emora-health	Emora Health
 empirical	Empirical
 empirical-security	Empirical Security
+Empo Health	Empo Health
+enactintelligence	Enact Intelligence
 enclave	Enclave
+enclosure	Enclosure.inc
 encord	Encord
-endeavorai	endeavorai.com
+endeavorai	Endeavor AI
 endeavorflow	Endeavor
 endex	Endex
+Endgame	Endgame
 endra	Endra
 endurance-energy	Endurance Energy
 eneba	Eneba
 engagedmd	EngagedMD
 engflow	EngFlow
 engram	Engram Lab
+engramme	Engramme
 enode	Enode
 enpal	Enpal
 ens-labs	ENS Labs
 ent-security	Ent
 enter-ai	Enter
 envision-horizons	Envision Horizons LLC
+Envoy	Envoy
+EON	EON
+Eon Systems	Eon Systems
 epay-policy	ePayPolicy
 epianeuro	Epia Neuro
 epidemic-sound	Epidemic Sound
+Epistemix	Epistemix
 epsilon-health	Epsilon Health
 equal-ventures	Equal Ventures
 equal1	Equal1
+equall	Equall
 equi	Equi
 equip	Equip Health
+Eragon	Eragon
 erebor	Erebor
 erp.ai	ERP•AI
+Escape	Escape Technologies
 espa	Espa Labs
 espresso	Espresso AI
 essentialai	Essential AI
+Etched	Etched
 ether.fi	Ether.fi
 ethereum-foundation	Ethereum Foundation
 ethglobal	ETHGlobal Inc
@@ -1495,14 +1165,18 @@ evenup	EvenUp
 everai	EverAI
 everfield	Everfield
 everis	Everis
+EverOps	EverOps
 everself	Everself
 everstar	Everstar
 evertune	Evertune
 evervault	Evervault
 every-io	Every.io
 everywai	Everywai
+Evolve	Evolve AI Ltd
+Evvy	Evvy
 exa	Exa
 exegy	Exegy
+exo	Exo Labs
 expa	Expa
 exponential	Exponential Security Labs
 expressable	Expressable
@@ -1510,18 +1184,23 @@ extend	Extend
 extropic	Extropic
 eye-security	Eye Security
 eyebot	Eyebot
-eyetell	EyeTell, Inc.
+EYT	Extend Your Team
 eztexting	EZTexting
 f2-ai	F2
+f40d14d9-07f4-403d-802b-37453deccf0a	Klaviyo
+Fab2	Fab2
 fable	Fable Security
 fabrion	Fabrion
+facilityos	FacilityOS
 faction	Faction
 factor-eleven	Factor Eleven
 factory	Factory
 faculty	Faculty
+faculty-fellowship	Faculty Fellowship
 fal-ai	fal
 falconer	Falconer
 fama-technologies-inc	Fama Technologies
+familiarmachines	Familiar Machines & Magic
 fanvue.com	Fanvue
 far.ai	FAR.AI
 farel	Farel
@@ -1533,27 +1212,32 @@ farsight	Farsight AI
 fastino-ai	fastino.ai
 fathom	Fathom
 fathom.video	Fathom
+fav	fav
 faves	Faves
-favorited	Favorited
+fcb2fa31-4415-4b05-9f1a-16a326c21432	fcb2fa31-4415-4b05-9f1a-16a326c21432
 featherlessai	Featherless AI
 feathery	Feathery
 feathr	Feathr
 feedbackfruits	FeedbackFruits
+Feegow	Feegow
 feldera	Feldera
 felicity	Felicity
+Felix	Felix
 fellowai	Fellow Insights Inc.
+fence-masters-inc	Fence Masters, Inc
 fencer	Fencer
 fernstone	Fernstone
+Ferovinum	Ferovinum Limited
 ferryhealth	Ferry
 fetch-pet-health	Fetch Pet
 ffg	Full Funnel Growth
 fidamy	Fidamy
 fiddler-ai	Fiddler AI
+Fiducial	Fiducial
 fieldguide	Fieldguide
 filigran	Filigran
 filmhub	Filmhub
 fin	Fin
-finalis	Finalis
 financewithin	FinanceWithin
 finary	Finary
 fincentify	Fincentify
@@ -1563,16 +1247,17 @@ findanomaly	Anomaly
 findarbor	Arbor
 finmid.com	Finmid
 finni-health	Finni Health
+FINNY	FINNY
 finout	Finout
 finto	Finto
 finvari	Finvari
 fira-health	Adaptive Home Health
 firebirdmusic	Firebird Music
 firecrawl	Firecrawl
-firetiger	Firetiger
 fireworks	Fireworks
 first-resonance	First Resonance
 firsthand	Firsthand
+FirstPrinciples	FirstPrinciples
 firstround	First Round Capital
 firststreet	First Street
 firstwork	Firstwork
@@ -1581,25 +1266,38 @@ fitzroyandassociates	Fitz-Roy & Associates
 fizz	Fizz
 flaglerhealth	Flagler Health
 flagright.com	Flagright
+flagstone	Flagstone
 flai	Flai
 flashbots.net	Flashbots
 flashpoint.io	Flashpoint
+flatfile	Flatfile
 flawless	Flawless
 fleek	Fleek
-fleetline	Fleetline
+Fleet Health	Fleet Health
+Fleetcraft	Fleetcraft
 fleetpulse	FleetPulse
+FleetWorks	FleetWorks
+flex	Flex
 flexspace	Flexspace
 flink	Flink Robotics
 flint	Flint
 flipper	Flipper
 flipturn	Flipturn
+Float	Float
+FloatMe	FloatMe
 flock	Flock
+Flock Safety	Flock
+FLORA	FLORA
 flosports	FloSports, Inc.
+flossy	Flossy
 flowengineering	Flow Engineering
+FlowGen Labs	FlowGen Labs
 flowhub	Flowhub
+Flowtel	Flowtel
 flox	Flox
 fluency	Fluency
 fluidstack	Fluidstack
+FlutterFlow	FlutterFlow
 flux	Flux
 fnatic	Fnatic
 focal	Focal
@@ -1612,28 +1310,40 @@ fonio	fonio
 fonoa	Fonoa
 fonzi	Fonzi
 footprint	Footprint
+FORDEFIJobs.ashbyhq.com	FORDEFI
 forerunner	Forerunner
+Foresight	Foresight Data
 foresight-health	Foresight Health
 forgeatomics	Forge Atomics Inc.
+forgepoint	Forgepoint
 forma	Forma
 formal	Formal
 formance	Formance
 formula	Formula
+formulary	Formulary Financial, Inc.
+Fort Health	Fort Health
 fortreum	Fortreum
 fortuna-health	Fortuna Health
+fortytwo	Fortytwo
 forum-ventures	Forum Ventures
 forus	Forus
+Forward Financing	Forward Financing
 found	Found
 foundation	Foundation
 foundational	Foundational
+Foundational Industries	Foundational Industries
 foundationhealthcareers	Foundation Health
 founders-factory	Founders Factory
+foundry-for-good	Foundry for Good
 foundry-robotics	Foundry Robotics
+Fourier	Fourier
 fourth-power	Fourth Power
 fourtwothree	FourTwoThree
 foxelligroup	Foxelli Group
 foxglove	Foxglove
 fr	Maya HTT (FR)
+fractile	Fractile
+Frameplay	Frameplay
 frec	Frec Markets, Inc.
 freckle	Freckle
 freda	Freda
@@ -1648,22 +1358,31 @@ frontcareers	Front
 frontier-health	Frontier Health
 fruitist	Fruitist
 fs-studio	FS Studio
+FSH	FSH Technologies
+Fuel-Cycle	Fuel Cycle
+Fulcrum	Fulcrum
 fulcrum-inc	Fulcrum
+fullenrich	FullEnrich
 fullstory	Fullstory
 fundamental	Fundamental
 fundamentalXR	fundamentalXR
 fundingcircle	Funding Circle
 fundwell	Fundwell
 furo	Furo
+FURTHER	FURTHER
 furtherai	FurtherAI
+Fuse	Fuse
 fuser	Fuser
+futrue	FUTRUE
 futrue-neuroscience	FUTRUE Neurosciences
 futurefitai	FutureFit AI
 futureworks	Future Works
 fwd-people	FWD People
 fyxer	Fyxer
+G2	G2
 g2i	G2i Inc.
 gadget	Gadget
+Gaia Health	Gaia Health
 gaiafamily	Gaia Family Inc
 gainsight	Gainsight
 gallatin	Gallatin
@@ -1671,6 +1390,8 @@ galvany	GALVANY
 gamechanger	GameChanger
 gamma	Gamma
 garage	Garage
+garage-door-doctor	Garage Door Doctor
+Gardens	Gardens Interactive
 gc-ai	GC AI
 gearset	Gearset
 gecko-robotics	Gecko Robotics
@@ -1682,26 +1403,35 @@ general-medicine	General Medicine
 generalintelligencecompany	The General Intelligence Company of New York
 generalintuition-medal	General Intuition & Medal
 generalist	Generalist
+generalmagic	General Magic
 generalrobotics	General Robotics
 generaltranslation	General Translation
 generate	Generate
+generatorhealth	Generator Health
 genesis	Genesis
 genesis-molecular-ai	Genesis Molecular AI
 genies	Genies
+geniusai	Genius AI
 genmd	GenMD
 genmo	Genmo
 genomics	Genomics
 genpeach	GenPeach AI
+genspark	Genspark Inc
 geobrowser	Geo Browser
+Geoforce	Geoforce
 geordieai	Geordie AI
 georgian	Georgian Partners Growth
 getground	GetGround
 getscope	Scope AI
+getsquire	SQUIRE
+getting-attention	Getting Attention
 ghost	Ghost
+GigaML	Giga
 gigaton	Gigaton
 gigsafe	GigSafe
 gimlet	Gimlet Labs
 gismart	Gismart
+GitBook	GitBook
 givebutter	Givebutter
 glacier	Glacier
 glacis-ai	Glacis
@@ -1718,8 +1448,11 @@ glow	Glow
 glow25	Glow25
 go-augment	Augment
 go-nimbly	Go Nimbly
+goaly	Goaly
 goanagram	Anagram
+GoHenry	GoHenry
 going	Going
+Goldsky	Goldsky
 golinks	GoLinks
 gooddata	GoodData.AI
 goodie-ai	Goodie AI
@@ -1729,66 +1462,100 @@ goodparty	GoodParty.org
 goodstack	Goodstack
 goody	Goody
 gorgias	Gorgias
-gorilla	Gorilla
 goteleport	Teleport
+GotPhoto	GotPhoto
 govdash	GovDash
-govworx	GovWorx
+GovEagle	GovEagle
+GoVenti	Venti Technologies
+GovSignals	GovSignals
+GovWell	GovWell
+gpcconsulting	General Purpose Consulting LLC
+GPTZero	GPTZero
+GR8-TECH	GR8_TECH
 grabagun	GrabAGun
 gradient-labs	Gradient Labs
 gradientrobotics	Gradient Robotics
+grai	GRAI Inc.
 granica	Granica
 granola	Granola
+grantassistant	Grant Assistant
 granted	Granted
 granular-energy.com	Granular Energy
 grapevine	Grapevine
 graphite	Graphite
+Graphitehq	Graphite
 gratia	Gratia
 gravie	Gravie
+GravityClimate	Gravity
 gravitysketch	Gravity Sketch
+Gray Swan AI	Gray Swan AI
 graymatter-robotics	GrayMatter Robotics
 greatquestion	Great Question
+Green-Tree-School-and-Services	Green Tree School & Services
+Greenboard	Greenboard
 greenlight-workforce-solutions	GreenLight Workforce Solutions Inc
 greenlitecareers	GreenLite
 grepr	Grepr
 gridcare	GridCARE
+Gridium	Gridium
 gridunity	GridUnity
 gridverify	Grid
 griffin	Griffin
+Grindr LLC	Grindr
 gritt	Gritt Robotics
 grotto	Grotto AI
 groundnews	Ground News
 groundtruthlabs	Ground Truth Labs
 grow-inc	GROW Inc.
 grow-therapy	Grow Therapy
+growfig	Fig AI
+growthprotocol	Growth Protocol
+GrowthX AI	GrowthX AI
+grubel	Grubel
+Gruntwork	Gruntwork
 grvt	GRVT TECHNOLOGIES
 gt-hq	GT
 guidelabs.ai	Guide Labs
 guild	Guild.ai
+Gumloop	Gumloop
 h2analytics	H2 Analytics
 h3x-technologies	H3X Technologies
+Haast	Haast
 haastautonomous	Haast Autonomous
 hackerone	HackerOne
 hadrian-automation	Hadrian Automation
+hadrius	Hadrius
 halliday	Halliday
+halluminate	Halluminate
 halo-cures	Halo
 halobraid	Halo
 halter	Halter
 hamilton-ai	Hamilton AI
 hammerhead-ai	Hammerhead AI
+Hamming AI	Hamming AI
 hamsa	Hamsa
 hamster	Hamster
+hamstergarage	Hamster Garage
 handshake	Handshake
 handspring	Handspring
+Hang	Hang
 hanover-park	Hanover Park
 happl	Happl
 happyhotel	happyhotel
 happyrobot.ai	Happyrobot Inc.
 happyscribe.com	HappyScribe
+harbor	Harbor
+hargravetechnologies	Hargrave Technologies
 harmattan-ai	Harmattan AI
+Harmonic	Harmonic
+harmonic-ai	Harmonic
 harmonic-security-inc	Harmonic Security, Inc
 harmony	Harmony
 harperinsure	Harper
+Harrison.ai	Harrison.ai
+Hartbeat	Hartbeat
 harvey	Harvey
+Hatch	Hatch
 hauler-hero	Hauler Hero Inc.
 haus	Haus Analytics
 havocai	HavocAI
@@ -1798,14 +1565,17 @@ haydenai	Hayden AI
 haystacknews	Haystack News
 hazel	Hazel
 hcompany	H Company
+Headstart	Headstart
 headway	Headway
 healf	Healf
 healthaxis	HealthAxis Group, LLC
-healthleap	HealthLeap
-healthprogresshub	Health Progress Hub
+healthleap	Healthleap
+HealthMatch	HealthMatch
 healthsherpa	HealthSherpa
+Healthtech-1	Healthtech-1
 heart-and-soil	Heart & Soil Supplements
 hebbia-ai	Hebbia AI
+hedge	Hedge Specialty
 hedra	Hedra
 heidihealth.com.au	Heidi
 heirloomcarbon	Heirloom Carbon
@@ -1819,87 +1589,112 @@ hellohera	Hera
 hellopatient	Hello Patient
 hellyeah	Hellyeah AI
 helm-ai	Helm.ai
+helmguard	HelmGuard Technologies, Inc.
+helogen	Helogen
 helpscout	Help Scout
 hercules	Hercules
+heritage-holding	Heritage Holding
 heron-power	Heron Power
 herondata	Heron Data
+hex	Hex
 hexa	Hexa
 heyjobs	HeyJobs
 heymilo	HeyMilo
 heypinnacle	Pinnacle
+hifi	HIFI
 higgsfieldai	Higgsfield
+Higharc	Higharc
 highbeam	Highbeam
 highlightai	Highlight AI
+HighlightTA	HighlightTA
 hightop-health	Hightop Health
+hightouch-inc	Hightouch
 hike-medical	Hike Medical
-hilberts	Hilbert's AI
+hims-and-hers	Hims & Hers
 hinge-health	Hinge Health
 hinoki	Hinoki Security
 hipeople-official	HiPeople
 hipp	Hipp Health
+Hippocratic AI	Hippocratic AI
 hirehangar	Hire Hangar
 hirehire	hirehire
 hiring-cafe	HiringCafe
+hive-autonomy	HIVE
 hive.co	hive.co
 hived	HIVED
 hivehealth	Hive Health
 hivemq	HiveMQ GmbH
 hiverge	Hiverge Ltd
-hivesmart-consulting	HiveSmart Consulting
 hiya	Hiya
 hobbes	Hobbes
 hockeystack	HockeyStack
+Holidu	Holidu
 holywater	HOLYWATER TECH
 homebase	Homebase
 homebot	Homebot
+Homebound	Homebound
+homera-health	Homera Health
 homevision	HomeVision
+Honey Homes	Honey Homes
 honeybook	HoneyBook
 honeydew	Honeydew
+Hooglee	Hooglee
 hook	Hook
 hookmusic	Hook Music
 hopae	Hopae
 hopper	Hopper
+Horizon	Horizon Institute for Public Service
 horizon3ai	Horizon3
 hostinger	Hostinger
 hotplate	Hotplate
 hotspexmedia	Hotspex Media
 hoxhunt	Hoxhunt
 hoyoverse	HoYoverse
+HRS	HRS
 httpie	HTTPie
-hubfit	HubFit
+Hubs.is	Hubs.is
 hubstaff	Hubstaff
 hud	HUD
+hudson-pacific-properties	Hudson Pacific Properties
 hudu	Hudu
 hum-ai	hum.ai
 humaans	Humaans
+HUMAN	HUMAN
+Human Intuition	Human Intuition
 human-computer-lab	Human Computer Lab
 human.capital	Human Capital
 humanarchive	Human Archive
-humanitec	Humanitec
+Humanly	Humanly
 humanoid	Humanoid
 humans-and	humans&
 humatahealth	Humata Health, Inc
+hume-ai	Hume AI
+hv	HV Capital Manager
 hyde	Hyde
-hyperbolic	Hyperbolic Labs
+hyperbolic	Hyperbolic
+Hyperbound	Hyperbound
 hypercore	Hypercore Inc.
 hypercubic	Hypercubic
 hyperexponential	hyperexponential
 hyperhug	HyperHug
+Hyperliquid Labs	Hyperliquid Labs
 hyperscale	Hyperscale
 hyperscience	Hyperscience
-hyperspell	Hyperspell
 hypha	Hypha
+hyphenate	Hyphenate
 i-onx	I/ONX HPC
 i3d	i3D.net
-iVerify	iVerify
 iambic-therapeutics	Iambic Therapeutics, Inc
 ibotta	Ibotta
 iceye	ICEYE
 iceye-us-jobs	ICEYE US
 icon	Icon
 iddqd	IDDQD CAPITAL
+Ideal Dental	Ideal Dental
 ideals	Ideals
+Ideogram	Ideogram
 idler	idler
+igaminghunt	IGAMINGHUNT
 ignite-reading	Ignite Reading
 ignition	Ignition
 illumio	Illumio
@@ -1908,6 +1703,7 @@ immersivelabs	Immersive
 impact-networking	Impact Networking
 impossible-foods	Impossible Foods
 imprint	Imprint
+Improbable	Improbable
 impulse	Impulse Labs
 imubiosciences	IMU Biosciences
 inato	Inato
@@ -1915,6 +1711,7 @@ inbeat-agency	inBeat Agency
 incandescent	Incandescent
 incard	Incard
 incident	incident.io
+Inclined	Inclined
 indent	Indent
 inductive-automation-llc	Inductive Automation LLC
 inductive-bio	Inductive Bio
@@ -1924,6 +1721,7 @@ inertia	Inertia
 inferact	Inferact
 inference	Inference
 infinite	Infinite
+Infinite Lambda	Infinite Lambda
 infinite-machine	Infinite Machine
 infinitefield	Field Technologies FZCO
 infinitform	InfinitForm
@@ -1932,26 +1730,36 @@ infinity-constellation	Infinity
 infisical	Infisical
 infiterra	Infiterra  S.A
 inflectionio	Inflection.io
+Influxdata	InfluxData
 infracost	Infracost
 inherent	Inherent
+Injective	Injective
 injective-labs	Injective Labs
 inkeep	Inkeep
 innate	Innate
 innatera	Innatera Nanosystems
 inngest	Inngest
+InoviaCapital	Inovia Capital
+InscribeAI	Inscribe
 inshur	Inshur
 insight-browser	Insight Browser
 insitro	insitro
+Inspectiv	Inspectiv
 inspiren	Inspiren
 instil	Instil Software Ltd
+instinct	Spear Street Technology (DBA Instinct)
 instructure	Instructure, Inc.
 intangible.ai	Intangible
+integrate	Integrate
+Intelligence-Security-Laboratories	Intelligence Security Laboratories
+Intellistack	Intellistack
 interface	Interface
 interface-ai	interface.ai
 interfere	Interfere
 interplay	Interplay
+Interrahealth	Interra Health
 intology	Intology
-intrinsic-safety	Variance
+intrinsictech	Intrinsic Technologies
 intro	Intro
 intus	IntusCare
 inversion-cap	Inversion
@@ -1961,9 +1769,15 @@ investorsheritage	Investors Heritage
 invopop	Invopop
 inworld-ai	Inworld
 ironcladhq	Ironclad
+Irregular	Irregular
+isembard	Isembard
 isometric	Isometric
+IT Labs	IT Labs
+iterable	Iterable
+iVerify	iVerify
 ivo-inc	Ivo Inc.
 iwoca.co.uk	iwoca
+ixianrobotics	Ixian Robotics
 iyo	iyo
 jack-jill-external-ats	Jack & Jill
 jameda	Jameda
@@ -1972,13 +1786,17 @@ jamssoftware	JAMS Software
 jane	Jane
 janitor-ai	janitorAI
 january	January
+Jasper AI	Jasper
 javvy-coffee-company	Javvy Coffee Company
 jbs-dev	JBS Dev
+Jellyfish	Jellyfish
 jellyfishcareers	Jellyfish
+Jerry.ai	Jerry.ai
 jiga	Jiga
 jigsaw	Jigsaw Tech
 jimdo.com	Jimdo
 jito-labs	Jito Labs
+Jitter	Jitter
 jitter-video	Jitter
 jobber	Jobber
 jobs	Dusty
@@ -1993,10 +1811,14 @@ joor	JOOR
 jordandigitalmarketing	Jordan Digital Marketing
 josys	Josys
 joyfulhealth	Joyful Health
+Joyteractive	Joyteractive
 jua	Jua
 judgmentlabs	Judgment Labs
+Juicebox	Juicebox
 julius	Julius AI
+Jump	Jump
 jump-app	Jump
+Junction	Junction
 junior	Junior AI
 junipersquare	Juniper Square
 jupus	JUPUS
@@ -2006,23 +1828,35 @@ k-ID	k-ID
 kafene	Kafene
 kairon-health	Kairon Health
 kairos-project	Kairos
-kaizenlabs	Kaizen Labs
+kaizenlabs	Kaizen
 kale	Kale
 kalibri-labs	Kalibri Labs
+Kallikor	Kallikor
 kalshi	Kalshi
+kaluza	Kaluza
+kamino	Kamino
 kamiwaza	Kamiwaza AI
 kandou-ai	Kandou AI
+kantiv	Kantiv (formerly Joist AI)
 kantoko	Kantoko
+Karman Industries	Karman Industries
+Kastle	Kastle
 katana	Katana
 katana-network	Katana
 katapult-Labs	Katapult Labs
 kayak	KAYAK
 keeling-labs	Keeling Labs
+keenable	Keenable.ai
+kelluu	Kelluu
 kepler-ai	Kepler
+Keragon	Keragon Inc
 kernel	Kernel
 kestra	Kestra Technologies
 kevins-natural-foods	Kevin's Natural Foods
-keycard-labs	Keycard Labs
+keycard-labs	Keycard
+Keyrock	Keyrock
+khoslaventures	Khosla Ventures
+kiddom	Kiddom
 kiefer	Kiefer
 kiln.fi	Kiln
 kiloforge	Kiloforge
@@ -2030,15 +1864,19 @@ kimarutalent	KIMARU Talent
 kin	Kin Insurance
 kindred	Kindred
 kineticsystems	Kinetic Systems
+Kingdom	Kingdom
 kins	Kins
 kinship	Kinship
 kinsteadhealth	Kinstead
 kira	Kira
+Kirin	Kirin
 kiso-technology	Kiso Technology
 kissmyapps	Kiss My Apps
 kit	Kit
+kivo-health	Kivo Health
 kiwi	Kiwi Financial Inc
 kiwi-com	Kiwi.com
+klarify	Klarify
 kled-ai	Kled AI
 kleinerperkinsfellows	Kleiner Perkins
 klim	Klim GmbH
@@ -2047,6 +1885,7 @@ knock	Knock
 knoetic	CPOHQ + Knoetic AI
 knot	Knot
 knowledge-road	Knowledge Road
+Known	Known
 knownwell	knownwell
 knowtex	Knowtex
 knowunity	Knowunity GmbH
@@ -2055,29 +1894,44 @@ koahlabs	Koah
 kodex	Kodex
 kodifly	Kodifly
 kog	Kog
+Kognitos	Kognitos
 kognity	Kognity
 koho	KOHO
+Kojo	Kojo
+Kombo	Kombo
 kong	Kong
+Konnected	Konnected
 kontakt	Kontakt.io
 konvu	Konvu
 koro	KoRo
 kos.ai	kos.ai
+Kota	Kota
 kovari	Kovari
 kovo	Kovo
+Koyfin	Koyfin
+KPR	KP Reddy Co.
 kraken-kinetics	Kraken Kinetics
 kraken.com	Kraken
 krakensandbox	Kraken Sandbox
 krakentech	Kraken
+kranz-consulting	Kranz Consulting
 krea	Krea
 krew	Krew
+kubera-health	Kubera Health
+Kueski	Kueski
 kunin	Kunin Technologies
+Kustomer	Kustomer
 kyanhealth	Kyan Health
 kyra	Kyra
 labhouse	LABHOUSE
 ladder	Ladder
-lago	Lago
+laelaps	Laelaps AI
+LAI	Lead Allies Inc
 lakera.ai	Lakera
+Lambda	Lambda
+laminar-jobs	Laminar
 lanai	Lanai
+Lance	Lance
 lancedb	LanceDB
 langchain	LangChain
 langdock	Langdock
@@ -2086,46 +1940,66 @@ lapel	Lapel
 lapitopa.com	lapitopa
 lark	Lark Health
 lassie	Lassie
+latacora	Latacora
 latamcent	LatamCent
+LatchBio	LatchBio
 latent	Latent
+Latent Defense	Latent Defense
 latentlabs	Latent Labs
+Latitud	Latitud
 latitude-global	Latitude
+launchwellgroup	LaunchWell Group
 laurel	Laurel
 lavendo	Lavendo
+LawDepot	LawDepot
 lawhive	Lawhive
 layerfi	Layer
 lazer	Lazer
 leadbank	Lead
+LeanData	LeanData
+LeanLayer	Lean Layer
 leanscale	LeanScale
+LeanTech	Lean Technologies
 leantechniques	Lean TECHniques
 leap	Leap
 learn-ashby	Learn Ashby (Google Workspace)
 leavitt	Leavitt Group
 ledge	Ledge
 ledger	Ledger
-legend-xyz	Legend Labs, Inc.
+legal-500	Legal 500
 legionhealth	Legion Health
 legora	Legora
 leland	Leland
 lemfi	LemFi
 lemlist	lemlist
+lemon-io	Lemon.io
 lemon-markets	lemon.markets
 lendable	Lendable
+lens	LENS Inc.
 leona	Leona Health
 leonardo.ai	Leonardo.Ai
+leovegasgroup	LeoVegas Mobile Gaming Group
 letta	Letta
 level	Level
-levels	Levels Technologies
+Level-AI	Level AI
+Levelpath	Levelpath
 leveragedmedia	Leveraged Media
+LevHaolam	Lev Haolam World Ltd.
 lexroom	Lexroom
 lgads	LG Ad Solutions
 li.fi	LI.FI
-libra	Libra AI, Inc
 lickability	Lickability
+Lido.fi	Lido
 life-space-digital	Life Space Digital
+LifeLabs Learning	LifeLabs Learning
+lifen	Lifen
 light	Light
 light-inc	Light
+Lightdash	Lightdash
+Lightfield	Lightfield
+lighthousehq	Lighthouse
 lightning	Lightning Labs
+lightsage	Lightsage
 lightsource	LightSource
 lightspark	Lightspark
 lightspeedhq	Lightspeed Commerce, Inc.
@@ -2133,15 +2007,19 @@ lilt-corporate	LILT
 lilt-production	LILT (Production)
 limbic	Limbic
 limble	Limble
+Lime	Lime
 limelight-steel	Limelight Steel, Inc.
 limetax	Limetax
 lindus	Lindus
 linear	Linear
 lingodotdev	Lingo.dev
+Links-Academy	Links Academy
+Linkup	Linkup
 linqapp	Linq
 linro	Linro
 lio	Lio
 liqid-lam	LIQID Asset Management GmbH
+liqid-lig	LIQID Investments GmbH
 liquid	Liquid
 liquid-ai	Liquid AI
 listenlabs	Listen Labs
@@ -2149,21 +2027,27 @@ litellm	LiteLLM
 literati	Literati
 lithosquare	Lithosquare
 litmus	Litmus
+LIV-Golf	LIV Golf
 liveflow	LiveFlow
 liveitup	Live it Up
 livekit	LiveKit
+liveramp-inc	LiveRamp, Inc.
 liveview-technologies	LiveView Technologies
 livingHR	livingHR
 llamaindex	LlamaIndex
 lm-studio	LM Studio
 loancrate	Loancrate
+Local Infusion	Local Infusion
 locale.com	Locale
+localstack	LocalStack
 logiqal	Logiqal
 logos-space	Logos Space
+loki	Loki Robotics
 long-lake	Long Lake
 loopio	Loopio Inc.
 loora	Loora
 loot-labs	Loot Labs
+Lorikeet	Lorikeet
 lottie	Lottie
 lotushealth	Lotus AI
 loula	Loula
@@ -2178,30 +2062,36 @@ lucis	Lucis
 lumaai	Luma
 lumai	Lumai
 lumana	Lumana
-lumanu	Lumanu
 lumbermanufactory	The Lumber Manufactory
 lumen.energy	Lumen Energy
 lumilens	Lumilens
 lumin-digital	Lumin Digital
 luminai	Luminai
+Luminary	Luminary
 luminovo	Luminovo
 lumos	Lumos
 lunar	Lunar
 lunar-solar-group	Lunar Solar Group
-luopay	Luo
+Lunon	Lunon
 luxor	Luxor Technology Corporation
+lyceum	Lyceum
 lydian	Lydian
 lyrebird-health	Lyrebird Health
 lyric	Lyric
+M-KOPA	M-KOPA
 m13	M13
 maca	MACA
+mach10usa	MACH10
 mach9	Mach9
+machinacognita	Machina Cognita Technologies
 macquarie-airfinance-careers	Macquarie AirFinance
 macrohealth	MacroHealth
 macroscope	Macroscope
 macroscopic	Macroscopic
+madhive	Madhive
 magentic	Magentic
 magic.dev	Magic
+Magical	Magical
 magiceden	Magic Eden
 magicpatterns	Magic Patterns
 magicschool	MagicSchool AI
@@ -2215,17 +2105,21 @@ makai-labs	Makai Labs
 makermaker.ai	MakerMaker
 maki	MakiPeople
 mandolin	Mandolin
-mandrel	Mandrel
 maneuver-marketing	Maneuver Marketing
 manex	Manex AI GmbH
 mangomint	Mangomint
 manifest-law	Manifest Law
 manifest-os	Manifest OS
 manifold-industries	Manifold Industries
+Maniilaq-School-Based-Health-Center	Tribal Health Connections
+manychat	Manychat, Inc
+Mapbox	Mapbox
 maple	Maple
+Marathon Fusion	Marathon Fusion
 marble	Marble
 marble.ai	Marble Technology Inc.
 marblehealth	Marble Health
+MarcoHire	Marco
 marianaminerals	Mariana Minerals
 mariner-careers	Mariner
 markarch	Marketing Architects
@@ -2233,38 +2127,50 @@ marloo	Marloo
 marqeta-inc	Marqeta
 marshmallow	marshmallow
 masabi	Masabi
+mast	Mast
+Mastra	Mastra
 matchii	Matchii
+matchmatch	matchmatch
 matchnode	Matchnode
 materialsecurity	Material Security
 matia	Matia
+MaticRobots	Matic
 matter-intelligence	Matter Intelligence
 matter-labs	Matter Labs
 matterworks	Matterworks, Inc.
+matx	MatX
 maven	Maven
 maven-agi	Maven AGI
+MaxBeauty	MaxBeauty
+Maxima	Maxima
 maxima-consulting	Maxima Consulting
-maximor	Maximor AI
 maximustribe	Maximus Health, Inc.
 maxinsights	Maxinsights
 maxrewards	MaxRewards
+maya-htt	Maya HTT
 maybern	Maybern
 mazedesign	Maze
 mazehq	Maze
+mbdialogues	Mirror Biology Dialogues Fund
 mdcalc	MDCalc
+Meadow	Meadow
 meadowmemorials	Meadow
 mebe	MeBe
+mechanism-ventures	Mechanism Ventures
 mechanize	Mechanize, Inc.
 mecka.ai	Mecka
 medely	Medely
 media-mogul	Mogul & Co.
 medialicious	Medialicious
 mediatech	Mediatech
+MediCircle	MediCircle
 mednet	Mednet, Inc.
 medraai	Medra
 medscout	MedScout
 medsender	Medsender
 meetmarvin	Marvin Behavioral Health
 megazone	Megazone Cloud US
+Meliora-Academy	Meliora Academy
 melius	Melius
 melotech	Melotech
 mem.ai	Mem
@@ -2277,10 +2183,14 @@ menlosecurity	Menlo Security
 mentava	Mentava
 mento	Mento
 meow	Meow
+Meraki-Labs	Meraki-Labs
 mercator	Mercator
 merciv	Merciv
 mercor	Mercor
 mercura	Mercura
+merge	Merge
+Merge Labs	Merge Labs
+mergemoney	Merge Money Ltd.
 meridianlink	MeridianLink
 meridio	Meridio
 meshy	Meshy LLC
@@ -2299,10 +2209,12 @@ method-crm	Method Integration Inc.
 method.security	Method Security
 meticulous	Meticulous
 metriport	Metriport
+metro-credit-union	Metro Credit Union
 mexdigital	Multibank Group
 mgtinsurance	MGT Insurance
 mia-labs	Mia Labs, Inc.
-miaplaza	Miaplaza
+microagi	microagi
+micromart	Micromart
 middesk	Middesk
 midjourney	Midjourney
 midnite	Midnite
@@ -2310,34 +2222,42 @@ midpage	Midpage
 midstream	Midstream Health
 mightyacorndigital	Mighty Acorn Digital
 mikmak	MikMak
+milesai	Miles AI
 mimica	Mimica
 mindbeam	Mindbeam
 mindly	Mindly
 mindpeak	Mindpeak
 mindrobotics	Mind Robotics
 mindvalley	Mindvalley
-mintmcp	MintMCP
+minerva	Minerva
+Mintlify	Mintlify
+miodottore	MioDottore
 miovision	Miovision
 mirage	Mirage
 miramace	Mira Mace
 mirelo	Mirelo AI
 mirendil	Mirendil
 miri	Machine Intelligence Research Institute
+mirror-physics	Mirror Physics
 misen	Misen
+misfitsandmachines	Misfits & Machines
 mistral.ai	Mistral
 miter	Miter
 mithrl	Mithrl
+mitti	Mitti
 moab	Moab
 mobbin.com	Mobbin
+mobi	Mobi.AI
 mobilefirst	The Mobile-First Company
 modal	Modal
-modelyst	Modelyst
 modernfi	ModernFi
 moderntreasury	Modern Treasury
+modulate	Modulate
 modus	Modus
 moego	MoeGo
 molecule	molecule.xyz
 molecule-software	Molecule Software
+Molg	Molg
 mollie	Mollie
 moment	Moment
 momentic	Momentic
@@ -2345,6 +2265,7 @@ monaco	Monaco
 monad.foundation	Monad Foundation
 monarchcrops	Monarch
 monarchmoney	Monarch Money
+monday.com	monday.com
 mondoo	Mondoo
 monei	MONEI
 monk	Monk
@@ -2355,6 +2276,7 @@ monterra	Monterra
 montu-uk	Montu UK
 monumental	Monumental
 moonactive	Moon Active
+Moonlake	Moonlake
 moonshot	Moonshot
 moovx	Moovx
 moraleshr	MoralesHR
@@ -2363,22 +2285,34 @@ morpho	Morpho
 morse-micro	Morse Micro
 mosaic	Mosaic
 moss	Moss
+mossrobotics	moss robotics
+MotherDuck	MotherDuck
 motorway	Motorway
 mount-thor	Mount Thor
+Move Concierge	Move Concierge
+movement	Movement
 moxfive	MOXFIVE
+Moxie	Moxie
+MSquared	MSquared
+MUBI	MUBI
 mubit	Mubit
 mudflap	Mudflap
+MUI	MUI
 multiply	Multiply
+multiplyai	Multiply
 multiplymii	MultiplyMii
 multiverse	Multiverse
 munich-electrification	Munich Electrification
 mural	Mural
+Mutiny	Mutiny
 mux	Mux
-myTomorrows	myTomorrows
+mycroft	Mycroft
 myedspacecareers	MyEdSpace
+mymoneymatters	My Money Matters
 myparadigm	Paradigm
 myriad-ai	Myriad AI
 mystenlabs	Mysten Labs
+myTomorrows	myTomorrows
 n1	N1
 n8n	n8n
 nabihealth	Nabi
@@ -2386,16 +2320,21 @@ nabla	Nabla
 nabucasa	Nabu Casa
 nace.ai	Nace AI
 namespace	Namespace
+Nango	Nango
 nano-qt	Nanofiber Quantum Technologies, Inc.
 nascent	Nascent
-nava-benefits	Nava Benefits
+Nash	Nash
+NationGraph	NationGraph
+Natter	Natter
+Nautilus Biotechnology	Nautilus Biotechnology
 navattic	Navattic
+navflex	Navflex
 navi	Navi AI
 ncontracts	Ncontracts
-ndeavour	NDEAVOUR CONSULTING
+ndeavour	Mobile Wave Solutions
 neara	Neara
 nebulock	Nebulock
-nectar-social	Nectar Social
+nectar	Nectar
 negotiate-ai	Aron
 neighborly-software	Neighborly Software
 neko-health	Neko Health
@@ -2406,6 +2345,7 @@ nen-creative	Nen Creative
 neo-tax	Neo.Tax
 neocognition	NeoCognition
 neofinancial	Neo Financial
+Neon	Neon
 neon-health	Neon Health
 neonredwood	Neon Redwood
 neotaste	NeoTaste
@@ -2418,6 +2358,7 @@ netbird	NetBird
 netboxlabs	NetBox Labs
 netgear	NETGEAR
 nethermind	Nethermind
+netholabs	Netholabs
 netic	Netic
 netpreme	Netpreme
 netwealth	Netwealth
@@ -2431,17 +2372,25 @@ neurophos	Neurophos
 neuroscale	Neuroscale AI
 nevis	Nevis Wealth
 nevoya	Nevoya
+New Story	New Story
+New-Story	New Story
+New-Story-Schools-OH	New Story Schools (OH)
+New-Story-Schools-PA	New Story Schools (PA)
 newform	Newform
 newlantern	New Lantern
+NewOrbit	NewOrbit Space
 newtonx	NewtonX
 newxel	Newxel
 nexos-ai	nexos.ai
 nextdata	Nextdata
 nextlinklabs	NextLink Labs
+NextPatient	NextPatient
+nexttoken	NextToken
 nexus-cognitive	Nexus One
+nexus-intelligence	Nexus Intelligence
 nexus-marketing	Nexus Marketing
 nexus.xyz	Nexus
-nexxa	Nexxa.AI
+nexxa	Nexxa
 nexxen	Nexxen
 niantic-spatial	Niantic Spatial
 nidus-technologies	Nidus Technologies
@@ -2450,7 +2399,10 @@ nimbl	Nimbl
 ninjatech.ai	NinjaTech AI
 niramedical	Nira Medical
 nirvana	Nirvana Insurance
+Niural	Niural
 niva	Niva
+Nivoda	Nivoda
+NOCTOVO	NOCTOVO
 noda-ai	NODA AI
 nodle	Nodle
 noetica	Noetica
@@ -2464,7 +2416,9 @@ nomic.foundation	Nomic Foundation
 nomos	Nomos
 nooks	Nooks
 nord-security	Nord Security
-norm-ai	Norm Ai
+norm	Norm
+NormalComputing	Normal Computing Corporation
+normlaw	Norm Law
 northflank.com	Northflank
 northslope-technologies	Northslope
 northvectordynamics	North Vector Dynamics Inc.
@@ -2486,9 +2440,11 @@ novita-ai	Novita AI
 novo	Novo
 nox-metals	NOX METALS
 noyo	Noyo
+NPX	Nuclear Promise X
 ntegrity	ntegrity
 ntt-data-aivista	NTT DATA AIVista
 nubank	Nubank
+nuclearn	Nuclearn
 nucleus	Nucleus Genomics
 nudge	Nudge
 numeral	Numeral
@@ -2499,15 +2455,18 @@ nuna	Nuna
 nursa	Nursa
 nusano	Nusano
 nylas	Nylas
+nylon	Nylon
 oak	Oak
 oakland-feather-river-camp	Oakland Feather River Camp
 oakslab	OAK'S LAB
 oberst	Oberst
+OBRIO	OBRIO
 observable-space	Observable Space
 obsidiansystems	Obsidian Systems
 obviant	Obviant
 obvio	Obvio
 obvious	Obvious
+ocean-atomics	Ocean Atomics
 oceanus	Oceanus Marine Technologies
 oden-technologies	Oden Technologies
 odin	Odin
@@ -2525,13 +2484,14 @@ old-well-labs	Old Well Labs
 oligo	Oligo Space
 olix	OLIX
 ollama	Ollama
+olly-olly	Olly Olly
 omadaai	Omada.ai
 omafertility	Oma Fertility
 omarobotics	Oma Robotics
 omaze	Omaze
 omegga	Omegga
 omi	Omi
-omnea	Omnea
+Omnea	Omnea
 omni	Omni
 omnifold	Omnifold
 omnilex	Omnilex
@@ -2542,38 +2502,56 @@ onebrief	Onebrief
 onecrew	OneCrew
 onehealth	OneHealth Tech Corp
 oneleet	Oneleet
+onepot	onepot
 onereach.ai	OneReach.ai
+onerobot	One Robot
 oneschema	OneSchema
 onestock	OneStock
 onhires	OnHires
 onme	On Me Gifting
 onoshealth	Onos Health
 onramp	OnRamp
+Ontic	Ontic
 ontologize	Ontologize
 onton	Onton
+ontra	Ontra
 onyx	Onyx
 onyx-bio	Onyx Bio
+Opal	Opal Security
+Opal-OS	Opal
+OpenAge	OpenAge
 openai	OpenAI
 openai-deployment-company	OpenAI Deployment Company
+openai-foundation	OpenAI Foundation
 openart	OpenArt AI
 openclaw-foundation-inc	OpenClaw Foundation
 opencoreos	OpenCoreOS
+opendr	openDoctor
 opened	OpenEd
 openevidence	OpenEvidence
 opengov	OpenGov
 opengovsg	Open Government Products
+OpenHands	OpenHands
 openhomefoundation	Open Home Foundation
 openloophealth	OpenLoop Health
+openlooppartners	OpenLoop Health Partners
 openly	Openly
 openmind	OpenMind
+Opennote	Opennote
 openobserve-careers	OpenObserve Inc.
 openrouter	OpenRouter
+OpenSea	OpenSea
+openstandard	Open Standard
 opfoundation	Optimism Foundation
+oplabs	OP Labs
+OpsLevel	OpsLevel
 opsmill	OpsMill
 optery	Optery, Inc.
 optimum	Optimum
+options-it	Options Technology
 optro	Optro
 opus-training	Opus Training Inc.
+Opus1	Opus1
 opusclip	OpusClip
 oratomic	Oratomic, Inc.
 orb	Orb
@@ -2585,33 +2563,51 @@ orca	Orca
 orchard	Orchard Robotics
 orchestra-bio	Orchestra Bio
 orderful	Orderful
+originhq	Origin
 orita	Orita
+orpex	Orpex
+ortet	Ortet
 orum	Orum
 oscilar	Oscilar
 osmo	Osmo
+Oso	Oso
 ostium	Ostium Labs
+Ostrom	Ostrom
 oumi	Oumi
+OurRitual	OurRitual
 outcapped	Outcapped
 outersignal	OuterSignal
 outmarket	Outmarket AI
+Outpost	Outpost
 outpostnow	Outpost Technologies
-output	Output Biosciences
+output	Output Labs
 outputinc	Output Inc
+Outrival	Outrival
 outro-health	Outro Health USA Inc.
+outschool	Outschool
 outset	Outset
+Outsmart	Outsmart
 outtake	Outtake
 overflow	Overflow
+Overjet	Overjet
+overstory	Overstory
 overtone	Overtone
 overview	Overview Corporation
 overviewenergy	Overview Energy
+oviva	Oviva
 owkin	Owkin
 owner	Owner.com
+OXIO	OXIO Corporation
 oxman	OXMAN
 oyster	Oyster
+P-1 AI	P-1 AI
 p2p.org	P2P. org
+PACELoanGroup	PACE Loan Group
 packz	Packz
 pactfi	PactFi
 paddle	Paddle
+Pagos	Pagos
+paid	Paid
 paireyewear	Pair Eyewear, Inc.
 palette-media	Palette Media
 palettelabs	Palette Labs
@@ -2623,22 +2619,30 @@ palup	Palup.ai
 pandektes	Pandektes
 pangramlabs	Pangram Labs
 pano-ai	Pano AI
+Panoptyc	Panoptyc
 panther-life-sciences	Panther Life Sciences
 pantograph	Pantograph
+PAR Technology	PAR Technology
 parable	Parable
 parabola-io	Parabola
+Paradigm	Paradigm
+paradigm-health	Paradigm Health
 paradigmai	Paradigm
 paradox	Paradox
 parafin	Parafin
 paraform	Paraform
+Paragon	Paragon
+parakeet-health	Parakeet Health
 parallel	Parallel Web Systems
 parallel-bio	Parallel Bio
 parallel-fluidics	Parallel Fluidics, Inc.
 parambil	Parambil
+parameter	Parameter ai
 parasail	Parasail
 pareto-ai	Pareto
 parity	Parity
 pariveda	Pariveda
+Parkade	Parkade
 parker	Parker Group Inc
 parspec	Parspec
 partiful	Partiful
@@ -2650,39 +2654,53 @@ passage	Passage
 passes	Passes
 passionfroot	Passionfroot
 passport	Passport
+Passthrough	Passthrough
 patch.io	Patch
 pathos	The Path
+Pathways	Pathways
 pathwork	Pathwork
 patlytics	Patlytics, Inc.
 patreon	Patreon
 patrianna	Patrianna
 pave-power	Pave Power
+PaveBank	Pave Bank
 pawp	Pawp
 pax-historia	Pax Historia
+paxos	Paxos
+PaxosLabs	Paxos Labs
 payabli	Payabli
 payflip	Payflip
 paymentology	Paymentology
 payrails	Payrails GmbH
+Payscale	Payscale
 payzen-inc	PayZen
+PeakMetrics	PeakMetrics
+Pear-VC	Pear VC
 pearl	Pearl
 pearlhealth	Pearl Health
 pearlyplan	Pearly
+Pearmill	Pearmill
 pearpop	Pearpop
 pebl	Pebl
 peec	Peec AI
 peek	Peek
+Pelico	Pelico
+Pemberton	Pemberton
 pencil	Pencil
 pennylane	Pennylane SAS
 pensive	Pensive
 people-culture-talent	People Culture Talent
 people-data-labs	People Data Labs
 percepta	Percepta
+Perchwell	Perchwell
 percona	Percona
 perfect-venue	Perfect Venue
 pergolux	Pergolux
 periodic-labs	Periodic Labs
+Perk	Perk
 permitflow	PermitFlow
 permutive	Permutive
+Perplexity	Perplexity
 perryweather	Perry Weather
 persona	Persona
 persona.ai	Persona AI Inc
@@ -2690,6 +2708,8 @@ petra-labs	Petra Labs
 phantom	Phantom
 phasebiolabs	Phase Biolabs
 phia	Phia
+Phil	PHIL
+Phinitylabs	Phinity Labs
 phlair	Phlair
 phoebe-work	Phoebe
 phoenix	Phoenix
@@ -2708,8 +2728,9 @@ pilgrim	Pilgrim
 pillarspace	Pillar Space
 pilot-fiber	Pilot Fiber
 pinecone	Pinecone
-pingo	Pingo
 pirros	Pirros
+Pivot	Pivot
+pivotal	Pivotal Research
 pivotal-health	Pivotal Health
 pivotrobotics	Pivot Robotics
 pixelmatters	Pixelmatters
@@ -2719,67 +2740,99 @@ plancraft	plancraft
 plane	Plane Software, Inc.
 planehr	Plane
 planera	Planera
+planhat	Planhat
 planteria	Planteria Group
+PlantingSpace	PlantingSpace
+plasiv	Plasiv Inc
 plasma	Plasma
 plasmidsaurus	Plasmidsaurus
 platformed	Platformed
-playerzero	PlayerZero, Inc.
+plato.so	Plato
+Plaud	Plaud
+Playbook	Playbook
+playerzero	PlayerZero
+Playground	Playground
+Playground Global	Playground Global
+Playlab	Playlab
 playpowerlabs	Playpower Labs
 playson	Playson
+plentific	Plentific
 pleo	Pleo
 pliant	Pliant
 plinth	Plinth
 plot	Plot Technologies, Inc.
-plot-pointe	Plot Pointe
+plot-pointe	PlotPointe
+plotlineso	Plotline
 plotly	Plotly
 ployai	Ploy
+plsn	Polished Snow
+plugmotors	Plug Technologies Inc
 plumerai	Plumerai
 pluralfinance	Plural
 pluralis-research	Pluralis Research
 pmmalliance	Product Marketing Alliance
+pocket	Pocket (YC W26)
+Pocket Worlds	Pocket Worlds
 pocketprep	Pocket Prep
 pod-network	pod.network
 podium-automation	Podium Automation
 poesis	Poesis
+Poetiq	Poetiq
+PoggioLabs	Poggio Labs
+Point	Point
 point-one-navigation	Point One Navigation Inc
+pointfive	PointFive
+PointOne	PointOne
 pointr	Pointr
 polar	Polar
-polaranalytics	Polar Analytics
 polarisgrowth	Polaris Growth
 polarsteps	Polarsteps
 polene-paris	Polène Paris
+polimorphic	Polimorphic
 politanalytics	PolitAnalytics
 polly	Polly
+polygon-labs	Polygon Labs
 polymarket	Polymarket
 polymath	Polymath
 polymr	polymr
+pomelo-care	Pomelo Care
 poolside	Poolside
+PopArabia	PopArabia
 popl	Popl Co
 poseidonaero	Poseidon Aerospace
 posh	Posh
 posh-ai	Posh
 poshmark	Poshmark
 positive-development	Positive Development
+Post	Post.
+Powerlattice	Powerlattice Technologies Inc.
 powerline	Powerline
-powerus	PowerUs
+powertown	Powertown
 pplwise	pplwise
 praecipio	Praecipio Consulting
 pragmatico	Pragmatico
 pragmatike	Pragmatike
 prairielearn	PrairieLearn, Inc.
+pramaana-labs	Pramaana Labs
+Prava Therapy	Prava Therapy
 pravah	Pravāh
 praxipal	praxipal
 prefect	Prefect
+Preference-Model	Preference Model
 prelim	Prelim
 prelude	Prelude
 preply	Preply
 preql	Preql AI
 pressw	PressW
 prevail-fund	Prevail Fund
+Prima Mente	Prima Mente
 primary	Primary
+PrimeIntellect	Prime Intellect
 primer	Primer
 primer.io	Primer.io
 prior-labs	Prior Labs
+PRISM	PRISM
+probably-good	Probably Good
 probablygenetic	Probably Genetic
 probook	Probook
 procurementsciences	Procurement Sciences
@@ -2789,47 +2842,63 @@ product-now	ProductNow
 productgenius	Product Genius
 producthunt	Product Hunt
 productwind	ProductWind
+Profound	Profound
 progress-partners	Progress Partners
 project-expedition	Project Expedition
 projecteleven	Project Eleven
 projectsbyif	Projects by IF
 prokeep	Prokeep
+Promise	Promise
 promise-studios	Promise Studios
+Prompt	Prompt
+proofofhuman	Proof of Human
 propel	Propel
 propelus	Propelus
 prophecygov	Prophecy Gov
+Prophet Tech Pty Ltd	Prophet Tech Pty Ltd
 prophet-security	Prophet Security
 prophetic-technologies	Prophetic Technologies Inc
 prorata	ProRata.ai
 prose	Prose
 prosper-ai	Prosper AI
+Prospyr	Prospyr
+prosus	Prosus
 protege	Protege
 protegrity	Protegrity
 proterahealth	Protera Health
+Protex AI	Protex AI
 proto-town	Proto-Town
 protocol-cares	Protocol Behavioral Health
 provable	Provable
+ProvenirInc	Provenir Inc
 proxima	Proxima
 proxima-fusion	Proxima Fusion
-pryzm	Pryzm
+ProximaAI	Proxima
+Proximal	Proximal
 psi	Physical Superintelligence
 publiccloudgroup	Public Cloud Group
 publicit	Publicit Global
 pulse	Pulse
+Pulsora Inc	Pulsora, Inc.
 pure	Pure
+pureapp	Pure Interactive Entertainment, Inc
 pursuit	Pursuit
 puzzle-consulting-services	Puzzle Consulting Services
-puzzle.io	Puzzle.io
 pylon	Pylon
 pylon-labs	Pylon
 pythnetwork	Pyth Data Association
 pytho-ai	Pytho AI
+Pyyne	Pyyne
+pzeroresearch	P-Zero Research
+q	ㅤ
+QAWolf	QA Wolf
 qdrant.tech	Qdrant
 qed-ai	QED.ai
+qlub	qlub
 qontext	Qontext
 qorelo	Qorelo
+quadric	quadric
 quadrillion-labs	Quadrillion
-quadrivia	Quadrivia
 qualified	Qualified
 qualified-health-pbc	Qualified Health PBC
 qualitate	Qualitate
@@ -2844,13 +2913,16 @@ quantumleap.education	Quantum Leap
 quantware	QuantWare
 quarks-tech	Quarks
 quartermaster	Quartermaster
+queueinc	queueinc
 quicknode	Quicknode
 quilter	Quilter
 quindar	Quindar
 quizlet-inc	Quizlet
 qumulo	Qumulo
+quo	Quo
 quora	Quora
 quorum	Quorum
+quorumai	Quorum
 quotewell	QuoteWell
 qwilr	Qwilr
 r37	R37 Lab, R1 RCM
@@ -2861,12 +2933,16 @@ radiant	Radiant
 radiant-industries	Radiant Industries
 radiantgraph	RadiantGraph, Inc
 radical-numerics	Radical Numerics
+radixark	RadixArk
 raft	Raft
 raiku	Raiku
+Railway	Railway
 rain	Rain
 rain-technologies	Rain Technologies Inc.
+Raindrop	Raindrop
 rainfallhealth	Rainfall Health
 rainforest-pay	Rainforest
+rainmaker	Rainmaker Technology Corporation
 rallyuxr	Rally
 ramielcapital	Ramiel Capital
 ramp	Ramp
@@ -2874,6 +2950,7 @@ range	Range
 rapdev	RapDev
 raptive	Raptive
 rarecandy	Rare Candy
+Rasa	Rasa
 raspberry	Raspberry AI
 ravenna	Ravenna
 ravio	Ravio
@@ -2886,31 +2963,47 @@ reactivemarkets	Reactive Markets
 read-ai	Read AI, Inc.
 readme	ReadMe
 ready	Ready
+Reaktor	Reaktor
 realitydefender	Reality Defender
 realmalliance	Realm
 rebar	Rebar
+Rebecca-School	Rebecca School
 rebel-space-technologies	Rebel Space Technologies
 rebuy	Rebuy, Inc.
 rec	Rec Technologies
+Recall	Recall
 recharge	Recharge
 recraft	Recraft
+Recurrency	Recurrency
+recursive-superintelligence	Recursive Superintelligence
 red-gate	Redgate
 red-oak	Red Oak
+Red6	Red 6
 reddit	Reddit
+Redesign Health	Redesign Health
+Redis	Redis
 redlygames	Redly Games
 redmetals	Red Metals
+redpanda-data	Redpanda Data
 redpine	Redpine
 reducto	Reducto
+redwoodresearch	Redwood Research
 reedsy	Reedsy
 reevo	Reevo
+refine	Refine.ink
 reflect-orbital	Reflect Orbital
 reflectionai	Reflection
+ReflexRobotics	Reflex Robotics
 reflow	Reflow
 reframesystems	Reframe Systems
 regard	Regard
+REGENT	REGENT
 rehire	Rehire
 reindeer-ai	Reindeer
 reinforce-labs-inc	Reinforce Labs, Inc.
+rejigg	Rejigg
+Reka	Reka
+ReklameHealth	ReKlame Health
 relace	Relace
 relationrx	relationrx
 relay	Relay Technologies
@@ -2919,82 +3012,110 @@ relayprotocol	Relay
 relevanceai	Relevance AI
 releventfp	Relevent Football Partners
 reliable-robotics	Reliable Robotics Corporation
+Relling	Relling
 remarcable-inc	Remarcable, Inc.
+rematiq-gmbh	REMATIQ
 remberg	remberg
+Remedy Scientific	Remedy Scientific
 remedyrobotics	Remedy Robotics
 remilia	Remilia Corporation
 remo	Remo Health
 render	Render
 renderfoundation	The Render Foundation
+renewable-properties-llc	Renewable Properties, LLC
 rennscotmfg	Rennscot MFG
+rentana-io	Rentana
+Renterra	Renterra
 rentman	Rentman
 renuity	Renuity
 reo-dev	Reo.Dev
 reonic	Reonic
+repeatbuilders	Repeat Builders
+Replicant	Replicant
 replimune	Replimune
 replit	Replit
 replo	Replo
 reprally	RepRally
 reprise	Reprise
+Reprise Financial	Reprise Financial
 rerun	Rerun
 rescale	Rescale
 resend	Resend
 reserve	Reserve
+reservoir	Reservoir
+Reset	Reset
+Resilience Care	Resilience Care
 resolution	Resolution
+ResolveAI	ResolveAI
 reson8	Reson8
+Resonance	Resonance
 resorcer.com	Resorcer
 resq	ResQ
 restate	Restate
 restream	Restream
+resurgent-industries	Resurgent Industries
 reteam	Reteam
 retell-ai	Retell AI
 rev	Rev
+Revecore	Revecore
 revel	Revel
 revelrobotics	Revel Robotics
-revelxdstudio	Revel, Inc.
 revenuebase-inc	RevenueBase Inc
 revenuecat	RevenueCat
-revic	Revic
+RevenueVessel	Revenue Vessel
 revin	Revin
 reviserobotics	Revise Robotics
-revive	Revive
 revv-hq	Revv
 rewind	Rewind
 rewst	Rewst
 rho	Rho
 rhoda-ai	Rhoda AI
+Rhythms	Rhythms
 ribbon-ai	Ribbon AI
+Ricursive Intelligence	Ricursive Intelligence
+Ridealso	ALSO
 rightfoot	Rightfoot
 rilla	Rilla
 rillet	Rillet
 rime	Rime Labs
+riplo	Riplo
+RiseGuide	RiseGuide
 risklabs	Risk Labs
 river	River
+River-Rock-Academy	River Rock Academy
+Rivermont-Schools	Rivermont Schools
 riveron	Riveron
 rivet	Rivet Industries
 rivianvw.tech	Rivian and Volkswagen Group Technologies
 rivora	Rivora
 rize	Rize Education
 rnrs.solutions	RNRS Solutions
+Roadrunner	Roadrunner
 roadsurfer.com	Roadsurfer
 robco	RobCo
-robin-radar	Robin Radar
+robert-rauschenberg-foundation	Robert Rauschenberg Foundation
+robin-radar	Robin Radar Systems
 roboflow	Roboflow
 rocketsciencegg	Rocket Science Group
 roebling	Roebling
 rogerhealthcare	Roger Healthcare
+Rogo	Rogo
 rohlik	Rohlik
 rojointegrations	Rojo Integrations
 rollout	Rollout
 rollstack	Rollstack
 roompricegenie	RoomPriceGenie
+Root Financial	Root Financial
 root-access	Root Access
 rootglobal	Root Global
 ropes	Ropes
-rossum.ai	Rossum
+Rosabella	Rosabella
+Rose Rocket	Rose Rocket
+Rothys	Rothy's
 routefusion	Routefusion
 routereports	Route Reports
 rowan	Rowan Digital Infrastructure
+Rox-Data-Corp	Rox Data Corp
 rubiconmd	RubiconMD
 rubie	Rubie
 ruby-labs	Ruby Labs
@@ -3003,10 +3124,14 @@ runa	Runa
 rundoo	Rundoo
 runetech	Rune Technologies
 runlayer	Runlayer
+runna	Runna
 runpod	Runpod
 runsybil-jobs	RunSybil
+runtrellis	Trellis AI
+Runway	cfo.ai
 runway-ml	Runway
 rutter	Rutter
+RWA.xyz	RWA.xyz
 rwazi	Rwazi, Inc.
 rxvantage	RxVantage
 ryvn	Ryvn
@@ -3018,25 +3143,29 @@ safelease	SafeLease
 safety	Safety Cybersecurity
 safetykit	SafetyKit
 safi	Safi
+Sage-Alliance-Schools	Sage Alliance Schools
 sagecare	Sage Care Inc
 sagelabs.ai	Sage AI Labs
+SageOx	SageOx
 sagetap	Sagetap
+Sahara	Sahara
 sail	Sail Research
 sailorhealth	Sailor Health
 sailpeak	Sailpeak
 sainapse	Sainapse
 salesape-ai	SalesAPE.ai
 salesjack	SalesJack
+SalesPatriot	SalesPatriot
 salient	Salient
 salma-health	Salma Health
 salmon-group	Salmon Group
 salonkee	Salonkee
 saltz	Saltz Marketplace
 sampura	Sampura Research
-sana-roles	Sana
 sanctuary	Sanctuary
 sandbar	Sandbar
 sandboxaq	SandboxAQ
+Sandstone	Sandstone
 sanity	Sanity
 santermedia	SanterMedia
 sapien	Sapien
@@ -3046,28 +3175,36 @@ saris-ai	Saris
 sarjai	Sarj.ai
 saronic	Saronic Technologies
 sarvam	Sarvam
+SASH	Singapore AI Safety Hub
 satispay	Satispay
 satoshilabs	SatoshiLabs
 sauna.ai	Sauna
-savvy	Savvy Wealth
+savvy	Savvy
 savvymoney	SavvyMoney
 sazabi	Sazabi
 sbs-comms	SBS Comms
 scalar	Scalar
+Scale Army Careers	Scale Army Careers
 scale-to-win-inc	Scale to Win, Inc
 scaled-cognition	Scaled Cognition
 scalemath	ScaleMath
 scaler	Scaler
 scalera	Scalera
 scan-com	Scan.com
+scape	Scape
 scarlet	Scarlet
+Scholarly	Scholarly
 schoolhouse-world	Schoolhouse
 sciemo	Sciemo
 sciencelogic	ScienceLogic
 scientech-research	Scientech Research LLC
+Sciforium	Sciforium
+scope-labs	Scope
 scoreplay	ScorePlay
 scorewarrior	Scorewarrior
+scout-ai	Scout AI
 screenverse	Screenverse
+ScribdInc	Scribd, Inc.
 scribe	Scribe
 scrollmark	Scrollmark
 scrunch	Scrunch
@@ -3077,20 +3214,23 @@ sea12	Sea12 Technologies
 sealed	Sealed
 seamflow	Seamflow
 searchable	Searchable
+SearchApi	SearchApi
+SearchStax	SearchStax
 seccl	Seccl
 secfix	Secfix
+Second-Front-Systems	Second Front Systems
 second-nature	Second Nature
+SecondDinner	Second Dinner
 secondnaturecomputing	Second Nature Computing
 securebio	SecureBio
 security-level-5	Security Level 5
 seekeasy	Seekeasy
 sei-labs	Sei Labs
 seifoundation	Sei Development Foundation
-seismic-change.com	Seismic
 sekai	Sekai
+sela	Sela AI
 sellerx	SellerX
 sellfire	Sellfire
-sema4.ai	Sema4.ai
 semgrep	Semgrep
 semperis	Semperis
 seneca	Seneca
@@ -3102,14 +3242,18 @@ sentient	Sentient
 sentient-foundation	Sentient Foundation
 sentilink	SentiLink
 sentra	Sentra
+Sentradel	Sentradel
 sentry	Sentry
 seon	Seon
 seqera.io	Seqera
 seqholdings	Sequence Holdings
 sequen-ai	Sequen AI
 sequence	Sequence
+sequencing	Sequencing
 sequoia	Sequoia
 sereact	Sereact
+serova	Serova
+Serval	Serval
 serverobotics	Serve Robotics
 sesame	Sesame
 sevaro	Sevaro
@@ -3118,6 +3262,7 @@ sewer-ai	SewerAI Corporation
 seyna	Seyna
 sf-tensor	San Francisco Tensor Company
 sfcompute	The San Francisco Compute Company
+sfdata	San Francisco Data
 sfg20	SFG20
 sgnlai	SGNL.ai
 shade-inc	Shade.inc
@@ -3126,15 +3271,22 @@ shapes	Shapes
 shapr3d	Shapr3D
 share	Share
 sharedcontextlab	Shared Context Lab
+Shasqi	Shasqi
 sheerhealth	Sheer Health
 shepherd	Shepherd
+shield	f7d8749a-72d6-407c-bf98-292ea630c73a
 shift	Shift
+ShiftKey	ShiftKey
 shiftsmart	Shiftsmart
 shook	Shook
+ShortStory	Short Story
 shuttlebase	Shuttlebase
 shuttlelabs	Shuttle Labs
 sibill	Sibill Srl
+siegemedia	Siege Media
 siena	Siena AI
+Sierra	Sierra
+sierra-jp	Sierra Japan
 sierra-studio	Sierra Studio
 sieve	Sieve
 sifflet	SIFFLET
@@ -3142,11 +3294,15 @@ sift	Sift
 siftstack	Sift Stack, Inc.
 siftwell-analytics	Siftwell Analytics
 signal-ai	Signal AI
+SignalFire	SignalFire
 signalwire	SignalWire, Inc
+SigNoz	SigNoz
 sigp	Sigma Prime
 silktide	Silktide
 silnahealth.com	Silna Health
+Silver	Silver.dev
 sim	Sim
+simetrik	Simetrik
 simile	Simile
 simondata	Simon AI
 simple-ai	Simple AI
@@ -3155,18 +3311,29 @@ simplestudy	SimpleStudy
 simply-wall-st	Simply Wall St
 simspace-corporation	SimSpace Corporation
 simular	Simular
+Sine Engineering	Sine Engineering
 singu	SINGU
 singular	Singular
-singulate	Singulate
 sintra	Sintra
 sio-logistics	SIO Logistics
+Siro	Siro
 sisense	Sisense
 sisu	Sisu
+sitecore	Sitecore
+Sitemate	Sitemate
+SiteMinder	SiteMinder
+Skalar	Skalar
+SKELAR	SKELAR
+SKELAR-Platform	SKELAR Platform
 skimmer	Skimmer
+Skip	Skip
 skip-loans	Skip Loans
 skr-reisen	SKR Reisen GmbH
+Skyband Systems	Skyband Systems
 skydio	Skydio
+Skydropx	Skydropx - Frenet
 skyecosystem	Sky Frontier Foundation
+SkyLink	SkyLink
 skylo	Skylo Technologies
 skymavis	Sky Mavis
 skynrg	SkyNRG
@@ -3177,6 +3344,7 @@ slash-financial	Slash Financial
 slate	Slate
 sleeper	Sleeper
 slingshot-aerospace	Slingshot Aerospace
+SlingshotAI	Slingshot AI
 slope	Slope
 small-door-veterinary	Small Door Veterinary
 smallest	Smallest
@@ -3187,28 +3355,41 @@ smarkets	Smarkets
 smartleaf	Smartleaf
 snackpass	Snackpass
 snapdocs	Snapdocs
+Snappy	Snappy
 snd	Social News Desk
 snowball	Snowball
 snowflake	Snowflake
+Snyk	Snyk
 sobek-ai	Sobek AI
+socialscout	Social Scout
 socket	Socket
+Socotra	Socotra
 socure	Socure
 sofarocean	Sofar Ocean
 sola	Sola
 sola-insurance	Sola Insurance
+Solace	Solace
+Solana Foundation	Solana Foundation
 solanalabs	Solana Labs
 solcoa	Solcoa Industries
 solidgate	Solidgate
 solidroad	Solidroad
 solink	Solink
+SoLo Funds	SoLo Funds
 solstice	Solstice
-solva	Solva Technology
+Solvd	Solvd
 solve.ai	SolveAI
 solveintelligence	Solve Intelligence
 soma-energy	Soma Energy
+somana.tech	Somana
 somethings	Somethings
 somnia	Somnia
+Somnia-jobs	Somnia
+Sona	Sona
 sonar-us	Sonar
+Sondermind	SonderMind
+Sonio	Sonio
+Sorare	Sorare
 sorcerer	Sorcerer
 sosafe	SoSafe
 soshallwe	So Shall We
@@ -3220,40 +3401,44 @@ southgeeks	South Geeks
 sovereign-engineering	Obscura VPN
 sovra	SOVRA
 space44	SPACE44
-spacecurve	Spacecurve
 spacial	Spacial AI
 spade	Spade
 spaice-tech	SPAICE
 spaitial	SpAItial
 span	SPAN
+Span.app	Span
 spara	Spara
 spare	Spare
 sparrow	Sparrow
 sparta-commodities	Sparta
 speak	Speak
+Speakeasy	Speakeasy
 spear-ai	Spear AI
 spearbio	Spear Bio
+Speckle	Speckle
 specter	Specter
 spector-ai	Spector.ai
+Spectral Labs	Spectral Labs
 spekit	Spekit
 spellbook.com	Spellbook
 spellbrush	Spellbrush
 spexi	Spexi
-sphere	Sphere, Inc.
+sphere	Sphere
 spherecast	Spherecast
 spherical	Spherical
+Sphinx	Sphinx
 spikelabs	Spike Labs
 spiral	Spiral
 spiritus	Spiritus
 splitmetrics	SplitMetrics
 spotdraft	SpotDraft
+spotlight	Spotlight Media
 spotminders	Spotminders
 spoton	SpotOn
 sprig	Sprig
 sprinter-health	Sprinter Health
 sprout-ai	Sprout.ai
 spruceid	Spruce Systems, Inc.
-squad	Squad | Bowery
 squadai	Squad
 squads	Squads
 squint.ai	Squint
@@ -3263,13 +3448,16 @@ stable	Stable
 stack-ai	StackAI
 stack-infrastructure-apac-pte-ltd	STACK Infrastructure APAC
 stacker	Stacker
+stackfuel	StackFuel
 stackone	StackOne
 stacks	Stacks
-stainlessapi	Stainless
+Stand	Stand
+StandardBots	Standard Bots
 standardfleet	Standard Fleet
 standardsubsea	Standard Subsea
+StandInsurance	Stand Insurance
 starbridge	Starbridge
-stargate-foundation	Stargate Foundation
+starfish-space-inc	Starfish Space Inc.
 starknetfoundation	Starknet Foundation
 starpath.space	Starpath Robotics
 startplaying	StartPlaying
@@ -3277,6 +3465,9 @@ stash	Stash
 statisfy	Statisfy
 statista	Statista
 stayai	Stay AI
+Staycation	Staycation
+Steadily	Steadily
+steakhouse	Steakhouse Financial
 stealth	Stealth Startup
 stealth-healthtech-startup	Stealth HealthTech Startup
 stealthventurecapitalfirm	Stealth Venture Capital Firm
@@ -3287,21 +3478,28 @@ stellar-health	Stellar Health
 stellarentertainment	Stellar Entertainment Software Ltd
 stellic	Stellic
 stensul	Stensul
+Stepful	Stepful
 steuerbot	Steuerbot
+steyngroup	Steyn Group
 stickermule	Sticker Mule
 stigg	Stigg
 stillbright	Still Bright
 stndrd	STNDRD
+Stora	Stora
 stork	Stork Labs
 stotles.com	Stotles
 stradahq	Strada
+Straia	Straia
 strala-ai	Strala
 strange-loop-labs	Strange Loop Labs
 strategic-growth-partners	Strategic Growth Partners
+stratos	STRATOS Technologies
 stratum-ai	Stratum AI
+Strava	Strava
 stream	Stream
 streetgroup	Street Group
 strella	Strella
+Stride Build	Stride Build
 strider-technologies	Strider Technologies
 strix	Strix
 strongdm	StrongDM
@@ -3309,33 +3507,38 @@ stronghold	Stronghold
 stuut-ai	Stuut
 stytch	Stytch
 sublime-security	Sublime Security
+subq	SubQ
 subsets	Subsets
 substack	Substack
 substrate	Substrate
 subtotal	Subtotal
 subzero	Subzero Labs
 succinct	Succinct
+Sui Foundation	Sui Foundation
+Suite-Studios	Suite Studios
 summation	Summation
 summer-robotics	Summer Robotics
 summerhealth	Summer Health
 sunday	Sunday Robotics
 sunday-natural	Sunday Natural
 sunflower-sober	Sunflower Sober
+SunnyData	SunnyData
 suno	Suno
 sunrise	Sunrise Robotics Corporation
-sunset	Sunset
+sunset	Replay
 sunset-studios	Sunset Studios
+supa	Supa
 supabase	Supabase
 super.com	Super.com
 superconductor	Superconductor
 superdial	SuperDial
+Superhuman Platform Inc	Superhuman
 superplane	SuperPlane
 superpower	Superpower
 surge-ai	Surge AI
 surgimate	Surgimate
 susteon	Susteon Inc.
 svix	Svix
-swamp-club	Swamp Club
 swans	Swans
 swap	Swap
 swarmaero	Swarm Aero
@@ -3346,14 +3549,18 @@ sweedpos.com	Sweed
 sweep	Sweep
 swishbreaks	Swishbreaks
 switchboard	Switchboard
+Swoop	Swoop Technologies
 sxaler	Sxaler
-sybill-ai	Sybill AI
+sycamore	Sycamore
 sydecar	Sydecar
 sygaldry-technologies	Sygaldry Technologies
 sylvera	Sylvera
 symbiotic	Symbiotic
 symbolica-ai	Symbolica AI
+Symmetry	Symmetry AI
 synctera	Synctera
+Syndica	Syndica
+Synergy Pet Group	Synergy Pet Group
 synhawk	Synhawk
 synquery	Synquery
 synthesia	Synthesia
@@ -3361,20 +3568,22 @@ synthetic	Synthetic
 syzygy	Syzygy Research
 t1energy	T1 Energy
 taaraconnect	Taara
+Tabs	Tabs
 tabz	Tabz
 tacit	Tacit
 tactiq	Tactiq
 tacto	Tacto
 taekus	Taekus
 tailor	Tailor
-tailwind	Tailwind
 tajir	Tajir
 take2	Take2
 tako	Tako
+takt	Takt
 taktile	Taktile
 talentful	Talentful
 talentsafari	Talent Safari
 talkiatry	Talkiatry
+Talos-Trading	Talos
 tamr	Tamr
 tandem-health	Tandem Health
 tandempv	Tandem PV
@@ -3382,8 +3591,10 @@ tango	Tango
 tapblaze	TapBlaze
 tapcart	Tapcart Inc.
 tapcheck	Tapcheck
+TaptapSend	Taptap Send
 tarro	Tarro
 tasman	Tasman Analytics
+Taste-Labs	Taste Labs
 tavahealth	Tava Health
 tavily	Tavily
 tavrn	Tavrn.ai
@@ -3391,9 +3602,10 @@ tavus	Tavus
 taxfix.com	Taxfix
 taxforce	Taxforce
 taxo	Taxo
+taxscouts.com	TaxScouts
+taxwire	Taxwire
 tbc	The Biological Computing Co.
 tdv	The Deep View
-teachfx	TeachFX
 teal-health	Teal Health
 tealhq	Teal HQ
 teambridge	Teambridge
@@ -3402,24 +3614,34 @@ teameigen	Eigen
 teamworks	Teamworks
 tebi	Tebi
 techne-elysia	Elysia
+Technimove	Technimove
+Technitask	Technitask
 techtorch	Techtorch
 techyrecruiter	Techy Recruiter
 teero	Teero
 teiko	Teiko
+Tekion	Tekion
+tekton-dynamics	Tekton Dynamics
+telepatia	Telepatia
 teleskope	Teleskope
 telli	telli
 tellos	Tellos, Inc.
 telus-digital	TELUS Digital
 tem	tem
+Tembo-Health	Tembo Health
 tempo-io	Tempo
 tempo-xyz	Tempo
 temporal	Temporal Technologies
+tenaraixdstudio	Tenarai. Inc.
+tenderly	Tenderly
 tenex	TENEX.AI
 tenexlabs	Tenex
 tenjin	Tenjin
 tennr	Tennr
 tenor	Tenor
 tensec	Tensec
+TensorWave	TensorWave
+TENTENS-Tech	TENTENS Tech
 terac	Terac
 teraswitch	Teraswitch
 terminal	Terminal
@@ -3428,8 +3650,11 @@ tern	Tern Travel
 ternary	Ternary
 terra	TERRA
 terraai	Terra AI
+TerraFirma-Inc	TerraFirma
+Terranova	Terranova
+terrestrialbio	Terrestrial Bio
 tessera-labs	Tessera Labs
-tesslcareers	Tessl
+tesslcareers	Tessl AI
 testgorilla	TestGorilla
 teton	Teton.ai
 tetrix	Tetrix
@@ -3442,36 +3667,49 @@ teza-technologies	Teza Technologies
 tgc	The Generalist Company Ltd
 thaleron	Thaleron
 thatgamecompany	thatgamecompany
+The Agency Fund	The Agency Fund
+The Browser Company	The Browser Company
+The Job Sauce	The Job Sauce
+The Zebra	The Zebra
 the-exploration-company	The Exploration Company
+The-Flex	The Flex
 the-global-talent-co	The Global Talent Co.
+The-Learning-Spectrum	The Learning Spectrum
+The-Pinnacle-School	The Pinnacle School
+the-robotics-company	The Robotics Company
+The-Spire-School	The Spire School
 the-studio	The Utopia Venture Platform
+the-suite	The Suite
 the-token-company	The Token Company
 theacademysf	Horowitz Andreessen Academy
 thebotcompany	The Bot Company
 theflex	The Flex
+Theori	Theori
 theprimary	Primary
 thera	Thera
 thesirius	Sirius
 thesis	Thesis Inc.
+TheyDo	TheyDo
 thinkific	Thinkific
+ThinkingMachines	Thinking Machines Lab
 third-space-therapy	Third Space
 thirdlaw	ThirdLaw, Inc.
 thndr	Thndr
 thought-machine	Thought Machine
 thread-ai	Thread AI
 threataware	ThreatAware
-threev.ai	ThreeV Technologies, Inc.
 thrill-labs	Thrill Labs
+Thrive-Alliance-Group	Thrive Alliance Group
 thrivo-wealth	Thrivo Wealth Partners
 thumbtack	Thumbtack
 thundercompute	Thunder Compute
 thyme-care	Thyme Care
+Tides	Tides Network
+TigerData	Tiger Data
 tight	Tight
-tightrope	Tightrope
-tilderesearch	Tilde Research
 tilla	Tilla
 tillo	Tillo
-tilt	Tilt
+Tillster	Tillster
 tilthq	Tilt Finance
 timely	Timely
 tin-can	Tin Can
@@ -3485,6 +3723,7 @@ tldr.tech	TLDR
 tldraw	tldraw
 togal-ai	Togal AI
 toggl	TOGGL
+Toku	Toku
 tolan	Tolan
 tolmo	Tolmo
 toma	Toma
@@ -3492,8 +3731,11 @@ tomo	Tomo Mortgage
 tomo.ai	Tomo
 toms	TOMS
 tonal	Tonal
+TonicAI	Tonic AI
 toogeza	Toogeza
 toogoodtogo	Too Good To Go
+Tools for Humanity	Tools for Humanity
+Tooploox	Tooploox
 top-hat	Top Hat
 topline-pro	Topline Pro
 topologic	Topologic
@@ -3508,8 +3750,11 @@ tractable	Tractable
 tradeify	Tradeify
 trading212	Trading212
 tradinghub	TradingHub
+trailhq	Trail
 trainline	Trainline
 trajectory	Trajectory
+trajectory-labs	Trajectory Labs
+Transfr	Transfr
 transgrid-energy	TransGrid Energy
 traversal	Traversal
 trawa	trawa
@@ -3518,8 +3763,10 @@ traysar	Traysar
 tread	Tread
 treefera	Treefera
 treeswift	Treeswift Inc
+Tremendous	Tremendous
+Trenchant	Trenchant
 trener-robotics	Trener
-tribalhealthconnections	Tribal Health Connections
+Trexo Robotics	Trexo Robotics
 tribe-ai	Tribe AI
 tribe-xyz	Tribe.xyz
 triedge-investments	TriEdge Investments
@@ -3530,15 +3777,18 @@ trilitech	Trilitech
 triomics	Triomics
 triumph-arcade	Triumph
 trm-labs	TRM Labs
+trnsact	Trnsact
 trovehq	Trove
 troveo	Troveo AI
 trovy	Trovy
 trucksmarter	TruckSmarter
 true-classic-tees	True Classic
+true-talent-solutions-partners	True Talent Solutions Partners
 truelinkfinancial	True Link Financial
 truelogic	Truelogic
 truemed	Truemed
 trulioo	Trulioo
+Trunk Tools	Trunk Tools, Inc.
 trust-wallet	Trust Wallet
 trustlab	TrustLab
 trustly	Trustly
@@ -3546,6 +3796,7 @@ tryalma	Alma
 trychroma	Chroma
 tryroam	Roam
 trysend	SEND
+tuesday-labs	Tuesday Labs
 tunnl	Tunnl
 turbolaw	TurboLaw
 turbopuffer	turbopuffer
@@ -3556,23 +3807,26 @@ turquoise-health	Turquoise
 twelve	Twelve
 twelve-labs	TwelveLabs
 twenty	Twenty
-twin-so	Twin Labs
 twinprime	Twin Prime
+TwoStepTx	TwoStep Therapeutics
 tyba	Tyba
 tycho-ai	Tycho.AI
 typesafe-ai	TypeSafe AI
-tzafon	Tzafon
+Uberall	Uberall
 udisc	UDisc
 uforce	UFORCE
+UHP-UnlockHumanPotential	UHP (Unlock Human Potential)
 uipath	UiPath
 ultra	Ultra Pouches
 ultralytics	Ultralytics
 umbrel	Umbrel
 unblock-computing	Unblock Computing
+Unblocked	Unblocked
 uncountable	Uncountable Inc.
 unicornpro	Unicorn Pro
 unicourt	UniCourt Inc
 unify	Unify
+Union	Union.ai
 union-tech	Union Technologies
 uniswap	Uniswap Labs
 unit	Unit
@@ -3581,23 +3835,28 @@ uniti	Uniti AI
 unitxlabs	UnitX
 unity-advisory	Unity Advisory
 universalagi	UniversalAGI
+universe	Universe
+Unlearn	Unlearn
 unlikelyai	UnlikelyAI
 unlimitedindustries	Unlimited
 unmind	Unmind
 unstructured	Unstructured Technologies Inc.
 unto-labs	Unto Labs
+Unwrap	Unwrap
 upchurch	Upchurch
+UpCodes	UpCodes
 updoc	UpDoc
 upflow	Upflow
 upguard	UpGuard Inc.
 uplane	Uplane
+uprootclean	Uproot Clean
 upside	Upside
-upside-tech	Upside
+uptimeai	UptimeAI
 upvest	Upvest
+US Health Partners	US Health Partners
 usekernel	Kernel
 usul	Usul
 v7labs.com	V7
-vClusterLabs	vCluster Labs
 vacuumgroup	Vacuumgroup / Vacuumlabs
 vaeridion	VÆRIDION
 valence	Valence Discovery
@@ -3606,51 +3865,65 @@ valeriehealth	Valerie Health
 valinor	Valinor Enterprises, Inc.
 valiussciences	Valius Sciences
 valkai	Valkai
+Valon	Valon Tech
+ValonVM	Valon Mortgage
 vals-ai	Vals AI
 valstad	Valstad
 valthos	Valthos
 vandenboomassociates	van den Boom & Associates
 vanilla	Vanilla Technologies
 vanishid	VanishID
+vanna-health-inc	Vanna Health, Inc
 vanta	Vanta
 vantage	Vantage
 vantageanalytics	Vantage
 vantheon	Vantheon
 vapi	Vapi
+variance	Variance
 variant-fund	Variant
+Varick-Agents	Varick Agents
 vasco	Vasco
 vastai	Vast.ai
+vClusterLabs	vCluster Labs
 vea-connect	VEA Connect
 vector	Vector
 veda	Veda Tech Labs Inc
 veeda-ai	Veeda AI
 veezu	Veezu
 vega	Vega
+vegatech	Vega
 veho-tech-inc	Veho
 veliu	Veliu
 velocity	Velocity
 venatus.com	Venatus
 vend-park	Vend Park
-vendelux	Vendelux
+Vendelux	Vendelux
 venn	Venn
-ventuals	Ventuals
 verdance	Verdance
 verge-labs	Verge Labs
 verisoul	Verisoul
+veritus	Veritus
+Verne	Verne
 versemedical	Verse Medical
 vertical-aerospace	Vertical Aerospace
 verticalsemi	Vertical Semiconductor
 vertice	Vertice
 verto	Verto
 vesta	Vesta Innovations Inc.
+Vetcove	Vetcove
 vibe	Vibe
+Vibrant Planet	Vibrant Planet
+Vic.ai	Vic.ai
 victorious	Victorious
+victorylap	Victory Lap
 videa.ai	Videa
-vidrush	VIDRUSH AI STUDIOS LLP
+Vidmob	Vidmob
 viessmann	Viessmann Generations Group
 viggle	Viggle AI
 vigil-markets	Vigil Markets
+vikta-energy	Vikta Energy
 viktor	Viktor
+vinylequity	Vinyl Equity, Inc.
 vio	Vio
 violet	VIOLET
 virahealth	Vira Health
@@ -3661,12 +3934,17 @@ vistar	Vistar Media
 vitable	Vitable
 vital-lyfe	Vital Lyfe
 vitalize	Vitalize
+VITL	VITL
 vitvio	VitVio
 vivian-health	Vivian Health
 vivun	Vivun Inc.
+Viz.ai	Viz.ai
 vizcom	Vizcom
 vizzia	Vizzia
+VLogic	VLogic
 vmax	Vmax AI Corp
+vocca	Vocca
+Vogel	Vogel
 voicemod	Voicemod
 voize	voize
 voladynamics	Vola Dynamics
@@ -3679,13 +3957,20 @@ voltai.careers	Voltai
 voltrac	Voltrac S.L.
 voodoo	Voodoo
 vooma	Vooma
+Vori	Vori
 vorticity	Vorticity Inc.
 vorto	Vorto
+vote4anthony	vote4anthony
 vow	Vow
+Voxel	Voxel
+Voya Energy	Voya Energy
 voyant-photonics	Voyant Photonics
 voyfai	Voyfai
+VREY	VREY
+Vultr	Vultr
 vyn	Vyn
 vynca	Vynca
+Vytalize Health	Vytalize Health
 wabi	Wabi, Inc.
 wafer	Wafer
 wagmo	Wagmo
@@ -3695,6 +3980,8 @@ walrusfi	Walrus
 wand	Wand
 wand-ai	Wand Synthesis AI Inc
 warp	Warp
+warren	Warren
+Watershed	Watershed
 watney	Watney
 wayflyer	Wayflyer
 wayve	Wayve
@@ -3703,9 +3990,12 @@ wealthsimple	Wealthsimple Technologies
 wearebeyondsports	Beyond Sports
 weave	Weave
 weave-grid	WeaveGrid, Inc.
+weave-os	Weave
 weaviate	Weaviate
 webAI	webAI
+webfx	WebFX
 weekend	Weekend
+welborne-garage	Welborn Garage
 welfarefootprint	Welfare Footprint Institute
 wellsheet	Wellsheet
 welltech	Welltech
@@ -3726,21 +4016,22 @@ whitecircle	White Circle
 whoop	Whoop
 whop	Whop
 widgetfactory	idlexperts
-willow-health	Willow Health
 willreed	Will Reed
-wilson	WilsonAI
 wincent	Wincent
 windborne-systems	WindBorne Systems
 windfall	Windfall Trust
 windranger	Windranger Labs
+Winona	Winona
 wirescreen	WireScreen
+Wisdom-AI	Wisdom AI
+Wisp	Wisp
 wispr-flow	Wispr Flow
 wistia	Wistia
+with-fulcrum	Fulcrum
 withcherry	Cherry Technologies, Inc.
 withclutch	Clutch
 withco	withco
 withdaydream	daydream
-withdefault	Default
 withflex	Flex
 within.ai	Within
 withpace	Pace
@@ -3748,33 +4039,42 @@ withpulley	Pulley
 withwisdom	Wisdom
 witnessai	Witness AI
 wolfjaw-careers	Wolfjaw Studios
+WON.ai	WON
 wonderful	Wonderful
 wonderly	Wonderly
+Woodhouse-Academy	Woodhouse Academy
+Wordly.ai Careers	Wordly.ai
 wordsmith	Wordsmith AI
 workerbase	WORKERBASE
 workhero	WorkHero
 workhuman	Workhuman
 workos	WorkOS
-worktrace ai	Worktrace AI
 workwhilejobs	WorkWhile
 workyard	Workyard
 world-foundation	World Foundation
 world-golf-tour	World Golf Tour (WGT)
+worldengine	WorldEngine AI
 worldlabs	World Labs
 worldly	Worldly
 wormholelabs	Wormhole Labs
 wraithwatch	Wraithwatch Corporation
 wrapbook	Wrapbook
+WRITER	WRITER
+WunderGraph	WunderGraph, Inc.
 wursta	Wursta
 wynd-labs	Wynd Labs
 xapien	Xapien
 xbowcareers	XBOW
+xbuild	XBuild
+XDOF	XDOF
 xds	XDS
 xenon	Xenon Pharmaceuticals
 xephyr	Xephyr
 xero	Xero
+XMTP Labs	XMTP Labs
 xnrgy-climate-systems	XNRGY Climate Systems
 xona-space	Xona Space Systems
+Xterra AI	Xterra AI
 xyz-reality	XYZ Reality
 yadda	Yadda
 yazio	Yazio
@@ -3783,14 +4083,15 @@ yeet	yeet
 yendo	Yendo
 yepoda	Yepoda
 yobi	Yobi
-yolabs	Yo Labs
 yondr	Yondr
 yotta	Yotta Labs
 you-health	You Health
 yourco	Yourco, Inc.
 yubo	Yubo
 yumaai	Yuma AI
+yuzu-health	Yuzu
 zafran-security	Zafran Security
+Zania	Zania
 zapier	Zapier
 zauber	Zauber
 zayzoon	ZayZoon
@@ -3800,280 +4101,30 @@ zedfinancial	Zed
 zeely	Zeely Inc.
 zefir	Zefir
 zefr	Zefr
+zego	Zego
 zeit-ai	Zeit AI (YC S24)
+Zello	Zello
 zencastr	Zencastr
 zenjob	Zenjob
 zeno	Zeno
 zenos	Zenos
+Zeromark	Zeromark
+zerorfi	ZeroRFI
 zettabyte-space	Zettabyte
+ziina	Ziina
 zilch	Zilch
+Zingage	Zingage
 zip	Zip
+Zip Security	Zip Security
 ziplines	Ziplines, Inc.
 zippymh	Zippy
+Zircuit	Zircuit
+znanylekarz	ZnanyLekarz
 zodl	ZODL
 zoe	ZOE
 zoomlogi	Zoomlogi
 zowie	Zowie
 zuru	ZURU
+zus-health	Zus Health
 zydro	Zydro Marine Technologies
 zyphra	Zyphra
-# added 2026-11-06 01:26 by update_companies.py
-1uphealth	1upHealth
-3ive	3ive
-829studios	829 Studios
-act-security	Act Security
-adaptive-innovations	Adaptive Innovations
-adapty-io	Adapty.io
-adexis	Adexis
-Agave	Agave
-agility.io	Agility IO
-agzen	AgZen
-aire	Aire
-aistudio	AiStudio Artificial Intelligence Technologies Ltd
-Alchemi	Alchemi
-alt	Alt Platform Inc
-altadaily	Alta Daily
-amenitiz	Amenitiz
-american-turbines	American Turbines
-appsumo	AppSumo
-ariesglobal	Aries Global
-atlys	Atlys
-aurora-operations-inc	Aurora
-averi	AVERI
-ayosemi	Ayo Semiconductor
-beach-bum	Beach Bum
-Benchmark Analytics	Benchmark Analytics
-beyondreachlabs	Beyond Reach Labs
-black-forest-labs	Black Forest Labs
-Bolter	Bolter
-breadwinner	Breadwinner
-bridgeneurotech	Bridge Neurotech, Inc.
-build-ai	Build AI
-calder	Calder
-careers.mural	Mural
-chalk	Chalk
-Chapters	Chapters
-chiefai	Chief AI
-circle	Circle
-cleo-2	Cleo
-climb-ai	Climb
-clueso	Clueso
-company	Stealth-mode Battery Startup
-consensys	Consensys
-Coral Care	Coral Care
-cortea	Cortea AI
-davischicago	Davis Chicago
-deaa6ad2-d184-436b-b69e-17f761da1d94	Spring Health
-deepslate	Deepslate
-designrulesco	The Design Rules Company
-dewarmte	DeWarmte
-dialogica	Dialogica
-differential.bio	Differential Bio
-DiligenceSquared	DiligenceSquared
-Discernis	Discernis
-dmodel	dmodel
-docplanner	Docplanner
-doctoralia-mexico	Doctoralia Mexico
-dreamhq	Dream Technologies
-Dressly	Dressly
-drivewealth	DriveWealth
-earth	Earth
-echeloncareers	Echelon
-Elveo	Elveo
-enactintelligence	Enact Intelligence
-enclosure	Enclosure.inc
-engramme	Engramme
-equall	Equall
-exo	Exo Labs
-f7d8749a-72d6-407c-bf98-292ea630c73a	f7d8749a-72d6-407c-bf98-292ea630c73a
-facilityos	FacilityOS
-faculty-fellowship	Faculty Fellowship
-farfetch	Farfetch
-fractile	Fractile
-generalmagic	General Magic
-generatorhealth	Generator Health
-geniusai	Genius AI
-genspark	Genspark Inc
-getsquire	SQUIRE
-goaly	Goaly
-gpcconsulting	General Purpose Consulting LLC
-grai	GRAI Inc.
-Green-Tree-School-and-Services	Green Tree School & Services
-growfig	Fig AI
-grubel	Grubel
-hadrius	Hadrius
-halluminate	Halluminate
-harbor	Harbor
-hargravetechnologies	Hargrave Technologies
-harmonic-ai	Harmonic
-hedge	Hedge Specialty
-helmguard	HelmGuard Technologies, Inc.
-helogen	Helogen
-hex	Hex
-hightouch-inc	Hightouch
-hims-and-hers	Hims & Hers
-Hooglee	Hooglee
-HRS	HRS
-hudson-pacific-properties	Hudson Pacific Properties
-hv	HV Capital Manager
-hyphenate	Hyphenate
-igaminghunt	IGAMINGHUNT
-Improbable	Improbable
-instinct	Spear Street Technology (DBA Instinct)
-integrate	Integrate
-isembard	Isembard
-iterable	Iterable
-ixianrobotics	Ixian Robotics
-kaluza	Kaluza
-kamino	Kamino
-kantiv	Kantiv (formerly Joist AI)
-keenable	Keenable.ai
-kelluu	Kelluu
-khoslaventures	Khosla Ventures
-klarify	Klarify
-laminar-jobs	Laminar
-lemon-io	Lemon.io
-leovegasgroup	LeoVegas Mobile Gaming Group
-lifen	Lifen
-liqid-lig	LIQID Investments GmbH
-liveramp-inc	LiveRamp, Inc.
-localstack	LocalStack
-longitudelabs	Longitude Labs
-lyceum	Lyceum
-mach10usa	MACH10
-madhive	Madhive
-manychat	Manychat, Inc
-matx	MatX
-maya-htt	Maya HTT
-mbdialogues	Mirror Biology Dialogues Fund
-Meraki-Labs	Meraki-Labs
-merge	Merge
-metro-credit-union	Metro Credit Union
-microagi	microagi
-minerva	Minerva
-miodottore	MioDottore
-mitti	Mitti
-mobi	Mobi.AI
-modulate	Modulate
-monday.com	monday.com
-multiplyai	Multiply
-navflex	Navflex
-nexttoken	NextToken
-nexus-intelligence	Nexus Intelligence
-normlaw	Norm Law
-ocean-atomics	Ocean Atomics
-onepot	onepot
-onerobot	One Robot
-ontra	Ontra
-OpenAge	OpenAge
-openai-foundation	OpenAI Foundation
-opendr	openDoctor
-Opennote	Opennote
-openstandard	Open Standard
-oplabs	OP Labs
-options-it	Options Technology
-orpex	Orpex
-ortet	Ortet
-outschool	Outschool
-paid	Paid
-paradigm-health	Paradigm Health
-parakeet-health	Parakeet Health
-parameter	Parameter ai
-Pathways	Pathways
-paxos	Paxos
-Phinitylabs	Phinity Labs
-planhat	Planhat
-plentific	Plentific
-plsn	Polished Snow
-pocket	Pocket (YC W26)
-pointfive	PointFive
-polimorphic	Polimorphic
-polygon-labs	Polygon Labs
-pomelo-care	Pomelo Care
-PopArabia	PopArabia
-PostHog	PostHog
-powertown	Powertown
-pramaana-labs	Pramaana Labs
-Prava Therapy	Prava Therapy
-probably-good	Probably Good
-proofofhuman	Proof of Human
-prosus	Prosus
-Proximal	Proximal
-pureapp	Pure Interactive Entertainment, Inc
-pzeroresearch	P-Zero Research
-q	ㅤ
-qlub	qlub
-quadric	quadric
-queueinc	queueinc
-quorumai	Quorum
-Raindrop	Raindrop
-rainmaker	Rainmaker Technology Corporation
-recursive-superintelligence	Recursive Superintelligence
-redpanda-data	Redpanda Data
-redwoodresearch	Redwood Research
-Relling	Relling
-rematiq-gmbh	REMATIQ
-renewable-properties-llc	Renewable Properties, LLC
-Resonance	Resonance
-resurgent-industries	Resurgent Industries
-Revecore	Revecore
-rifa	Rifa AI
-RiseGuide	RiseGuide
-Rosabella	Rosabella
-Sage-Alliance-Schools	Sage Alliance Schools
-scape	Scape
-scope-labs	Scope
-scout-ai	Scout AI
-sela	Sela AI
-sequencing	Sequencing
-serova	Serova
-siegemedia	Siege Media
-sierra-jp	Sierra Japan
-simetrik	Simetrik
-sitecore	Sitecore
-SKELAR	SKELAR
-Skyband Systems	Skyband Systems
-Snyk	Snyk
-socialscout	Social Scout
-somana.tech	Somana
-Spectral Labs	Spectral Labs
-spotlight	Spotlight Media
-stackfuel	StackFuel
-starfish-space-inc	Starfish Space Inc.
-steakhouse	Steakhouse Financial
-steyngroup	Steyn Group
-subq	SubQ
-sycamore	Sycamore
-takt	Takt
-taxwire	Taxwire
-Tekion	Tekion
-tekton-dynamics	Tekton Dynamics
-tenderly	Tenderly
-TENTENS-Tech	TENTENS Tech
-terrestrialbio	Terrestrial Bio
-the-robotics-company	The Robotics Company
-Tooploox	Tooploox
-trailhq	Trail
-trnsact	Trnsact
-true-talent-solutions-partners	True Talent Solutions Partners
-tuesday-labs	Tuesday Labs
-uptimeai	UptimeAI
-vanna-health-inc	Vanna Health, Inc
-veritus	Veritus
-victorylap	Victory Lap
-vikta-energy	Vikta Energy
-vinylequity	Vinyl Equity, Inc.
-vocca	Vocca
-weave-os	Weave
-webfx	WebFX
-Wisdom-AI	Wisdom AI
-with-fulcrum	Fulcrum
-worldengine	WorldEngine AI
-Xterra AI	Xterra AI
-zego	Zego
-ziina	Ziina
-znanylekarz	ZnanyLekarz
-zus-health	Zus Health
-# added 2026-11-09 23:58 by update_companies.py
-machinacognita	Machina Cognita Technologies
-netholabs	Netholabs

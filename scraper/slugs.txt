@@ -1,9 +1,14 @@
 # Your own Ashby boards, one per line: `slug` or `slug<TAB>Company Name`
 # (the slug is the part after jobs.ashbyhq.com/). Lines starting with # are ignored.
-# The big community list lives in companies.tsv; add anything it is missing here.
-# discover.py appends companies it finds to this file.
+# The main list lives in companies.tsv and is maintained automatically; add anything it misses here.
 ashby
 ramp
 linear
 openai
 notion
+
+# Live boards our sources missed in the Nov 2026 rebuild; kept so their jobs stay listed.
+Foresight Diagnostics Inc.	Foresight Diagnostics Inc.
+castletontower	Castleton Tower
+claritymovescapital	Clarity
+concurrence	Concurrence
