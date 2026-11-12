@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
-"""Find companies that use Ashby and add new ones to companies.tsv (runs weekly via schedule.py).
+"""Find companies hiring through Ashby, Greenhouse and Lever, and keep their lists up to date.
 
 Usage:
-    python3 update_companies.py             # look for companies added since the last run (weekly)
-    python3 update_companies.py --full      # rescan every source's full history, add anything missing
-    python3 update_companies.py --rebuild   # build companies.tsv from scratch from the sources below
+    python3 update_companies.py                          # weekly: look for companies added since the last run
+    python3 update_companies.py --full                   # rescan every source's full history, add anything missing
+    python3 update_companies.py --rebuild                # build the lists from scratch
+    python3 update_companies.py --rebuild --platforms greenhouse,lever   # only some platforms
+
+Lists (board name<TAB>company name): companies.tsv (Ashby), greenhouse.tsv, lever.tsv.
 
 Where candidates come from (all free, no account needed):
-  * the Wayback Machine's index of every archived jobs.ashbyhq.com page
-  * Hacker News comments that link to jobs.ashbyhq.com ("Who's hiring" threads)
-  * public new-grad / internship job lists on GitHub that link to Ashby boards
+  * the Wayback Machine's index of every archived page on each platform's job-board domain
+  * Hacker News comments that link to those job boards ("Who's hiring" threads)
+  * public new-grad / internship job lists on GitHub
 
-Each new name is checked against its live Ashby board page: it is kept only if a real (non-demo)
-company owns it, under the board name Ashby itself uses. Names that turn out not to be companies
-are remembered, so they aren't checked again. Weekly runs never remove entries; closed boards
-are simply skipped by ingest.py.
+Each new name is checked against the platform itself (Ashby's board page, Greenhouse's and Lever's
+public job APIs) and kept only if a real company owns it. Names that turn out not to be companies
+are remembered so they aren't checked again. Weekly runs never remove entries; closed boards are
+simply skipped by ingest.py.
 
 The discovery approach is adapted from scripts/refresh_companies.py in
 github.com/AnshumanAtrey/ashby-jobs-search (MIT License, Copyright (c) 2026 Anshuman Atrey).
 """
 import argparse
+import gzip
 import html
 import json
 import os
@@ -33,9 +37,8 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-COMPANIES = os.path.join(HERE, "companies.tsv")
 STATE = os.path.join(HERE, "discovery_state.json")
-UA = "Mozilla/5.0 (compatible; ashby-jobs-personal-index/0.4; personal, non-commercial)"
+UA = "Mozilla/5.0 (compatible; tech3000-job-index/1.0; free, non-commercial job search)"
 
 # Overridable for testing.
 WAYBACK = os.environ.get("ASHBY_WAYBACK_URL", "https://web.archive.org/cdx/search/cdx")
@@ -43,6 +46,11 @@ HN = os.environ.get("ASHBY_HN_URL", "https://hn.algolia.com/api/v1/search_by_dat
 GITHUB_RAW = os.environ.get("ASHBY_GITHUB_RAW", "https://raw.githubusercontent.com")
 BOARD_PAGE = os.environ.get("ASHBY_BOARD_URL", "https://jobs.ashbyhq.com")
 POSTING_API = os.environ.get("ASHBY_API_BASE", "https://api.ashbyhq.com/posting-api/job-board")
+GREENHOUSE_API = os.environ.get("GREENHOUSE_API_BASE", "https://boards-api.greenhouse.io/v1/boards")
+LEVER_API = os.environ.get("LEVER_API_BASE", "https://api.lever.co/v0/postings")
+LEVER_EU_API = os.environ.get("LEVER_EU_API_BASE", "https://api.eu.lever.co/v0/postings")
+LEVER_PAGE = os.environ.get("LEVER_PAGE_URL", "https://jobs.lever.co")
+LEVER_EU_PAGE = os.environ.get("LEVER_EU_PAGE_URL", "https://jobs.eu.lever.co")
 
 GITHUB_LISTS = [
     "SimplifyJobs/New-Grad-Positions/dev/.github/scripts/listings.json",
@@ -53,17 +61,37 @@ GITHUB_LISTS = [
     "vanshb03/Summer2026-Internships/dev/.github/scripts/listings.json",
     "vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json",
 ]
-# Where a weekly run starts if it has no saved progress yet.
-FIRST_RUN_FROM = datetime(2026, 9, 1, tzinfo=timezone.utc)
-FULL_FROM = datetime(2019, 1, 1, tzinfo=timezone.utc)   # before Ashby's first job boards
-LINK = re.compile(r"jobs\.ashbyhq\.com/([A-Za-z0-9][A-Za-z0-9._%~&-]{0,99})", re.I)
+FIRST_RUN_FROM = datetime(2026, 9, 1, tzinfo=timezone.utc)   # a weekly run with no saved progress
+FULL_FROM = datetime(2010, 1, 1, tzinfo=timezone.utc)
 NAME_OK = re.compile(r"[A-Za-z0-9][A-Za-z0-9._~ &-]{0,99}")
-MIN_REBUILD = 500   # refuse to replace the list with fewer confirmed companies than this
+NOT_BOARDS = {"embed", "v1", "api", "static", "assets", "includes", "favicon.ico", "robots.txt", "sitemap.xml",
+              "job_app", "jobs", "search", "apply", "login", "privacy", "terms"}
 APP_DATA = "window.__appData = "
+MIN_REBUILD = {"ashby": 500, "greenhouse": 500, "lever": 200}   # refuse to replace a list with fewer
+
+PLATFORMS = {
+    "ashby": {
+        "label": "Ashby", "file": "companies.tsv",
+        "wayback": ["jobs.ashbyhq.com/"], "hn": "ashbyhq",
+        "link": re.compile(r"jobs\.ashbyhq\.com/([A-Za-z0-9][A-Za-z0-9._%~&-]{0,99})", re.I),
+    },
+    "greenhouse": {
+        "label": "Greenhouse", "file": "greenhouse.tsv",
+        "wayback": ["boards.greenhouse.io/", "job-boards.greenhouse.io/", "job-boards.eu.greenhouse.io/"],
+        "hn": "greenhouse.io",
+        "link": re.compile(r"(?:job-)?boards(?:\.eu)?\.greenhouse\.io/(?:embed/job_(?:board|app)\?(?:[^\s\"'<>]*?&)?for=)?"
+                           r"([A-Za-z0-9][A-Za-z0-9._-]{0,99})", re.I),
+    },
+    "lever": {
+        "label": "Lever", "file": "lever.tsv",
+        "wayback": ["jobs.lever.co/", "jobs.eu.lever.co/"], "hn": "lever.co",
+        "link": re.compile(r"jobs\.(eu\.)?lever\.co/([A-Za-z0-9][A-Za-z0-9._-]{0,99})", re.I),
+    },
+}
 HEADER = (
-    "# Ashby job boards: board name<TAB>company name.\n"
+    "# {label} job boards: board name<TAB>company name.\n"
     "# Built by update_companies.py from the Wayback Machine, Hacker News and public job lists;\n"
-    "# every entry was checked against its live Ashby board.\n"
+    "# every entry was checked against {label}.\n"
 )
 
 
@@ -72,14 +100,17 @@ def log(msg):
 
 
 def get(url, params=None, timeout=60, tries=3):
-    """GET with retries. Returns (status, text); status 0 means the request failed."""
+    """GET with retries and gzip. Returns (status, text); status 0 means the request failed."""
     if params:
         url += ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Encoding": "gzip"})
     for attempt in range(tries):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
-                return r.status, r.read().decode("utf-8", "replace")
+                body = r.read()
+                if r.headers.get("Content-Encoding") == "gzip":
+                    body = gzip.decompress(body)
+                return r.status, body.decode("utf-8", "replace")
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503, 504) and attempt < tries - 1:
                 time.sleep(5 * (attempt + 1))
@@ -93,83 +124,106 @@ def get(url, params=None, timeout=60, tries=3):
     return 0, ""
 
 
-def first_part(path):
-    """'/acme/123?x' -> 'acme'. None if it doesn't look like a board name."""
-    part = urllib.parse.unquote(path.strip("/").split("/")[0].split("?")[0].split("#")[0]).strip().rstrip(".")
-    return part if part and NAME_OK.fullmatch(part) else None
+def clean(name):
+    name = urllib.parse.unquote(name or "").strip().rstrip(".")
+    return name if name and NAME_OK.fullmatch(name) and name.lower() not in NOT_BOARDS else None
 
 
-def links_in(text):
+def name_from_url(platform, url):
+    """Board name from an archived URL, e.g. 'https://boards.greenhouse.io/stripe/jobs/1' -> 'stripe'."""
+    u = urllib.parse.urlparse(url.strip() if "://" in url else "https://" + url.strip())
+    seg = u.path.strip("/").split("/")[0].split("?")[0].split("#")[0]
+    if platform == "greenhouse" and seg == "embed":
+        seg = (urllib.parse.parse_qs(u.query).get("for") or [""])[0]
+    name = clean(seg)
+    if name and platform == "lever" and u.netloc.lower().split(":")[0].startswith("jobs.eu."):
+        name = "eu/" + name
+    return name
+
+
+def links_in(platform, text):
     out = set()
-    for m in LINK.finditer(html.unescape(text or "")):
-        part = first_part(m.group(1))
-        if part:
-            out.add(part)
+    for m in PLATFORMS[platform]["link"].finditer(html.unescape(text or "")):
+        if platform == "lever":
+            name = clean(m.group(2))
+            if name and m.group(1):
+                name = "eu/" + name
+        else:
+            name = clean(m.group(1))
+        if name:
+            out.add(name)
     return out
 
 
 # ---------------------------------------------------------------- sources
 
-def from_wayback(since):
-    found, key, pages = set(), None, 0
-    while True:
-        params = {"url": "jobs.ashbyhq.com/", "matchType": "prefix", "fl": "original", "collapse": "urlkey",
-                  "limit": "150000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
-        if key:
-            params["resumeKey"] = key
-        status, body = get(WAYBACK, params, timeout=300)
-        if status != 200:
-            raise RuntimeError(f"HTTP {status}" if status else "couldn't connect")
-        rows, _, rest = body.rstrip("\n").partition("\n\n")
-        for line in rows.splitlines():
-            part = first_part(urllib.parse.urlparse(line.strip()).path)
-            if part:
-                found.add(part)
-        key = rest.strip() or None
-        pages += 1
-        if pages % 10 == 0:
-            log(f"    Wayback: {pages * 150000:,} archived pages read, {len(found):,} names so far")
-        if not key or not rows.strip() or pages >= 2000:
-            break
+def from_wayback(platform, since):
+    found = set()
+    for prefix in PLATFORMS[platform]["wayback"]:
+        key, pages = None, 0
+        while True:
+            params = {"url": prefix, "matchType": "prefix", "fl": "original", "collapse": "urlkey",
+                      "limit": "150000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
+            if key:
+                params["resumeKey"] = key
+            status, body = get(WAYBACK, params, timeout=300, tries=4)
+            if status != 200:
+                raise RuntimeError(f"{prefix}: " + (f"HTTP {status}" if status else "couldn't connect"))
+            rows, _, rest = body.rstrip("\n").partition("\n\n")
+            for line in rows.splitlines():
+                name = name_from_url(platform, line)
+                if name:
+                    found.add(name)
+            key = rest.strip() or None
+            pages += 1
+            if pages % 10 == 0:
+                log(f"    {prefix} {pages * 150000:,} archived pages read, {len(found):,} names so far")
+            if not key or not rows.strip() or pages >= 3000:
+                break
     return found
 
 
-def from_hacker_news(since):
+def from_hacker_news(platform, since):
     found = set()
     start, step, end = int(since.timestamp()), 86400 * 60, int(time.time())
     while start < end:
         for page in range(5):
-            params = {"query": "ashbyhq", "tags": "comment", "hitsPerPage": 1000, "page": page,
+            params = {"query": PLATFORMS[platform]["hn"], "tags": "comment", "hitsPerPage": 1000, "page": page,
                       "numericFilters": f"created_at_i>{start},created_at_i<={start + step}"}
             status, body = get(HN, params)
             if status != 200:
                 raise RuntimeError(f"HTTP {status}" if status else "couldn't connect")
             data = json.loads(body)
             for hit in data.get("hits", []):
-                found |= links_in(hit.get("comment_text"))
+                found |= links_in(platform, hit.get("comment_text"))
             if page >= data.get("nbPages", 1) - 1:
                 break
         start += step
     return found
 
 
-def from_github_lists():
-    found, ok = set(), 0
-    for path in GITHUB_LISTS:
-        status, body = get(f"{GITHUB_RAW}/{path}", tries=2)
-        if status == 200:
-            ok += 1
-            found |= links_in(body)
-    if not ok:
+_github_cache = {}
+
+
+def from_github_lists(platform, _since=None):
+    if "texts" not in _github_cache:
+        texts = []
+        for path in GITHUB_LISTS:
+            status, body = get(f"{GITHUB_RAW}/{path}", tries=2)
+            if status == 200:
+                texts.append(body)
+        _github_cache["texts"] = texts
+    if not _github_cache["texts"]:
         raise RuntimeError("no list could be downloaded")
+    found = set()
+    for body in _github_cache["texts"]:
+        found |= links_in(platform, body)
     return found
 
 
 # ---------------------------------------------------------------- verification
 
-def verify(candidate):
-    """Returns ('ok', slug, name), ('no', candidate, None) or ('error', candidate, None)."""
-    time.sleep(0.2)
+def verify_ashby(candidate):
     status, page = get(f"{BOARD_PAGE}/{urllib.parse.quote(candidate, safe='')}", timeout=30)
     if status == 404:
         return "no", candidate, None
@@ -195,14 +249,61 @@ def verify(candidate):
     return "error", candidate, None
 
 
+def verify_greenhouse(candidate):
+    token = candidate.lower()
+    status, body = get(f"{GREENHOUSE_API}/{urllib.parse.quote(token, safe='')}", timeout=30)
+    if status == 404:
+        return "no", candidate, None
+    if status == 200:
+        try:
+            name = (json.loads(body).get("name") or "").strip()
+        except ValueError:
+            return "error", candidate, None
+        return "ok", token, name or token
+    return "error", candidate, None
+
+
+TITLE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
+
+
+def verify_lever(candidate):
+    eu = candidate.startswith("eu/")
+    site = (candidate[3:] if eu else candidate).lower()
+    status, _ = get(f"{LEVER_EU_API if eu else LEVER_API}/{urllib.parse.quote(site, safe='')}",
+                    {"mode": "json", "limit": 1}, timeout=30)
+    if status == 404:
+        return "no", candidate, None
+    if status != 200:
+        return "error", candidate, None
+    name = ""
+    page_status, page = get(f"{LEVER_EU_PAGE if eu else LEVER_PAGE}/{site}", timeout=30, tries=2)
+    if page_status == 200:
+        m = TITLE.search(page)
+        if m:
+            name = " ".join(html.unescape(m.group(1)).split())
+            name = re.sub(r"\s*[-|–]\s*(jobs|careers).*$|^(jobs|careers) at\s+|\s+jobs$", "", name, flags=re.I).strip()
+    if not name or len(name) > 80:
+        name = site.replace("-", " ").title()
+    return "ok", ("eu/" if eu else "") + site, name
+
+
+VERIFY = {"ashby": verify_ashby, "greenhouse": verify_greenhouse, "lever": verify_lever}
+
+
 # ---------------------------------------------------------------- state and files
 
 def load_state():
     try:
         with open(STATE, encoding="utf-8") as f:
-            return json.load(f)
+            state = json.load(f)
     except (OSError, ValueError):
-        return {}
+        state = {}
+    if "wayback_from" in state or "rejected" in state:      # older single-platform format
+        state = {"ashby": {k: state.pop(k) for k in ("wayback_from", "hn_from", "rejected", "aliases", "retry")
+                           if k in state}, **state}
+    for p in PLATFORMS:
+        state.setdefault(p, {})
+    return state
 
 
 def save_state(state):
@@ -212,10 +313,19 @@ def save_state(state):
     os.replace(tmp, STATE)
 
 
-def known_slugs():
+def list_path(platform):
+    return os.path.join(HERE, PLATFORMS[platform]["file"])
+
+
+def known_slugs(platform):
     sys.path.insert(0, HERE)
-    from ingest import load_slugs
-    return {s.lower() for s, _ in load_slugs(os.path.join(HERE, "slugs.txt"), COMPANIES)}
+    from ingest import load_slugs, split_key
+    out = {s.lower() for s, _ in load_slugs(list_path(platform))}
+    for s, _ in load_slugs(os.path.join(HERE, "slugs.txt")):    # your own additions, any platform
+        src, slug = split_key(s)
+        if src == platform:
+            out.add(slug.lower())
+    return out
 
 
 def parse_time(value, default):
@@ -225,17 +335,23 @@ def parse_time(value, default):
         return default
 
 
-def check_all(names, workers):
-    """Verify names against Ashby. Returns (ok: {lower: (slug, name)}, aliases, rejected, retry)."""
+def check_all(platform, names, workers):
+    """Verify names. Returns (ok: {lower: (slug, name)}, aliases, rejected, retry)."""
     ok, aliases, rejected, retry = {}, set(), set(), []
     if not names:
         return ok, aliases, rejected, retry
-    log(f"  checking {len(names):,} name(s) against Ashby...")
+    log(f"  checking {len(names):,} {PLATFORMS[platform]['label']} name(s)...")
+    verify = VERIFY[platform]
+
+    def one(c):
+        time.sleep(0.15)
+        return verify(c)
+
     done = 0
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for cand, (result, slug, cname) in zip(names, pool.map(verify, names)):
+        for cand, (result, slug, cname) in zip(names, pool.map(one, names)):
             done += 1
-            if done % 1000 == 0:
+            if done % 2000 == 0:
                 log(f"    {done:,}/{len(names):,} checked, {len(ok):,} real companies so far")
             if result == "ok":
                 if cand.lower() != slug.lower():
@@ -248,122 +364,124 @@ def check_all(names, workers):
     return ok, aliases, rejected, retry
 
 
-def gather(sources_since, known, rejected, state_cursors):
-    """Collect names from every source. Returns {lower: name} not in known/rejected."""
-    candidates = {}
-    for name, key, fn in [("Wayback Machine", "wayback_from", from_wayback),
-                          ("Hacker News", "hn_from", from_hacker_news),
-                          ("GitHub job lists", None, lambda _since: from_github_lists())]:
-        since = sources_since(key)
-        try:
-            found = fn(since)
-            fresh = {c for c in found if c.lower() not in known and c.lower() not in rejected}
-            for c in fresh:
-                candidates.setdefault(c.lower(), c)
-            if key:
-                state_cursors[key] = True   # only advanced when the source worked
-            log(f"  {name}: {len(found):,} names seen, {len(fresh):,} not yet known"
-                + (f" (since {since:%Y-%m-%d})" if since else ""))
-        except Exception as e:
-            log(f"  {name}: skipped this time ({e}); will retry from the same point next run")
-    return candidates
-
-
-def write_rows(path, rows, mode, stamp):
-    with open(path, mode, encoding="utf-8") as f:
+def write_rows(platform, rows, mode, stamp):
+    with open(list_path(platform), mode, encoding="utf-8") as f:
         if mode == "w":
-            f.write(HEADER)
+            f.write(HEADER.format(label=PLATFORMS[platform]["label"]))
         else:
             f.write(f"# added {stamp} by update_companies.py\n")
         for slug, cname in sorted(rows, key=lambda r: r[0].lower()):
             f.write(f"{slug}\t{cname.replace(chr(9), ' ')}\n")
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    mode = ap.add_mutually_exclusive_group()
-    mode.add_argument("--full", action="store_true", help="rescan all history and add anything missing")
-    mode.add_argument("--rebuild", action="store_true", help="build companies.tsv from scratch")
-    ap.add_argument("--workers", type=int, default=6)
-    args = ap.parse_args()
-
-    t0 = time.time()
-    run_started = datetime.now(timezone.utc)
-    stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-    state = load_state()
+def run_platform(platform, args, st, stamp, run_started):
+    """Discover and verify one platform. Returns the number of companies added."""
+    label = PLATFORMS[platform]["label"]
+    has_list = os.path.exists(list_path(platform))
+    if not has_list and not args.rebuild:
+        log(f"{label}: no list yet; run with --rebuild --platforms {platform} first. Skipping.")
+        return 0
     fresh_start = args.full or args.rebuild
-    log(f"[{stamp}] " + ("Rebuilding the company list from scratch..." if args.rebuild
-                         else "Looking for new Ashby companies..."))
-
-    old = known_slugs() if os.path.exists(COMPANIES) else set()
-    rejected = set() if fresh_start else {r.lower() for r in state.get("rejected", [])}
-    aliases = set() if args.rebuild else {a.lower() for a in state.get("aliases", [])}
+    log(f"{label}: " + ("rebuilding from scratch..." if args.rebuild else "looking for new companies..."))
+    old = known_slugs(platform) if has_list else set()
+    rejected = set() if fresh_start else {r.lower() for r in st.get("rejected", [])}
+    aliases = set() if args.rebuild else {a.lower() for a in st.get("aliases", [])}
     known = set() if args.rebuild else old | aliases
 
-    def since(key):
-        if not key:
-            return None
-        return FULL_FROM if fresh_start else parse_time(state.get(key), FIRST_RUN_FROM)
-
-    worked = {}
-    candidates = gather(since, known, rejected, worked)
+    candidates, worked = {}, set()
+    for name, key, fn in [("Wayback Machine", "wayback_from", from_wayback),
+                          ("Hacker News", "hn_from", from_hacker_news),
+                          ("GitHub job lists", None, from_github_lists)]:
+        since = (FULL_FROM if fresh_start else parse_time(st.get(key), FIRST_RUN_FROM)) if key else None
+        try:
+            found = fn(platform, since)
+            fresh = {c for c in found if c.lower() not in known and c.lower() not in rejected}
+            for c in fresh:
+                candidates.setdefault(c.lower(), c)
+            if key:
+                worked.add(key)   # only advanced when the source worked
+            log(f"  {name}: {len(found):,} names seen, {len(fresh):,} not yet known"
+                + (f" (since {since:%Y-%m-%d})" if since else ""))
+        except Exception as e:
+            log(f"  {name}: skipped this time ({e}); will retry from the same point next run")
     if not args.rebuild:
-        # Names that couldn't be checked last time (network trouble) get another go.
-        for c in state.get("retry", []):
+        for c in st.get("retry", []):
             if c.lower() not in known and c.lower() not in rejected:
                 candidates.setdefault(c.lower(), c)
 
-    ok, new_aliases, new_rejected, retry = check_all(sorted(candidates.values()), args.workers)
+    ok, new_aliases, new_rejected, retry = check_all(platform, sorted(candidates.values()), args.workers)
     aliases |= new_aliases
     rejected |= new_rejected
 
     if args.rebuild:
         if "wayback_from" not in worked:
-            sys.exit("The Wayback Machine couldn't be read, so the list was not rebuilt. Try again later.")
-        if len(ok) < MIN_REBUILD:
-            sys.exit(f"Only {len(ok)} companies confirmed; something went wrong, so the list was not replaced.")
-        write_rows(COMPANIES, ok.values(), "w", stamp)
+            log(f"  The Wayback Machine couldn't be read, so the {label} list was not rebuilt.")
+            return 0
+        if len(ok) < MIN_REBUILD[platform]:
+            log(f"  Only {len(ok)} {label} companies confirmed; something went wrong, so the list was not replaced.")
+            return 0
+        write_rows(platform, ok.values(), "w", stamp)
         found_keys = set(ok) | aliases
         missed = sorted(old - found_keys)
-        log(f"  checking whether the {len(missed):,} previous entries we didn't find are still live...")
-        still_live, _, _, _ = check_all(missed, args.workers)
-        report = os.path.join(HERE, "rebuild_report.txt")
-        with open(report, "w", encoding="utf-8") as f:
-            f.write(f"Rebuild {stamp}: {len(ok)} companies confirmed from our own sources.\n")
-            f.write(f"Previous list: {len(old)}; found again: {len(old & found_keys)}; "
-                    f"not found by our sources: {len(missed)} ({len(still_live)} of them still live); "
-                    f"new: {len(set(ok) - old)}.\n\n")
-            f.write("Previous entries our sources didn't find but that are still live:\n")
-            f.write("".join(f"{slug}\t{name}\n" for slug, name in sorted(still_live.values())))
-        log(f"  previous list: {len(old):,}; found again: {len(old & found_keys):,}; "
-            f"not found by our sources: {len(missed):,} ({len(still_live):,} still live); "
-            f"new: {len(set(ok) - old):,} (details in rebuild_report.txt)")
+        still_live = {}
+        if missed:
+            log(f"  checking whether the {len(missed):,} previous entries we didn't find are still live...")
+            still_live, _, _, _ = check_all(platform, missed, args.workers)
+        log(f"  {label}: {len(ok):,} companies confirmed. Previous list: {len(old):,}; found again: "
+            f"{len(old & found_keys):,}; not found: {len(missed):,} ({len(still_live):,} still live); "
+            f"new: {len(set(ok) - old):,}.")
+        if still_live:
+            with open(os.path.join(HERE, f"rebuild_report_{platform}.txt"), "w", encoding="utf-8") as f:
+                f.write(f"Previous {label} entries our sources didn't find but that are still live:\n")
+                f.write("".join(f"{s}\t{n}\n" for s, n in sorted(still_live.values())))
         added = ok
     else:
         added = {k: v for k, v in ok.items() if k not in known}
         if added:
-            write_rows(COMPANIES, added.values(), "a" if os.path.exists(COMPANIES) else "w", stamp)
+            write_rows(platform, added.values(), "a", stamp)
 
     for key in worked:
-        state[key] = run_started.isoformat()
-    state["rejected"] = sorted(rejected)
-    state["retry"] = sorted(retry)
-    state["aliases"] = sorted(aliases)
-    state["last_run"] = run_started.isoformat()
-    state["last_added"] = len(added)
-    save_state(state)
-
+        st[key] = run_started.isoformat()
+    st["rejected"] = sorted(rejected)
+    st["retry"] = sorted(retry)
+    st["aliases"] = sorted(aliases)
     total = len(ok) if args.rebuild else len(old) + len(added)
     names = ", ".join(r[1] for r in sorted(added.values(), key=lambda r: r[1].lower())[:15])
-    log(f"[{datetime.now().strftime('%Y-%m-%d %H:%M')}] "
-        + (f"Company list rebuilt: {total:,} companies" if args.rebuild else
-           f"{len(added)} new compan{'y' if len(added) == 1 else 'ies'} added ({total:,} total)")
-        + f" in {round(time.time() - t0)}s."
-        + (f" {len(retry)} name(s) couldn't be checked and will be retried." if retry else "")
+    log(f"  {label}: " + (f"list rebuilt, {total:,} companies" if args.rebuild else
+                          f"{len(added)} new compan{'y' if len(added) == 1 else 'ies'} added ({total:,} total)")
+        + (f"; {len(retry)} name(s) couldn't be checked and will be retried" if retry else "") + "."
         + (f"\n  New: {names}{' …' if len(added) > 15 else ''}" if added and not args.rebuild else ""))
+    return len(added)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--full", action="store_true", help="rescan all history and add anything missing")
+    mode.add_argument("--rebuild", action="store_true", help="build the lists from scratch")
+    ap.add_argument("--platforms", default=",".join(PLATFORMS), help="e.g. greenhouse,lever")
+    ap.add_argument("--workers", type=int, default=8)
+    args = ap.parse_args()
+    platforms = [p.strip() for p in args.platforms.split(",") if p.strip() in PLATFORMS]
+
+    t0 = time.time()
+    run_started = datetime.now(timezone.utc)
+    stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    log(f"[{stamp}] Updating company lists: {', '.join(PLATFORMS[p]['label'] for p in platforms)}")
+    state = load_state()
+    added = 0
+    for platform in platforms:
+        added += run_platform(platform, args, state[platform], stamp, run_started)
+        save_state(state)   # after each platform, so a later failure keeps earlier progress
+    state["last_run"] = run_started.isoformat()
+    state["last_added"] = added
+    save_state(state)
+    log(f"[{datetime.now().strftime('%Y-%m-%d %H:%M')}] Done in {round(time.time() - t0)}s; "
+        f"{added:,} compan{'y' if added == 1 else 'ies'} added.")
+
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nStopped. Nothing was saved from this run; run again any time.")
+        print("\nStopped. Lists finished before the stop were saved; run again any time.")

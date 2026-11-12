@@ -1,10 +1,11 @@
 name: Weekly update
 
-# Every Monday at 16:00 UTC (8am PST), so fresh jobs are up by 9am PST.
+# Every Monday at 14:00 UTC (6am PST). Fetching every Ashby, Greenhouse and Lever board takes
+# about an hour or two, so fresh jobs are up by 9am PST.
 # You can also run it any time from the Actions tab: "Weekly update" -> "Run workflow".
 on:
   schedule:
-    - cron: "0 16 * * 1"
+    - cron: "0 14 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -19,7 +20,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 330
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -30,13 +31,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Find companies new to Ashby
+      - name: Find companies new to Ashby, Greenhouse and Lever
         # A problem here shouldn't stop the weekly jobs refresh.
         continue-on-error: true
         run: python3 -u scraper/update_companies.py
 
       - name: Fetch every company's jobs
-        run: python3 -u scraper/ingest.py --db jobs.db
+        run: python3 -u scraper/ingest.py --db jobs.db --no-descriptions --workers 10
 
       - name: Build the site's data
         # Stops here (and keeps last week's site) if the refresh looks broken.

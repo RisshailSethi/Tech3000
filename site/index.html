@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tech3000: every job on Ashby job boards, in one search</title>
-<meta name="description" content="Search jobs from thousands of companies that hire through Ashby, with filters for salary, remote or hybrid, experience and company size. Updated every Monday.">
+<title>Tech3000: every job on Ashby, Greenhouse and Lever job boards, in one search</title>
+<meta name="description" content="Search jobs from thousands of companies that hire through Ashby, Greenhouse and Lever, with filters for salary, remote or hybrid, experience and company size. Updated every Monday.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d4ed8'/%3E%3Ccircle cx='14' cy='14' r='6.5' fill='none' stroke='white' stroke-width='3'/%3E%3Cpath d='M19 19l6 6' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
       <span class="mark" aria-hidden="true"></span>
       <div>
         <h1>Tech3000</h1>
-        <p class="tag">Every job posted on Ashby job boards, in one search.</p>
+        <p class="tag">Every job posted on Ashby, Greenhouse and Lever job boards, in one search.</p>
       </div>
     </div>
     <a class="coffee" href="https://buymeacoffee.com/sethirisshy" target="_blank" rel="noopener">
@@ -46,6 +46,15 @@
 
 <div class="wrap layout">
   <aside id="filters" class="filters" aria-label="Filters">
+    <div class="fgroup">
+      <span class="flabel" id="srcLabel">Job board</span>
+      <div class="seg" role="group" aria-labelledby="srcLabel">
+        <label><input type="checkbox" name="src" value="0"><span>Ashby</span></label>
+        <label><input type="checkbox" name="src" value="1"><span>Greenhouse</span></label>
+        <label><input type="checkbox" name="src" value="2"><span>Lever</span></label>
+      </div>
+    </div>
+
     <div class="fgroup">
       <span class="flabel" id="workLabel">Work location</span>
       <div class="seg" role="group" aria-labelledby="workLabel">
@@ -154,7 +163,7 @@
 </div>
 
 <footer class="wrap foot">
-  <p>Tech3000 is free and unofficial, and isn't affiliated with Ashby or any company listed. If it helped your search, you can <a href="https://buymeacoffee.com/sethirisshy">buy me a coffee</a>. Every listing links to the company's own job page, where you apply.
+  <p>Tech3000 is free and unofficial, and isn't affiliated with Ashby, Greenhouse, Lever or any company listed. If it helped your search, you can <a href="https://buymeacoffee.com/sethirisshy">buy me a coffee</a>. Every listing links to the company's own job page, where you apply.
   Details like level, years and company size are inferred and can be wrong; check the posting.</p>
   <p>Want a company removed or found a problem? <a id="issues" href="#">Open an issue</a>.</p>
 </footer>

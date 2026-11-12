@@ -29,9 +29,19 @@ jobs:
       - name: Reuse this week's job data from the live site
         run: |
           base="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data"
-          curl -fsSL --retry 3 "$base/jobs.json" -o site/data/jobs.json
           curl -fsSL --retry 3 "$base/meta.json" -o site/data/meta.json
-          python3 -c "import json; d = json.load(open('site/data/jobs.json')); n = len(d['jobs']); assert n > 1000, n; print(n, 'jobs reused')"
+          python3 - "$base" <<'PY'
+          import json, subprocess, sys
+          base = sys.argv[1]
+          meta = json.load(open("site/data/meta.json"))
+          files = [f["file"] for f in meta.get("files", [])] or ["jobs.json"]
+          total = 0
+          for name in files:
+              subprocess.run(["curl", "-fsSL", "--retry", "3", f"{base}/{name}", "-o", f"site/data/{name}"], check=True)
+              total += len(json.load(open(f"site/data/{name}"))["jobs"])
+          assert total > 1000, total
+          print(f"{total} jobs reused from {len(files)} file(s)")
+          PY
 
       - uses: actions/configure-pages@v5
 

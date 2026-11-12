@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Pull published jobs from Ashby public job boards into a local SQLite database.
+"""Pull published jobs from Ashby, Greenhouse and Lever job boards into a local SQLite database.
 
 Usage:
-    python3 ingest.py                      # reads slugs.txt + companies.tsv, writes jobs.db
-    python3 ingest.py --companies ''       # only your own slugs.txt
-    python3 ingest.py --retry-missing      # re-probe boards that 404'd before
+    python3 ingest.py                         # all boards in slugs.txt, companies.tsv, greenhouse.tsv, lever.tsv
+    python3 ingest.py --sources ashby         # only some platforms (comma-separated)
+    python3 ingest.py --retry-missing         # re-probe boards that 404'd before
 
 Uses only the Python standard library. Personal, non-commercial use.
 """
 import argparse
+import html
 import json
 import os
 import re
@@ -28,8 +29,8 @@ except ImportError:  # Windows: no run lock, which only matters with the schedul
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 API = os.environ.get("ASHBY_API_BASE", "https://api.ashbyhq.com/posting-api/job-board")
-UA = "ashby-jobs-personal-index/0.3 (personal, non-commercial)"
-WORKERS = 6          # keep this modest; we are a guest on Ashby's API
+UA = "tech3000-job-index/1.0 (free, non-commercial job search)"
+WORKERS = 6          # keep this modest; we are a guest on these APIs
 PER_REQUEST_DELAY = 0.3
 SCHEMA_VERSION = 3   # v2: search index keyed by jobs.rowid; v3: salary/level/years columns
 
@@ -167,30 +168,237 @@ def years_required(description):
 
 # ---------------------------------------------------------------- fetching and storing
 
-def fetch_board(slug):
-    """Return (status, jobs). status is 'ok', 'not_found' or 'error:<detail>'."""
-    url = f"{API}/{urllib.parse.quote(slug, safe='')}?includeCompensation=true"
+# ---------------------------------------------------------------- sources
+#
+# Board keys: an Ashby board is just its name ("openai"); other platforms are prefixed:
+# "greenhouse:stripe", "lever:netflix" (Lever's EU-hosted boards: "lever:eu/acme").
+
+GREENHOUSE_API = os.environ.get("GREENHOUSE_API_BASE", "https://boards-api.greenhouse.io/v1/boards")
+LEVER_API = os.environ.get("LEVER_API_BASE", "https://api.lever.co/v0/postings")
+LEVER_EU_API = os.environ.get("LEVER_EU_API_BASE", "https://api.eu.lever.co/v0/postings")
+SOURCES = ("ashby", "greenhouse", "lever")
+LIST_FILES = {"ashby": "companies.tsv", "greenhouse": "greenhouse.tsv", "lever": "lever.tsv"}
+STORE_DESCRIPTIONS = True   # the CI build turns this off (--no-descriptions) to keep the database small
+
+
+def split_key(key):
+    head, _, rest = key.partition(":")
+    if rest and head in ("greenhouse", "lever"):
+        return head, rest
+    return "ashby", key
+
+
+def make_key(source, slug):
+    return slug if source == "ashby" else f"{source}:{slug}"
+
+
+def get_json(url):
+    """GET a JSON document with retries. Returns (status, data); status is 'ok', 'not_found' or 'error:...'."""
     req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
     for attempt in range(3):
         try:
             time.sleep(PER_REQUEST_DELAY)
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.load(resp)
-            return "ok", data.get("jobs", [])
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                return "ok", json.load(resp)
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                return "not_found", []
+                return "not_found", None
             if e.code in (429, 500, 502, 503, 504) and attempt < 2:
                 wait = int(e.headers.get("Retry-After", 0) or 0) or 5 * (attempt + 1)
                 time.sleep(min(wait, 60))
                 continue
-            return f"error:http_{e.code}", []
+            return f"error:http_{e.code}", None
         except Exception as e:  # network hiccup, bad JSON, etc.
             if attempt < 2:
                 time.sleep(3 * (attempt + 1))
                 continue
-            return f"error:{type(e).__name__}", []
-    return "error:unknown", []
+            return f"error:{type(e).__name__}", None
+    return "error:unknown", None
+
+
+def fetch_board(slug):
+    """Ashby: (status, raw jobs). Kept for discover.py and tests."""
+    status, data = get_json(f"{API}/{urllib.parse.quote(slug, safe='')}?includeCompensation=true")
+    return status, (data or {}).get("jobs", []) if status == "ok" else []
+
+
+def normalize_all(fn, items):
+    """Normalize each job, skipping any single malformed one instead of losing the whole board."""
+    out = []
+    for item in items:
+        try:
+            out.append(fn(item))
+        except Exception:
+            continue
+    return out
+
+
+def fetch(key):
+    """Fetch any board. Returns (status, [normalized job records])."""
+    source, slug = split_key(key)
+    try:
+        if source == "ashby":
+            status, jobs = fetch_board(slug)
+            return status, normalize_all(normalize_ashby, [j for j in jobs if j.get("isListed") is not False])
+        if source == "greenhouse":
+            status, data = get_json(f"{GREENHOUSE_API}/{urllib.parse.quote(slug, safe='')}/jobs?content=true")
+            return status, normalize_all(normalize_greenhouse, (data or {}).get("jobs", [])) if status == "ok" else []
+        base, name = (LEVER_EU_API, slug[3:]) if slug.startswith("eu/") else (LEVER_API, slug)
+        status, data = get_json(f"{base}/{urllib.parse.quote(name, safe='')}?mode=json")
+        return status, normalize_all(normalize_lever, data or []) if status == "ok" and isinstance(data, list) else []
+    except Exception as e:   # one malformed board must never stop the whole run
+        return f"error:parse_{type(e).__name__}", []
+
+
+TAG = re.compile(r"<[^>]+>")
+
+
+def plain(text):
+    """HTML (possibly entity-escaped, as Greenhouse sends it) to plain text."""
+    text = html.unescape(html.unescape(text or ""))
+    return " ".join(html.unescape(TAG.sub(" ", text)).split())
+
+
+def infer_workplace(location, title, desc):
+    head = f"{location} {title}".lower()
+    if "hybrid" in head:
+        return "Hybrid"
+    if "remote" in head:
+        return "Remote"
+    d = (desc or "")[:6000].lower()
+    if re.search(r"\bhybrid\b", d):
+        return "Hybrid"
+    if re.search(r"\b(fully remote|100% remote|remote[- ]first|remote position|remote role|work from anywhere)\b", d):
+        return "Remote"
+    return "OnSite" if location else ""
+
+
+CCY_SYMBOL = {"$": "USD", "US$": "USD", "CA$": "CAD", "C$": "CAD", "A$": "AUD", "£": "GBP", "€": "EUR"}
+CCY_CODES = {"USD", "CAD", "GBP", "EUR", "AUD", "SGD", "CHF", "INR", "NZD"}
+PAY_RX = re.compile(
+    r"(?P<c1>US\$|CA\$|C\$|A\$|\$|£|€|\b(?:USD|CAD|GBP|EUR|AUD|SGD|CHF|NZD)\b)\s?"
+    r"(?P<a>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s?(?P<ka>[kK])?\s*"
+    r"(?:-|–|—|to)\s*"
+    r"(?P<c2>US\$|CA\$|C\$|A\$|\$|£|€)?\s?(?P<b>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s?(?P<kb>[kK])?"
+    r"(?:\s*(?P<c3>USD|CAD|GBP|EUR|AUD|SGD|CHF|NZD)\b)?"
+    r"(?P<tail>[^.\n]{0,40})")
+PAY_CONTEXT = re.compile(r"salary|compensation|pay|base|wage|range|ote|earn", re.I)
+
+
+def parse_salary_text(text):
+    """Yearly (min, max, currency) from a pay range written in a job description, or (None, None, '')."""
+    t = text or ""
+    for m in PAY_RX.finditer(t):
+        if not PAY_CONTEXT.search(t[max(0, m.start() - 250):m.start()]):
+            continue
+        try:
+            a = float(m.group("a").replace(",", "")) * (1000 if m.group("ka") or m.group("kb") else 1)
+            b = float(m.group("b").replace(",", "")) * (1000 if m.group("kb") else 1)
+        except ValueError:
+            continue
+        tail = (m.group("tail") or "").lower()
+        if re.search(r"\b(hour|hr|hourly)\b", tail) and 10 <= a <= b <= 500:
+            a, b = a * 2080, b * 2080
+        if not (15000 <= a <= b <= 2_000_000) or b > 4 * a:
+            continue
+        code = m.group("c3") or (m.group("c1") if m.group("c1") in CCY_CODES else "")
+        ccy = code or CCY_SYMBOL.get(m.group("c1"), "USD")
+        if not code and m.group("c1") == "$":
+            window = t[max(0, m.start() - 300):m.end() + 60]
+            if re.search(r"\bCAD\b|Canadian", window):
+                ccy = "CAD"
+        return a, b, ccy
+    return None, None, ""
+
+
+def record(**r):
+    r.setdefault("secondary_locations", "")
+    r.setdefault("team", "")
+    r.setdefault("comp", "")
+    r["level"] = classify_level(r["title"], r["employment_type"])
+    r["years_min"] = years_required(r["desc"])
+    r["apply_url"] = r.get("apply_url") or r["url"]
+    return r
+
+
+def normalize_ashby(j):
+    smin, smax, ccy = parse_salary(j)
+    desc = j.get("descriptionPlain") or ""
+    return record(
+        url=j.get("jobUrl") or "", title=j.get("title") or "", department=j.get("department") or "",
+        team=j.get("team") or "", location=j.get("location") or "", secondary_locations=secondary(j),
+        is_remote=1 if j.get("isRemote") else 0, workplace_type=j.get("workplaceType") or "",
+        employment_type=j.get("employmentType") or "", comp=comp_text(j), published_at=j.get("publishedAt") or "",
+        apply_url=j.get("applyUrl"), salary_min=smin, salary_max=smax, salary_currency=ccy, desc=desc)
+
+
+def normalize_greenhouse(j):
+    desc = plain(j.get("content"))
+    loc = ((j.get("location") or {}).get("name") or "").strip()
+    title = j.get("title") or ""
+    wt = infer_workplace(loc, title, desc)
+    smin, smax, ccy = parse_salary_text(desc)
+    depts = [d.get("name") for d in j.get("departments") or [] if d.get("name")]
+    return record(
+        url=j.get("absolute_url") or "", title=title, department=depts[0] if depts else "",
+        team=depts[1] if len(depts) > 1 else "", location=loc, is_remote=1 if wt == "Remote" else 0,
+        workplace_type=wt, employment_type="Intern" if re.search(r"\bintern(ship)?\b", title, re.I) else "",
+        published_at=j.get("first_published") or j.get("updated_at") or "",
+        salary_min=smin, salary_max=smax, salary_currency=ccy, desc=desc)
+
+
+LEVER_WORK = {"remote": "Remote", "hybrid": "Hybrid", "onsite": "OnSite", "on-site": "OnSite"}
+LEVER_INTERVAL = {"per-year-salary": 1, "per-month-salary": 12, "per-week-salary": 52,
+                  "per-day-wage": 260, "per-hour-wage": 2080}
+
+
+def lever_employment(commitment):
+    c = (commitment or "").lower()
+    if "intern" in c:
+        return "Intern"
+    if "part" in c:
+        return "PartTime"
+    if "contract" in c or "freelance" in c:
+        return "Contract"
+    if "temp" in c:
+        return "Temporary"
+    return "FullTime" if "full" in c else ""
+
+
+def normalize_lever(p):
+    cats = p.get("categories") or {}
+    title = p.get("text") or ""
+    loc = (cats.get("location") or "").strip()
+    others = [l for l in cats.get("allLocations") or [] if l and l != loc]
+    parts = [p.get("descriptionPlain") or ""]
+    for lst in p.get("lists") or []:
+        parts.append(f"{lst.get('text') or ''}: {plain(lst.get('content'))}")
+    parts.append(p.get("additionalPlain") or "")
+    desc = " ".join(x for x in parts if x)
+    wt = LEVER_WORK.get((p.get("workplaceType") or "").lower()) or infer_workplace(loc, title, desc)
+    smin = smax = None
+    ccy = ""
+    sr = p.get("salaryRange") or {}
+    mult = LEVER_INTERVAL.get(sr.get("interval") or "")
+    if mult and sr.get("min") is not None and sr.get("max") is not None:
+        try:
+            smin, smax, ccy = float(sr["min"]) * mult, float(sr["max"]) * mult, sr.get("currency") or "USD"
+        except (TypeError, ValueError):
+            smin = smax = None
+    if smin is None:
+        smin, smax, ccy = parse_salary_text(desc)
+    created = p.get("createdAt")
+    try:
+        published = datetime.fromtimestamp(created / 1000, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except (TypeError, ValueError, OverflowError, OSError):
+        published = ""
+    emp = lever_employment(cats.get("commitment"))
+    return record(
+        url=p.get("hostedUrl") or "", title=title, department=cats.get("department") or cats.get("team") or "",
+        team=cats.get("team") or "", location=loc, secondary_locations="; ".join(others),
+        is_remote=1 if wt == "Remote" else 0, workplace_type=wt, employment_type=emp,
+        published_at=published, apply_url=p.get("applyUrl"),
+        salary_min=smin, salary_max=smax, salary_currency=ccy, desc=desc)
 
 
 def comp_text(job):
@@ -214,32 +422,18 @@ UPSERT = (
 )
 
 
-def store_board(db, slug, status, jobs, name=""):
+def store_board(db, key, status, records, name=""):
     ts = now()
     count = 0
     if status == "ok":
         seen = set()
-        for j in jobs:
-            # isListed=false means "direct link only": respect that and skip.
-            if j.get("isListed") is False:
-                continue
-            url = j.get("jobUrl")
+        for rec in records:
+            url = rec.get("url")
             if not url or url in seen:
                 continue
             seen.add(url)
             count += 1
-            desc = j.get("descriptionPlain") or ""
-            smin, smax, ccy = parse_salary(j)
-            rec = {
-                "url": url, "slug": slug, "title": j.get("title") or "", "department": j.get("department") or "",
-                "team": j.get("team") or "", "location": j.get("location") or "",
-                "secondary_locations": secondary(j), "is_remote": 1 if j.get("isRemote") else 0,
-                "workplace_type": j.get("workplaceType") or "", "employment_type": j.get("employmentType") or "",
-                "comp": comp_text(j), "published_at": j.get("publishedAt") or "",
-                "apply_url": j.get("applyUrl") or url, "salary_min": smin, "salary_max": smax,
-                "salary_currency": ccy, "level": classify_level(j.get("title"), j.get("employmentType")),
-                "years_min": years_required(desc),
-            }
+            rec["slug"] = key
             # The description lives only in the search index (jobs_fts) to keep the file small.
             db.execute(UPSERT, [rec[c] for c in COLUMNS] + [ts, ts])
             rid = db.execute("SELECT rowid FROM jobs WHERE url = ?", (url,)).fetchone()[0]
@@ -247,11 +441,11 @@ def store_board(db, slug, status, jobs, name=""):
             db.execute(
                 "INSERT INTO jobs_fts(rowid, title, department, team, location, description) VALUES (?,?,?,?,?,?)",
                 (rid, rec["title"], rec["department"], rec["team"],
-                 rec["location"] + " " + rec["secondary_locations"], desc),
+                 rec["location"] + " " + rec["secondary_locations"], rec["desc"] if STORE_DESCRIPTIONS else ""),
             )
         # Anything from this board we did not see this time has been taken down.
         # Only done after a successful fetch, so an outage never wipes data.
-        for rid, u in db.execute("SELECT rowid, url FROM jobs WHERE slug = ? AND active = 1", (slug,)).fetchall():
+        for rid, u in db.execute("SELECT rowid, url FROM jobs WHERE slug = ? AND active = 1", (key,)).fetchall():
             if u not in seen:
                 db.execute("UPDATE jobs SET active = 0 WHERE rowid = ?", (rid,))
                 db.execute("DELETE FROM jobs_fts WHERE rowid = ?", (rid,))
@@ -260,7 +454,7 @@ def store_board(db, slug, status, jobs, name=""):
         "ON CONFLICT(slug) DO UPDATE SET status=excluded.status, "
         "job_count=CASE WHEN excluded.status = 'ok' THEN excluded.job_count ELSE boards.job_count END, "
         "last_checked=excluded.last_checked, name=COALESCE(NULLIF(excluded.name, ''), boards.name)",
-        (slug, status, count, ts, name),
+        (key, status, count, ts, name),
     )
     db.commit()
     return count
@@ -317,8 +511,9 @@ def main():
         pass
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--slugs", default=os.path.join(HERE, "slugs.txt"), help="your own board list")
-    ap.add_argument("--companies", default=os.path.join(HERE, "companies.tsv"),
-                    help="community board list (use --companies '' to skip it)")
+    ap.add_argument("--sources", default=",".join(SOURCES), help="platforms to fetch, e.g. ashby,greenhouse")
+    ap.add_argument("--no-descriptions", action="store_true",
+                    help="don't keep job descriptions in the search index (smaller database)")
     ap.add_argument("--db", default=os.path.join(HERE, "jobs.db"))
     ap.add_argument("--workers", type=int, default=WORKERS, help=f"parallel requests (default {WORKERS})")
     ap.add_argument("--retry-missing", action="store_true", help="re-probe boards that 404'd before")
@@ -331,8 +526,23 @@ def main():
 
     started = now()
     print(f"[{started}] Refresh started.")
+    global STORE_DESCRIPTIONS
+    STORE_DESCRIPTIONS = not args.no_descriptions
+    wanted = {x.strip() for x in args.sources.split(",") if x.strip()}
     db = open_db(args.db)
-    boards = load_slugs(args.slugs, args.companies)
+    boards, seen_keys = [], set()
+    for slug, name in load_slugs(args.slugs):          # your own list; may hold any platform's keys
+        if split_key(slug)[0] in wanted and slug.lower() not in seen_keys:
+            seen_keys.add(slug.lower())
+            boards.append((slug, name))
+    for source in SOURCES:
+        if source not in wanted:
+            continue
+        for slug, name in load_slugs(os.path.join(HERE, LIST_FILES[source])):
+            key = make_key(source, slug)
+            if key.lower() not in seen_keys:
+                seen_keys.add(key.lower())
+                boards.append((key, name))
     if not args.retry_missing:
         missing = {r[0] for r in db.execute("SELECT slug FROM boards WHERE status = 'not_found'")}
         before = len(boards)
@@ -348,7 +558,7 @@ def main():
     problems = []
     pool = ThreadPoolExecutor(max_workers=args.workers)
     try:
-        for (slug, name), (status, jobs) in zip(boards, pool.map(fetch_board, slugs)):
+        for (slug, name), (status, jobs) in zip(boards, pool.map(fetch, slugs)):
             n = store_board(db, slug, status, jobs, name)
             done += 1
             if status == "ok":
@@ -358,7 +568,7 @@ def main():
                 problems.append((slug, status))
             if len(slugs) <= 25:
                 print(f"  {slug}: {n} jobs" if status == "ok" else f"  {slug}: {status}")
-            elif done % 250 == 0 or done == len(slugs):
+            elif done % 1000 == 0 or done == len(slugs):
                 print(f"  {done}/{len(slugs)} boards, {total} jobs so far")
     finally:
         pool.shutdown(wait=False, cancel_futures=True)   # so Ctrl+C stops promptly

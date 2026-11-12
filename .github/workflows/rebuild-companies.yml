@@ -1,10 +1,15 @@
 name: Rebuild company list
 
-# Builds scraper/companies.tsv from scratch from the Wayback Machine's full history of
-# jobs.ashbyhq.com pages, Hacker News and public job lists, checking every name against Ashby.
-# The result goes to the "company-rebuild" branch for review instead of straight to main.
+# Builds the company lists (companies.tsv for Ashby, greenhouse.tsv, lever.tsv) from scratch from the
+# Wayback Machine's full history of each job-board domain, Hacker News and public job lists, checking
+# every name against the platform. The result goes to the "company-rebuild" branch for review.
 on:
   workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Which platforms to rebuild (comma-separated: ashby, greenhouse, lever)"
+        default: "ashby,greenhouse,lever"
+        required: true
 
 permissions:
   contents: write
@@ -16,7 +21,7 @@ concurrency:
 jobs:
   rebuild:
     runs-on: ubuntu-latest
-    timeout-minutes: 340
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +30,7 @@ jobs:
           python-version: "3.12"
 
       - name: Rebuild the company list from scratch
-        run: python3 -u scraper/update_companies.py --rebuild
+        run: python3 -u scraper/update_companies.py --rebuild --platforms "${{ inputs.platforms }}" --workers 10
 
       - name: Save it to the company-rebuild branch for review
         run: |
