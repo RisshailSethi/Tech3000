@@ -99,7 +99,7 @@ def log(msg):
     print(msg, flush=True)
 
 
-def get(url, params=None, timeout=60, tries=3):
+def get(url, params=None, timeout=60, tries=3, backoff=5):
     """GET with retries and gzip. Returns (status, text); status 0 means the request failed."""
     if params:
         url += ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
@@ -113,12 +113,12 @@ def get(url, params=None, timeout=60, tries=3):
                 return r.status, body.decode("utf-8", "replace")
         except urllib.error.HTTPError as e:
             if e.code in (429, 500, 502, 503, 504) and attempt < tries - 1:
-                time.sleep(5 * (attempt + 1))
+                time.sleep(backoff * (attempt + 1))
                 continue
             return e.code, ""
         except Exception:
             if attempt < tries - 1:
-                time.sleep(3 * (attempt + 1))
+                time.sleep(max(3, backoff // 2) * (attempt + 1))
                 continue
             return 0, ""
     return 0, ""
@@ -157,30 +157,51 @@ def links_in(platform, text):
 
 # ---------------------------------------------------------------- sources
 
+SHARDS = "0123456789abcdefghijklmnopqrstuvwxyz"   # first character of the board name
+
+
+def wayback_shard(platform, shard_prefix, since):
+    """All board names under one shard of one domain, e.g. 'boards.greenhouse.io/a'. Raises on failure."""
+    found, key, pages = set(), None, 0
+    while True:
+        params = {"url": shard_prefix, "matchType": "prefix", "fl": "original", "collapse": "urlkey",
+                  "limit": "100000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
+        if key:
+            params["resumeKey"] = key
+        status, body = get(WAYBACK, params, timeout=300, tries=5, backoff=30)
+        if status != 200:
+            raise RuntimeError(f"HTTP {status}" if status else "couldn't connect")
+        rows, _, rest = body.rstrip("\n").partition("\n\n")
+        for line in rows.splitlines():
+            name = name_from_url(platform, line)
+            if name:
+                found.add(name)
+        key = rest.strip() or None
+        pages += 1
+        if not key or not rows.strip() or pages >= 500:
+            return found
+        time.sleep(1)
+
+
 def from_wayback(platform, since):
-    found = set()
+    """Returns (names, complete). The archive is read in small pieces (one per first character),
+    because one query over a whole domain is too heavy for the Wayback Machine. A few failed pieces
+    are tolerated; more than 10% failing raises."""
+    found, failed, total = set(), [], 0
     for prefix in PLATFORMS[platform]["wayback"]:
-        key, pages = None, 0
-        while True:
-            params = {"url": prefix, "matchType": "prefix", "fl": "original", "collapse": "urlkey",
-                      "limit": "150000", "showResumeKey": "true", "from": since.strftime("%Y%m%d%H%M%S")}
-            if key:
-                params["resumeKey"] = key
-            status, body = get(WAYBACK, params, timeout=300, tries=4)
-            if status != 200:
-                raise RuntimeError(f"{prefix}: " + (f"HTTP {status}" if status else "couldn't connect"))
-            rows, _, rest = body.rstrip("\n").partition("\n\n")
-            for line in rows.splitlines():
-                name = name_from_url(platform, line)
-                if name:
-                    found.add(name)
-            key = rest.strip() or None
-            pages += 1
-            if pages % 10 == 0:
-                log(f"    {prefix} {pages * 150000:,} archived pages read, {len(found):,} names so far")
-            if not key or not rows.strip() or pages >= 3000:
-                break
-    return found
+        for ch in SHARDS:
+            total += 1
+            try:
+                found |= wayback_shard(platform, prefix + ch, since)
+            except RuntimeError as e:
+                failed.append(f"{prefix}{ch} ({e})")
+            time.sleep(1)
+        log(f"    {prefix}: {len(found):,} names so far")
+    if len(failed) > 0.1 * total:
+        raise RuntimeError(f"{len(failed)} of {total} pieces failed, e.g. {failed[0]}")
+    if failed:
+        log(f"    {len(failed)} of {total} pieces couldn't be read: {', '.join(failed[:5])}")
+    return found, not failed
 
 
 def from_hacker_news(platform, since):
@@ -388,18 +409,23 @@ def run_platform(platform, args, st, stamp, run_started):
     aliases = set() if args.rebuild else {a.lower() for a in st.get("aliases", [])}
     known = set() if args.rebuild else old | aliases
 
-    candidates, worked = {}, set()
+    candidates, worked, usable = {}, set(), set()
     for name, key, fn in [("Wayback Machine", "wayback_from", from_wayback),
                           ("Hacker News", "hn_from", from_hacker_news),
                           ("GitHub job lists", None, from_github_lists)]:
         since = (FULL_FROM if fresh_start else parse_time(st.get(key), FIRST_RUN_FROM)) if key else None
         try:
             found = fn(platform, since)
+            complete = True
+            if isinstance(found, tuple):
+                found, complete = found
             fresh = {c for c in found if c.lower() not in known and c.lower() not in rejected}
             for c in fresh:
                 candidates.setdefault(c.lower(), c)
             if key:
-                worked.add(key)   # only advanced when the source worked
+                usable.add(key)
+                if complete:
+                    worked.add(key)   # the "checked up to" point only moves when nothing was missed
             log(f"  {name}: {len(found):,} names seen, {len(fresh):,} not yet known"
                 + (f" (since {since:%Y-%m-%d})" if since else ""))
         except Exception as e:
@@ -414,7 +440,7 @@ def run_platform(platform, args, st, stamp, run_started):
     rejected |= new_rejected
 
     if args.rebuild:
-        if "wayback_from" not in worked:
+        if "wayback_from" not in usable:
             log(f"  The Wayback Machine couldn't be read, so the {label} list was not rebuilt.")
             return 0
         if len(ok) < MIN_REBUILD[platform]:
