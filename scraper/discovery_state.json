@@ -15,7 +15,7 @@
    "tribalhealthconnections",
    "verne robotics"
   ],
-  "hn_from": "2026-11-16T23:10:25.307108+00:00",
+  "hn_from": "2026-11-24T01:27:46.259036+00:00",
   "rejected": [
    "0",
    "01c",
@@ -197,6 +197,7 @@
    "bitnomial",
    "bivacor",
    "bizly",
+   "bja",
    "bjak",
    "blackpoint",
    "blackpointcyber",
@@ -3796,7 +3797,7 @@
  },
  "greenhouse": {
   "aliases": [],
-  "hn_from": "2026-11-16T23:10:25.307108+00:00",
+  "hn_from": "2026-11-24T01:27:46.259036+00:00",
   "rejected": [
    "001",
    "005",
@@ -14194,11 +14195,11 @@
   ],
   "retry": []
  },
- "last_added": 8,
- "last_run": "2026-11-16T23:10:25.307108+00:00",
+ "last_added": 15,
+ "last_run": "2026-11-24T01:27:46.259036+00:00",
  "lever": {
   "aliases": [],
-  "hn_from": "2026-11-16T23:10:25.307108+00:00",
+  "hn_from": "2026-11-24T01:27:46.259036+00:00",
   "rejected": [
    "043a89e8f0d2453a8f36f66042f722f3",
    "10thmagnitude",
