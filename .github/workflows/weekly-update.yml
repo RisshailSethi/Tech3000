@@ -1,11 +1,15 @@
 name: Weekly update
 
-# Every Monday at 14:00 UTC (6am PST): up to an hour looking for new companies, then fetching every
-# Ashby, Greenhouse and Lever board, so fresh jobs are up by 9am PST.
+# Every Monday morning: up to an hour looking for new companies, then fetching every Ashby, Greenhouse
+# and Lever board, so fresh jobs are up by 9am PST.
+# GitHub sometimes starts scheduled runs hours late (or skips them), so there are two start times; the
+# second does nothing if the site was already refreshed in the last two days. Times are UTC, off the hour
+# because on-the-hour schedules are the ones GitHub delays most.
 # You can also run it any time from the Actions tab: "Weekly update" -> "Run workflow".
 on:
   schedule:
-    - cron: "0 14 * * 1"
+    - cron: "23 12 * * 1"   # 4:23am PST
+    - cron: "53 14 * * 1"   # 6:53am PST, backup
   workflow_dispatch:
 
 permissions:
@@ -18,12 +22,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      fresh: ${{ steps.age.outputs.fresh }}
+    steps:
+      - name: Skip a scheduled run if the site was refreshed in the last two days
+        id: age
+        run: |
+          url="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/data/meta.json"
+          url=$(echo "$url" | sed 's#https://[^.]*#\L&#')
+          fresh=$(curl -fsSL "$url" | python3 -c "
+          import json, sys, datetime as d
+          u = d.datetime.fromisoformat(json.load(sys.stdin)['updated'].replace('Z', '+00:00'))
+          print('true' if d.datetime.now(d.timezone.utc) - u < d.timedelta(hours=48) else 'false')" || echo false)
+          echo "Site data refreshed recently: $fresh"
+          echo "fresh=$fresh" >> "$GITHUB_OUTPUT"
+
   update:
+    needs: check
+    if: github.event_name != 'schedule' || needs.check.outputs.fresh != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 330
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -69,7 +89,7 @@ jobs:
             echo "Company list unchanged."
           else
             git commit -m "Weekly company list update"
-            git push
+            git pull --rebase && git push
           fi
 
       - uses: actions/configure-pages@v5
@@ -78,6 +98,26 @@ jobs:
         with:
           path: site
 
+  # Publishing is its own job so that if GitHub has a hiccup here, "Re-run failed jobs" retries just
+  # this part in a minute instead of the whole hour-long refresh.
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url || steps.retry.outputs.page_url }}
+    steps:
       - name: Publish the site
         id: deploy
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Wait a minute if that failed
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 60
+
+      - name: Publish the site (second try)
+        id: retry
+        if: steps.deploy.outcome == 'failure'
         uses: actions/deploy-pages@v4
